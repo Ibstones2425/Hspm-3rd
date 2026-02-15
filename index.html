@@ -526,13 +526,29 @@
             }
 
             // Mobile Menu Logic
-            document
-                .getElementById("mobile-menu-toggle")
-                .addEventListener("click", () => {
-                    document
-                        .getElementById("nav-links")
-                        .classList.toggle("active");
-                });
-        </script>
+    const menuToggle = document.getElementById("mobile-menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+    const navItems = document.querySelectorAll("#nav-links a");
+
+    // Toggle menu open / close
+    menuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navLinks.classList.toggle("active");
+    });
+
+    // Close menu when clicking a menu item
+    navItems.forEach(link => {
+        link.addEventListener("click", () => {
+            navLinks.classList.remove("active");
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+        if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+            navLinks.classList.remove("active");
+        }
+    });
+</script>
     </body>
 </html>
