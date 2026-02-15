@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>His Spirit and Power Ministry | HSPM</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <!-- Navigation -->
+        <header>
+            <div class="container">
+                <nav>
+                    <div class="logo">HSPM</div>
+                    <button class="mobile-menu-btn" id="mobile-menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <ul class="nav-links" id="nav-links">
+                        <li><a href="#hero" class="active">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#sermons">Sermons</a></li>
+                        <li><a href="#devotional">Devotional</a></li>
+                        <li><a href="#giving">Giving</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#testimonies">Testimonies</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container">
+                <h1>Welcome to His Spirit<br />and Power Ministry</h1>
+                <p>Where Godly Minds Converge & Kingdom Leaders Emerge.</p>
+                <div class="hero-btns">
+                    <a href="#sermons" class="btn btn-primary">Watch Online</a>
+                    <a
+                        href="#appointment"
+                        class="btn btn-outline"
+                        style="color: white; border-color: white"
+                        >Book an Appointment</a
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Vision & Mission</h2>
+                    <p>Raising a generation of Spirit-filled believers.</p>
+                </div>
+                <div
+                    class="grid-container"
+                    style="grid-template-columns: 1fr 1fr; align-items: center"
+                >
+                    <div class="about-text">
+                        <h3>We are a Family</h3>
+                        <p>
+                            At HSPM, we believe in the transformative power of
+                            the Holy Spirit. Our mission is to preach the
+                            undiluted word of God, empower believers for
+                            service, and prepare saints for the coming of our
+                            Lord Jesus Christ.
+                        </p>
+                        <br />
+                        <p>
+                            <strong>Join us every Sunday:</strong> 8:00 AM
+                            (First Service) | 10:00 AM (Second Service)
+                        </p>
+                    </div>
+                    <div class="about-image">
+                        <img
+                            src="assets/images/about-church.jpg"
+                            alt="HSPM Worship"
+                            onerror="
+                                this.src =
+                                    'https://placehold.co/600x400/5D001E/FFF?text=HSPM+Worship'
+                            "
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sermons Section (Dynamic) -->
+        <section id="sermons" style="background-color: #f8f9fa">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Sermon Library</h2>
+                    <p>Watch recent messages or listen via Mixlr.</p>
+                </div>
+
+                <!-- Search -->
+                <div style="max-width: 500px; margin: 0 auto 30px">
+                    <input
+                        type="text"
+                        id="sermon-search"
+                        placeholder="Search sermons by title or preacher..."
+                    />
+                </div>
+
+                <!-- Loading State -->
+                <div id="sermon-loader" class="loader"></div>
+
+                <!-- Grid -->
+                <div class="grid-container" id="sermon-list">
+                    <!-- Sermons injected here by JS -->
+                </div>
+
+                <div style="text-align: center; margin-top: 30px">
+                    <a
+                        href="https://mixlr.com/hspm"
+                        target="_blank"
+                        class="btn btn-outline"
+                    >
+                        <i class="fas fa-headphones"></i> Visit Mixlr Channel
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Devotional (Dynamic) -->
+        <section id="devotional">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Daily Devotional</h2>
+                    <p>Start your day with the Word.</p>
+                </div>
+                <div id="devotional-display">
+                    <!-- Most recent devotional injected here -->
+                    <div class="card" style="text-align: center">
+                        <p>Loading today's word...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Giving Section (Manual) -->
+        <section id="giving" style="background-color: #f4f4f4">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Online Giving</h2>
+                    <p>Honor the Lord with your substance.</p>
+                </div>
+
+                <div
+                    class="giving-wrapper"
+                    style="
+                        display: grid;
+                        grid-template-columns: repeat(
+                            auto-fit,
+                            minmax(300px, 1fr)
+                        );
+                        gap: 30px;
+                    "
+                >
+                    <!-- Bank Transfer Details -->
+                    <div class="giving-details card">
+                        <h3><i class="fas fa-university"></i> Bank Transfer</h3>
+                        <p>
+                            Please use the account details below for Tithes,
+                            Offerings, and Seeds.
+                        </p>
+
+                        <div class="account-box">
+                            <span id="bank-name">GTBank</span>
+                            <button
+                                class="btn-copy"
+                                onclick="copyText('bank-name')"
+                            >
+                                Copy
+                            </button>
+                        </div>
+
+                        <div class="account-box">
+                            <span id="account-number">0123456789</span>
+                            <button
+                                class="btn-copy"
+                                onclick="copyText('account-number')"
+                            >
+                                Copy
+                            </button>
+                        </div>
+
+                        <div class="account-box">
+                            <span id="account-name">HSPM Giving</span>
+                            <button
+                                class="btn-copy"
+                                onclick="copyText('account-name')"
+                            >
+                                Copy
+                            </button>
+                        </div>
+
+                        <p
+                            style="
+                                font-size: 0.9rem;
+                                color: #666;
+                                margin-top: 10px;
+                            "
+                        >
+                            * Please indicate the purpose (e.g., "Tithe") in the
+                            transaction remarks.
+                        </p>
+                    </div>
+
+                    <!-- Giving Info -->
+                    <div
+                        class="giving-info card"
+                        style="background: var(--primary-color); color: white"
+                    >
+                        <h3>Why We Give</h3>
+                        <p style="margin-top: 20px">
+                            "Bring the whole tithe into the storehouse, that
+                            there may be food in my house. Test me in this,"
+                            says the Lord Almighty, "and see if I will not throw
+                            open the floodgates of heaven and pour out so much
+                            blessing that there will not be room enough to store
+                            it."
+                        </p>
+                        <p style="margin-top: 20px; font-style: italic">
+                            - Malachi 3:10
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Upcoming Events</h2>
+                    <p>Join us for our special programs.</p>
+                </div>
+                <div class="grid-container" id="events-list">
+                    <!-- Events injected by JS -->
+                    <p style="text-align: center; width: 100%">
+                        Loading events...
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonies Section -->
+        <section id="testimonies" style="background-color: #fff8f0">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Testimonies</h2>
+                    <p>What the Lord has done.</p>
+                </div>
+
+                <div class="grid-container" id="testimony-list">
+                    <!-- Testimonies injected by JS -->
+                </div>
+
+                <div style="text-align: center; margin-top: 40px">
+                    <button
+                        class="btn btn-primary"
+                        onclick="toggleTestimonyModal()"
+                    >
+                        Share Your Testimony
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimony Modal (Hidden) -->
+        <div
+            id="testimony-modal"
+            style="
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 2000;
+                justify-content: center;
+                align-items: center;
+            "
+        >
+            <div
+                class="card"
+                style="
+                    width: 90%;
+                    max-width: 500px;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                "
+            >
+                <div
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    "
+                >
+                    <h3>Share Testimony</h3>
+                    <button
+                        onclick="toggleTestimonyModal()"
+                        style="
+                            background: none;
+                            border: none;
+                            font-size: 1.5rem;
+                            cursor: pointer;
+                        "
+                    >
+                        &times;
+                    </button>
+                </div>
+                <form id="testimony-form">
+                    <input
+                        type="text"
+                        id="t-name"
+                        placeholder="Your Name"
+                        required
+                    />
+                    <textarea
+                        id="t-content"
+                        rows="4"
+                        placeholder="What did God do for you?"
+                        required
+                    ></textarea>
+                    <label
+                        style="
+                            display: block;
+                            margin-bottom: 10px;
+                            font-size: 0.9rem;
+                        "
+                        >Upload Photo (Optional)</label
+                    >
+                    <input type="file" id="t-image" accept="image/*" />
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        style="width: 100%"
+                    >
+                        Submit for Approval
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Prayer Request & Contact -->
+        <section id="contact">
+            <div class="container">
+                <div
+                    class="grid-container"
+                    style="
+                        grid-template-columns: repeat(
+                            auto-fit,
+                            minmax(300px, 1fr)
+                        );
+                    "
+                >
+                    <!-- Prayer Request Form -->
+                    <div class="card">
+                        <h3>Send Prayer Request</h3>
+                        <form id="prayer-form">
+                            <input
+                                type="text"
+                                id="p-name"
+                                placeholder="Your Name"
+                                required
+                            />
+                            <input
+                                type="tel"
+                                id="p-phone"
+                                placeholder="Phone Number"
+                                required
+                            />
+                            <textarea
+                                id="p-request"
+                                rows="4"
+                                placeholder="How can we pray for you?"
+                                required
+                            ></textarea>
+                            <select id="p-type">
+                                <option value="Private">Keep Private</option>
+                                <option value="Public">
+                                    Share with Prayer Team
+                                </option>
+                            </select>
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                style="width: 100%"
+                            >
+                                SendRequest
+                            </button>
+                        </form>
+                    </div>
+<!-- Appointment Form -->
+<section id="appointment" style="margin-top: 50px;">
+  <div class="container">
+    <div class="card">
+      <h3>Book an Appointment</h3>
+      <form 
+        action="mailto:lateefibrahim2425@gmail.com" 
+        method="post" 
+        enctype="text/plain"
+      >
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="tel" name="phone" placeholder="Phone Number" required>
+        <textarea name="message" rows="4" placeholder="Your Appointment Details" required></textarea>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Appointment Request</button>
+      </form>
+    </div>
+  </div>
+</section>
+                    <!-- Contact Info -->
+                    <div class="contact-info">
+                        <h3>Contact Us</h3>
+                        <p>
+                            <i
+                                class="fas fa-map-marker-alt"
+                                style="
+                                    color: var(--primary-color);
+                                    margin-right: 10px;
+                                "
+                            ></i>
+                            123 Church Street, Lagos, Nigeria
+                        </p>
+                        <p style="margin-top: 15px">
+                            <i
+                                class="fas fa-phone"
+                                style="
+                                    color: var(--primary-color);
+                                    margin-right: 10px;
+                                "
+                            ></i>
+                            +234 800 000 0000
+                        </p>
+                        <p style="margin-top: 15px">
+                            <i
+                                class="fas fa-envelope"
+                                style="
+                                    color: var(--primary-color);
+                                    margin-right: 10px;
+                                "
+                            ></i>
+                            info@hspm.org
+                        </p>
+
+                        <div style="margin-top: 30px">
+                            <h4>Follow Us</h4>
+                            <div
+                                class="social-links"
+                                style="justify-content: flex-start"
+                            >
+                                <a href="#" style="color: var(--primary-color)"
+                                    ><i class="fab fa-facebook"></i
+                                ></a>
+                                <a href="#" style="color: var(--primary-color)"
+                                    ><i class="fab fa-instagram"></i
+                                ></a>
+                                <a href="#" style="color: var(--primary-color)"
+                                    ><i class="fab fa-youtube"></i
+                                ></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <p>
+                    &copy; 2026 His Spirit and Power Ministry. All Rights
+                    Reserved.
+                </p>
+                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.5">
+                    <a href="login.html" style="color: inherit">Admin Portal</a>
+                </p>
+            </div>
+        </footer>
+
+        <!-- Toast Notification Container -->
+        <div id="toast" class="toast">Action Successful!</div>
+
+        <!-- Scripts -->
+        <script src="config.js" type="module"></script>
+        <script src="app.js" type="module"></script>
+
+        <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
+        <script>
+            // Copy functionality
+            function copyText(elementId) {
+                const text = document.getElementById(elementId).innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("Copied to clipboard!");
+                });
+            }
+
+            // Toast logic
+            function showToast(message) {
+                const toast = document.getElementById("toast");
+                toast.innerText = message;
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3000);
+            }
+
+            // Modal Logic
+            function toggleTestimonyModal() {
+                const modal = document.getElementById("testimony-modal");
+                if (
+                    modal.style.display === "none" ||
+                    modal.style.display === ""
+                ) {
+                    modal.style.display = "flex";
+                } else {
+                    modal.style.display = "none";
+                }
+            }
+
+            // Mobile Menu Logic
+            document
+                .getElementById("mobile-menu-toggle")
+                .addEventListener("click", () => {
+                    document
+                        .getElementById("nav-links")
+                        .classList.toggle("active");
+                });
+        </script>
+    </body>
+</html>

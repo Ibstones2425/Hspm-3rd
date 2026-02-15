@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | HSPM Portal</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, var(--primary-color), #2C0B0E);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            border-radius: var(--radius);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+
+        .login-logo {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .login-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+        }
+
+        .error-msg {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <span class="login-logo">HSPM</span>
+        <p class="login-subtitle">Sign in to manage the ministry portal</p>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="admin@hspm.org" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <span id="btn-text">Sign In</span>
+            </button>
+            
+            <p id="error-msg" class="error-msg">Invalid email or password.</p>
+        </form>
+        
+        <div style="margin-top: 20px; font-size: 0.8rem;">
+            <a href="#" onclick="alert('Please contact the IT Department to reset your password.')" style="color: var(--primary-color);">Forgot Password?</a>
+        </div>
+    </div>
+
+    <!-- Firebase Login Logic -->
+    <script type="module">
+        import { auth } from "./config.js";
+        import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const loginForm = document.getElementById('login-form');
+        const errorMsg = document.getElementById('error-msg');
+        const btnText = document.getElementById('btn-text');
+        const btn = document.querySelector('button');
+
+        // Check if already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = "admin.html";
+            }
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // UI Loading State
+            btnText.innerText = "Authenticating...";
+            btn.style.opacity = "0.7";
+            errorMsg.style.display = "none";
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // Redirect happens automatically via onAuthStateChanged
+            } catch (error) {
+                console.error("Login Error:", error.code);
+                btnText.innerText = "Sign In";
+                btn.style.opacity = "1";
+                
+                // Show user-friendly error
+                if(error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                    errorMsg.innerText = "Incorrect email or password.";
+                } else if (error.code === 'auth/too-many-requests') {
+                    errorMsg.innerText = "Too many failed attempts. Try again later.";
+                } else {
+                    errorMsg.innerText = "Login failed. Check your internet.";
+                }
+                errorMsg.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>

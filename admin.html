@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | HSPM</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>HSPM Admin</h2>
+            <small style="opacity: 0.7;">Content Management</small>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <div class="menu-item active" onclick="showSection('dashboard', this)">
+                <i class="fas fa-chart-pie"></i> Dashboard
+            </div>
+            <div class="menu-item" onclick="showSection('sermons', this)">
+                <i class="fas fa-video"></i> Sermons
+            </div>
+            <div class="menu-item" onclick="showSection('devotionals', this)">
+                <i class="fas fa-book-open"></i> Devotionals
+            </div>
+            <div class="menu-item" onclick="showSection('events', this)">
+                <i class="fas fa-calendar-alt"></i> Events
+            </div>
+            <div class="menu-item" onclick="showSection('testimonies', this)">
+                <i class="fas fa-comment-dots"></i> Testimonies
+            </div>
+            <div class="menu-item" onclick="showSection('prayers', this)">
+                <i class="fas fa-hands-praying"></i> Prayer Requests
+            </div>
+            <div class="menu-item" onclick="showSection('settings', this)">
+                <i class="fas fa-cogs"></i> Settings (Giving)
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <button class="mobile-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 id="page-title">Overview</h1>
+            <div class="user-profile">
+                <span style="font-weight: 600;">Admin</span>
+                <i class="fas fa-user-circle" style="font-size: 1.5rem; margin-left: 10px; color: var(--primary-color);"></i>
+            </div>
+        </div>
+
+        <!-- 1. DASHBOARD OVERVIEW -->
+        <div id="section-dashboard" class="admin-section active" style="display: block;">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="stat-sermons">0</h3>
+                        <p>Total Sermons</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-video"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="stat-prayers">0</h3>
+                        <p>Pending Prayers</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-praying-hands"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="stat-testimonies">0</h3>
+                        <p>New Testimonies</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-comments"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="stat-events">0</h3>
+                        <p>Upcoming Events</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SERMON MANAGEMENT -->
+        <div id="section-sermons" class="admin-section">
+            <div class="section-header">
+                <h2>Manage Sermons</h2>
+                <button class="btn btn-primary" onclick="openModal('modal-sermon')"><i class="fas fa-plus"></i> Add Sermon</button>
+            </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Preacher</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-sermons">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. DEVOTIONAL MANAGEMENT -->
+        <div id="section-devotionals" class="admin-section">
+            <div class="section-header">
+                <h2>Manage Devotionals</h2>
+                <button class="btn btn-primary" onclick="openModal('modal-devotional')"><i class="fas fa-plus"></i> Add Devotional</button>
+            </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Scripture</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-devotionals">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. EVENT MANAGEMENT -->
+        <div id="section-events" class="admin-section">
+            <div class="section-header">
+                <h2>Manage Events</h2>
+                <button class="btn btn-primary" onclick="openModal('modal-event')"><i class="fas fa-plus"></i> Add Event</button>
+            </div>
+            <div id="events-grid-admin" class="grid-container" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- 5. TESTIMONY MANAGEMENT -->
+        <div id="section-testimonies" class="admin-section">
+            <div class="section-header">
+                <h2>Testimony Inbox</h2>
+            </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Content</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-testimonies">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 6. PRAYER REQUESTS -->
+        <div id="section-prayers" class="admin-section">
+            <div class="section-header">
+                <h2>Prayer Requests</h2>
+            </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Request</th>
+                            <th>Visibility</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-prayers">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 7. SETTINGS (GIVING) -->
+        <div id="section-settings" class="admin-section">
+            <div class="section-header">
+                <h2>Giving Configuration</h2>
+            </div>
+            <div class="card" style="max-width: 600px;">
+                <form id="settings-form">
+                    <label>Bank Name</label>
+                    <input type="text" id="set-bank" placeholder="e.g. GTBank" required>
+                    
+                    <label>Account Number</label>
+                    <input type="text" id="set-account-num" placeholder="0123456789" required>
+                    
+                    <label>Account Name</label>
+                    <input type="text" id="set-account-name" placeholder="HSPM Giving" required>
+                    
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODALS -->
+
+    <!-- Add Sermon Modal -->
+    <div id="modal-sermon" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-sermon')">&times;</span>
+            <h3>Add New Sermon</h3>
+            <form id="form-sermon">
+                <input type="text" id="sermon-title" placeholder="Sermon Title" required>
+                <input type="text" id="sermon-preacher" placeholder="Preacher Name" required>
+                <input type="date" id="sermon-date" required>
+                <label>YouTube Link (Video)</label>
+                <input type="url" id="sermon-youtube" placeholder="https://youtube.com/...">
+                <label>Mixlr Link (Audio)</label>
+                <input type="url" id="sermon-mixlr" placeholder="https://mixlr.com/...">
+                <button type="submit" class="btn btn-primary">Publish Sermon</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Devotional Modal -->
+    <div id="modal-devotional" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-devotional')">&times;</span>
+            <h3>Add Daily Devotional</h3>
+            <form id="form-devotional">
+                <input type="date" id="dev-date" required>
+                <input type="text" id="dev-title" placeholder="Topic" required>
+                <input type="text" id="dev-scripture" placeholder="Scripture Reference" required>
+                <textarea id="dev-content" rows="6" placeholder="The Word for today..." required></textarea>
+                <button type="submit" class="btn btn-primary">Publish Devotional</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div id="modal-event" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-event')">&times;</span>
+            <h3>Add Upcoming Event</h3>
+            <form id="form-event">
+                <input type="text" id="event-title" placeholder="Event Name" required>
+                <input type="datetime-local" id="event-date" required>
+                <textarea id="event-desc" placeholder="Short Description" required></textarea>
+                <label>Event Poster (Image)</label>
+                <input type="file" id="event-image" accept="image/*" required>
+                <button type="submit" class="btn btn-primary">Create Event</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">Operation Successful</div>
+
+    <!-- Script -->
+    <script src="config.js" type="module"></script>
+    <script src="admin.js" type="module"></script>
+
+    <!-- UI Logic for switching tabs -->
+    <script>
+        function showSection(sectionId, element) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(sec => {
+                sec.style.display = 'none';
+                sec.classList.remove('active');
+            });
+            // Show target section
+            document.getElementById('section-' + sectionId).style.display = 'block';
+            
+            // Update Menu Active State
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Update Title
+            document.getElementById('page-title').innerText = element.innerText;
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
