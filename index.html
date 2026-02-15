@@ -552,31 +552,6 @@
                     navLinks.classList.remove("active");
                 }
             });
-            const overlay = document.getElementById("menu-overlay");
-
-function openMenu() {
-    navLinks.classList.add("active");
-    overlay.classList.add("active");
-    document.body.style.overflow = "hidden";
-}
-
-function closeMenu() {
-    navLinks.classList.remove("active");
-    overlay.classList.remove("active");
-    document.body.style.overflow = "";
-}
-
-menuToggle.addEventListener("click", (e) => {
-    e.stopPropagation();
-    navLinks.classList.contains("active") ? closeMenu() : openMenu();
-});
-
-navItems.forEach(link => {
-    link.addEventListener("click", closeMenu);
-});
-
-overlay.addEventListener("click", closeMenu);
         </script>
-        <div id="menu-overlay"></div>
     </body>
 </html>
