@@ -1,13 +1,13 @@
 import { db, IMGBB_API_KEY } from "./config.js";
-import { 
-    collection, 
-    addDoc, 
-    getDocs, 
-    query, 
-    orderBy, 
-    limit, 
+import {
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    orderBy,
+    limit,
     where,
-    serverTimestamp 
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // ---------------------------------------------------------
@@ -18,10 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
     loadDevotional();
     loadEvents();
     loadTestimonies();
-    
+
     // Setup Form Listeners
-    document.getElementById("prayer-form").addEventListener("submit", handlePrayerSubmit);
-    document.getElementById("testimony-form").addEventListener("submit", handleTestimonySubmit);
+    document
+        .getElementById("prayer-form")
+        .addEventListener("submit", handlePrayerSubmit);
+    document
+        .getElementById("testimony-form")
+        .addEventListener("submit", handleTestimonySubmit);
 });
 
 // ---------------------------------------------------------
@@ -35,11 +39,15 @@ document.addEventListener("DOMContentLoaded", () => {
 async function loadSermons() {
     const sermonList = document.getElementById("sermon-list");
     const loader = document.getElementById("sermon-loader");
-    
+
     try {
-        const q = query(collection(db, "sermons"), orderBy("date", "desc"), limit(6));
+        const q = query(
+            collection(db, "sermons"),
+            orderBy("date", "desc"),
+            limit(6)
+        );
         const querySnapshot = await getDocs(q);
-        
+
         loader.style.display = "none";
         sermonList.innerHTML = ""; // Clear existing
 
@@ -48,16 +56,20 @@ async function loadSermons() {
             return;
         }
 
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
             const data = doc.data();
-            const date = data.date ? new Date(data.date).toLocaleDateString() : "";
-            
+            const date = data.date
+                ? new Date(data.date).toLocaleDateString()
+                : "";
+
             let mediaContent = "";
-            
+
             // Logic: If YouTube link exists, show video. Else if Mixlr, show audio card.
             if (data.youtubeLink && data.youtubeLink.includes("youtube")) {
                 // Extract Video ID from standard YouTube URL
-                const videoId = data.youtubeLink.split("v=")[1]?.split("&")[0] || data.youtubeLink.split("/").pop();
+                const videoId =
+                    data.youtubeLink.split("v=")[1]?.split("&")[0] ||
+                    data.youtubeLink.split("/").pop();
                 mediaContent = `
                     <div class="video-wrapper">
                         <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
@@ -86,7 +98,6 @@ async function loadSermons() {
             `;
             sermonList.innerHTML += html;
         });
-
     } catch (error) {
         console.error("Error loading sermons:", error);
         loader.style.display = "none";
@@ -99,10 +110,14 @@ async function loadSermons() {
  */
 async function loadDevotional() {
     const container = document.getElementById("devotional-display");
-    
+
     try {
         // Get the most recent devotional
-        const q = query(collection(db, "devotionals"), orderBy("date", "desc"), limit(1));
+        const q = query(
+            collection(db, "devotionals"),
+            orderBy("date", "desc"),
+            limit(1)
+        );
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
@@ -135,11 +150,11 @@ async function loadDevotional() {
  */
 async function loadEvents() {
     const eventList = document.getElementById("events-list");
-    
+
     try {
         const q = query(collection(db, "events"), orderBy("date", "asc"));
         const querySnapshot = await getDocs(q);
-        
+
         eventList.innerHTML = "";
 
         if (querySnapshot.empty) {
@@ -147,11 +162,11 @@ async function loadEvents() {
             return;
         }
 
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
             const data = doc.data();
             // Use placeholder if no image
             const image = data.imageUrl || "assets/images/default-event.jpg";
-            
+
             const html = `
                 <div class="card" style="padding: 0; overflow: hidden;">
                     <img src="${image}" alt="${data.title}" style="width: 100%; height: 200px; object-fit: cover;">
@@ -166,7 +181,6 @@ async function loadEvents() {
             `;
             eventList.innerHTML += html;
         });
-
     } catch (error) {
         console.error("Error loading events:", error);
     }
@@ -177,23 +191,27 @@ async function loadEvents() {
  */
 async function loadTestimonies() {
     const list = document.getElementById("testimony-list");
-    
+
     try {
         // Only show testimonies approved by Admin
-        const q = query(collection(db, "testimonies"), where("status", "==", "approved"), limit(6));
+        const q = query(
+            collection(db, "testimonies"),
+            where("status", "==", "approved"),
+            limit(6)
+        );
         const querySnapshot = await getDocs(q);
-        
+
         list.innerHTML = "";
-        
+
         if (querySnapshot.empty) {
             list.innerHTML = "<p>No testimonies shared yet. Be the first!</p>";
             return;
         }
 
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
             const data = doc.data();
-            const imgHtml = data.imageUrl 
-                ? `<img src="${data.imageUrl}" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 15px;">` 
+            const imgHtml = data.imageUrl
+                ? `<img src="${data.imageUrl}" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 15px;">`
                 : `<div style="width: 60px; height: 60px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px;"><i class="fas fa-user"></i></div>`;
 
             const html = `
@@ -210,7 +228,6 @@ async function loadTestimonies() {
             `;
             list.innerHTML += html;
         });
-
     } catch (error) {
         console.error("Error loading testimonies:", error);
     }
@@ -271,12 +288,15 @@ async function handleTestimonySubmit(e) {
         if (fileInput.files.length > 0) {
             const formData = new FormData();
             formData.append("image", fileInput.files[0]);
-            
-            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                method: "POST",
-                body: formData
-            });
-            
+
+            const response = await fetch(
+                `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
             const result = await response.json();
             if (result.success) {
                 imageUrl = result.data.url;
@@ -297,7 +317,6 @@ async function handleTestimonySubmit(e) {
         alert("Testimony submitted for approval! Thank you for sharing.");
         document.getElementById("testimony-form").reset();
         document.getElementById("testimony-modal").style.display = "none";
-
     } catch (error) {
         console.error("Error submitting testimony:", error);
         alert("Something went wrong. Please check your connection.");
@@ -305,4 +324,14 @@ async function handleTestimonySubmit(e) {
         btn.innerText = "Submit for Approval";
         btn.disabled = false;
     }
+}
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(reg => console.log("Service Worker registered.", reg))
+            .catch(err =>
+                console.log("Service Worker registration failed:", err)
+            );
+    });
 }
