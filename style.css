@@ -576,3 +576,19 @@ footer {
     opacity: 1;
     transform: translateY(0);
 }
+/* Ensures both cards in the contact section are same height */
+#contact .grid-container {
+    display: flex; /* Make it a flex container */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 20px; /* Space between cards */
+    align-items: stretch; /* Make all children same height */
+}
+#contact .grid-container > .card,
+#contact .grid-container > section#appointment .card {
+    flex: 1 1 300px; /* Flex-grow, flex-shrink, min-width */
+    display: flex;
+    flex-direction: column; /* So content stacks vertically */
+}
+#contact .card button {
+    margin-top: auto; /* Pushes button to the bottom */
+}
