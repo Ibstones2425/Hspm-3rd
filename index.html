@@ -21,8 +21,8 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="style.css" />
-        <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#5d001e">
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#5d001e" />
     </head>
     <body>
         <!-- Navigation -->
@@ -377,54 +377,100 @@
         </div>
 
         <!-- Prayer Request & Contact -->
-<section id="contact">
-  <div class="container">
-    <div class="grid-container">
-      
-      <!-- Prayer Request Form -->
-      <div class="card contact-card">
-        <h3>Send Prayer Request</h3>
-        <form id="prayer-form">
-          <input type="text" id="p-name" placeholder="Your Name" required />
-          <input type="tel" id="p-phone" placeholder="Phone Number" required />
-          <textarea id="p-request" rows="4" placeholder="How can we pray for you?" required></textarea>
-          <select id="p-type">
-            <option value="Private">Keep Private</option>
-            <option value="Public">Share with Prayer Team</option>
-          </select>
-          <button type="submit" class="btn btn-primary">Send Request</button>
-        </form>
-      </div>
+        <section id="contact">
+            <div class="container">
+                <div class="grid-container">
+                    <!-- Prayer Request Form -->
+                    <div class="card contact-card">
+                        <h3>Send Prayer Request</h3>
+                        <form id="prayer-form">
+                            <input
+                                type="text"
+                                id="p-name"
+                                placeholder="Your Name"
+                                required
+                            />
+                            <input
+                                type="tel"
+                                id="p-phone"
+                                placeholder="Phone Number"
+                                required
+                            />
+                            <textarea
+                                id="p-request"
+                                rows="4"
+                                placeholder="How can we pray for you?"
+                                required
+                            ></textarea>
+                            <select id="p-type">
+                                <option value="Private">Keep Private</option>
+                                <option value="Public">
+                                    Share with Prayer Team
+                                </option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">
+                                Send Request
+                            </button>
+                        </form>
+                    </div>
 
-      <!-- Appointment Form -->
-      <div class="card contact-card">
-        <h3>Book an Appointment</h3>
-        <form action="mailto:lateefibrahim2425@gmail.com" method="post" enctype="text/plain">
-          <input type="text" name="name" placeholder="Your Name" required />
-          <input type="email" name="email" placeholder="Your Email" required />
-          <input type="tel" name="phone" placeholder="Phone Number" required />
-          <textarea name="message" rows="4" placeholder="Your Appointment Details" required></textarea>
-          <button type="submit" class="btn btn-primary">Send Appointment Request</button>
-        </form>
-      </div>
+                    <!-- Appointment Form -->
+                    <div class="card contact-card">
+                        <h3>Book an Appointment</h3>
+                        <form
+                            action="mailto:lateefibrahim2425@gmail.com"
+                            method="post"
+                            enctype="text/plain"
+                        >
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Your Name"
+                                required
+                            />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Your Email"
+                                required
+                            />
+                            <input
+                                type="tel"
+                                name="phone"
+                                placeholder="Phone Number"
+                                required
+                            />
+                            <textarea
+                                name="message"
+                                rows="4"
+                                placeholder="Your Appointment Details"
+                                required
+                            ></textarea>
+                            <button type="submit" class="btn btn-primary">
+                                Send Appointment Request
+                            </button>
+                        </form>
+                    </div>
 
-      <!-- Optional Contact Info (kept separate if needed) -->
-      <div class="card contact-card">
-        <h3>Contact Us</h3>
-        <p><i class="fas fa-map-marker-alt"></i> 123 Church Street, Lagos, Nigeria</p>
-        <p><i class="fas fa-phone"></i> +234 800 000 0000</p>
-        <p><i class="fas fa-envelope"></i> info@hspm.org</p>
+                    <!-- Optional Contact Info (kept separate if needed) -->
+                    <div class="card contact-card">
+                        <h3>Contact Us</h3>
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i> 123 Church
+                            Street, Lagos, Nigeria
+                        </p>
+                        <p><i class="fas fa-phone"></i> +234 800 000 0000</p>
+                        <p><i class="fas fa-envelope"></i> info@hspm.org</p>
 
-        <div class="social-links">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Footer -->
         <footer>
@@ -490,4 +536,3 @@
         </script>
     </body>
 </html>
-
