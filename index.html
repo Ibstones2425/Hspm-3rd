@@ -526,29 +526,57 @@
             }
 
             // Mobile Menu Logic
-    const menuToggle = document.getElementById("mobile-menu-toggle");
-    const navLinks = document.getElementById("nav-links");
-    const navItems = document.querySelectorAll("#nav-links a");
+            const menuToggle = document.getElementById("mobile-menu-toggle");
+            const navLinks = document.getElementById("nav-links");
+            const navItems = document.querySelectorAll("#nav-links a");
 
-    // Toggle menu open / close
-    menuToggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        navLinks.classList.toggle("active");
-    });
+            // Toggle menu open / close
+            menuToggle.addEventListener("click", e => {
+                e.stopPropagation();
+                navLinks.classList.toggle("active");
+            });
 
-    // Close menu when clicking a menu item
-    navItems.forEach(link => {
-        link.addEventListener("click", () => {
-            navLinks.classList.remove("active");
-        });
-    });
+            // Close menu when clicking a menu item
+            navItems.forEach(link => {
+                link.addEventListener("click", () => {
+                    navLinks.classList.remove("active");
+                });
+            });
 
-    // Close menu when clicking outside
-    document.addEventListener("click", (e) => {
-        if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
-            navLinks.classList.remove("active");
-        }
-    });
-</script>
+            // Close menu when clicking outside
+            document.addEventListener("click", e => {
+                if (
+                    !navLinks.contains(e.target) &&
+                    !menuToggle.contains(e.target)
+                ) {
+                    navLinks.classList.remove("active");
+                }
+            });
+            const overlay = document.getElementById("menu-overlay");
+
+function openMenu() {
+    navLinks.classList.add("active");
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeMenu() {
+    navLinks.classList.remove("active");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+menuToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    navLinks.classList.contains("active") ? closeMenu() : openMenu();
+});
+
+navItems.forEach(link => {
+    link.addEventListener("click", closeMenu);
+});
+
+overlay.addEventListener("click", closeMenu);
+        </script>
+        <div id="menu-overlay"></div>
     </body>
 </html>
