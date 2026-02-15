@@ -76,8 +76,6 @@ img {
 /* ---------------------------------------------------------
    3. UI COMPONENTS (Buttons, Forms, Cards)
    --------------------------------------------------------- */
-
-/* Containers */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -107,8 +105,8 @@ img {
 
 .btn-primary:hover {
     background-color: var(--primary-hover);
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 8px 20px rgba(93, 0, 30, 0.3);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-outline {
@@ -118,17 +116,11 @@ img {
 }
 
 .btn-outline:hover {
-    background: linear-gradient(
-        135deg,
-        var(--primary-color),
-        var(--secondary-color)
-    );
+    background-color: var(--primary-color);
     color: var(--text-light);
-    transform: scale(1.03);
-    box-shadow: 0 6px 15px rgba(93, 0, 30, 0.2);
 }
 
-/* Copy Button */
+/* Copy Button (For Giving) */
 .btn-copy {
     background: var(--bg-body);
     border: 1px solid #ddd;
@@ -175,11 +167,8 @@ textarea:focus {
 }
 
 .card:hover {
-    transform: translateY(-10px) rotateZ(1deg);
-    box-shadow: 0 25px 40px rgba(93, 0, 30, 0.25);
-    transition:
-        transform 0.4s ease,
-        box-shadow 0.4s ease;
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
 /* ---------------------------------------------------------
@@ -203,16 +192,16 @@ nav {
 }
 
 .logo img {
-    height: 200px;
-    width: auto;
-    display: block;
-    margin: 0 auto;
+    height: 200px; /* Recommended size for desktop */
+    width: auto; /* Keeps aspect ratio */
+    display: block; /* Avoid inline spacing issues */
+    margin: 0 auto; /* Centers the logo if the parent allows */
     transform: scale(1.35);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease; /* subtle hover effect */
 }
 
 .logo img:hover {
-    transform: scale(1.45);
+    transform: scale(1.45); /* Slight zoom on hover for effect */
 }
 
 .nav-links {
@@ -224,24 +213,11 @@ nav {
 .nav-links a {
     font-weight: 500;
     color: var(--text-main);
-    position: relative;
-    padding-bottom: 4px;
 }
 
-.nav-links a::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: var(--primary-color);
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after,
-.nav-links a.active::after {
-    width: 100%;
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary-color);
 }
 
 .mobile-menu-btn {
@@ -253,12 +229,13 @@ nav {
 }
 
 /* ---------------------------------------------------------
-   5. HERO SECTION & GENERAL SECTIONS
+   5. SECTIONS (Hero, About, Sermons)
    --------------------------------------------------------- */
 section {
     padding: 80px 0;
 }
 
+/* Hero Section */
 #hero {
     height: 100vh;
     background:
@@ -285,67 +262,16 @@ section {
     margin-bottom: 30px;
     opacity: 0.9;
 }
-/* ---------------------------------------------------------
-   6. GRID & ABOUT SECTION
-   --------------------------------------------------------- */
+
+/* Sermon Grid */
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
 }
 
-.about-image {
-    position: relative; /* needed for overlay */
-}
-
-.about-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition:
-        transform 0.5s ease,
-        filter 0.5s ease;
-}
-
-.about-image img:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-}
-
-.about-image .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.667);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.about-image .overlay .verse {
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 500;
-    line-height: 1.4;
-    transition:
-        transform 0.4s ease,
-        opacity 0.4s ease;
-}
-
-.about-image .overlay:hover .verse {
-    transform: translateY(-10px);
-    opacity: 0.95;
-}
-
-/* ---------------------------------------------------------
-   7. SERMON GRID & VIDEO
-   --------------------------------------------------------- */
+/* Video Wrapper for Sermons */
 .video-wrapper {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
@@ -367,7 +293,7 @@ section {
 
 /* Mixlr Audio Box */
 .audio-card {
-    background: #fdf3f5;
+    background: #fdf3f5; /* Very light pink/cream */
     border-left: 5px solid var(--primary-color);
     padding: 1.5rem;
 }
@@ -394,7 +320,7 @@ section {
 }
 
 /* ---------------------------------------------------------
-   8. FOOTER
+   6. FOOTER
    --------------------------------------------------------- */
 footer {
     background: var(--bg-dark);
@@ -418,8 +344,21 @@ footer {
 }
 
 /* ---------------------------------------------------------
-   9. ANIMATIONS & UTILITIES
+   7. UTILITIES & ANIMATIONS
    --------------------------------------------------------- */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+}
+
+.section-title p {
+    color: var(--text-muted);
+}
+
 .loader {
     border: 4px solid #f3f3f3;
     border-top: 4px solid var(--primary-color);
@@ -431,10 +370,15 @@ footer {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
+/* Toast Notification */
 .toast {
     position: fixed;
     bottom: 20px;
@@ -453,94 +397,78 @@ footer {
     transform: translateY(0);
 }
 
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-        opacity 0.6s ease,
-        transform 0.6s ease;
-}
-
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* ---------------------------------------------------------
-   10. CONTACT & APPOINTMENT
-   --------------------------------------------------------- */
-#contact .grid-container {
-    display: flex; /* Make it a flex container */
-    flex-wrap: wrap; /* Allow wrapping on small screens */
-    gap: 20px; /* Space between cards */
-    align-items: stretch; /* Make all children same height */
-}
-
-#contact .grid-container > .card,
-#contact .grid-container > section#appointment .card,
-#contact .grid-container > .contact-card {
-    flex: 1 1 300px;
-    display: flex;
-    flex-direction: column;
-}
-
-#contact .card button,
-#contact .contact-card button {
-    margin-top: auto;
-}
-
-#contact .contact-card {
-    padding: 2rem;
-    box-shadow: var(--shadow-sm);
-    border-radius: var(--radius);
-    background: var(--bg-card);
-    border: 1px solid rgba(0, 0, 0, 0.03);
-    transition: var(--transition);
-}
-
-#contact .contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-}
-
-/* ---------------------------------------------------------
-   11. MEDIA QUERIES (Responsive)
+   8. MEDIA QUERIES (Responsive)
    --------------------------------------------------------- */
 @media (max-width: 768px) {
-
     #hero h1 {
         font-size: 2.5rem;
     }
 
     .nav-links {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
+        display: none; /* Add JS toggle logic later */
+        position: absolute;
         top: 80px;
         left: 0;
         width: 100%;
-        height: calc(100vh - 80px);
         background: white;
-        padding: 30px 20px;
+        flex-direction: column;
+        padding: 20px;
         text-align: center;
-        transform: translateX(-100%);
-        transition: transform 0.4s ease;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        z-index: 999;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     }
 
     .nav-links.active {
-        transform: translateX(0);
+        display: flex;
     }
 
-    .nav-links li {
-        margin: 15px 0;
+    .mobile-menu-btn {
+        display: block;
     }
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 20px;
+}
 
-    .nav-links a {
-        font-size: 1.1rem;
-    }
+.about-image {
+    position: relative; /* needed for overlay */
+}
 
+/* Image fills container */
+.about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Overlay for mobile and desktop */
+.about-image .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.667); /* dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.about-image .overlay .verse {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
     .grid-container {
         grid-template-columns: 1fr;
         row-gap: 20px;
@@ -568,34 +496,15 @@ footer {
         font-size: 1.1rem;
         padding: 0 15px;
     }
-
-    #contact .grid-container {
-        flex-direction: column; /* Stack cards vertically */
-    }
-
-    #contact .grid-container > .contact-card {
-        width: 100%; /* Full width on mobile */
-    }
 }
-/* ---------------------------------------------------------
-   12. HOVER EFFECTS & BUTTON ANIMATIONS
-   --------------------------------------------------------- */
-
-/* Hero buttons */
-.hero-btn:hover {
-    transform: scale(1.1) rotate(-2deg);
-    box-shadow: 0 15px 25px rgba(230, 57, 70, 0.5);
-}
-
-/* Modern hover for primary buttons (already merged in Part 1)
-   Kept override version here for clarity */
+/* Modern hover for primary buttons */
 .btn-primary:hover {
     background-color: var(--primary-hover);
     transform: scale(1.05) translateY(-2px);
     box-shadow: 0 8px 20px rgba(93, 0, 30, 0.3);
 }
 
-/* Outline buttons hover (already merged) */
+/* Outline buttons */
 .btn-outline:hover {
     background: linear-gradient(
         135deg,
@@ -606,8 +515,6 @@ footer {
     transform: scale(1.03);
     box-shadow: 0 6px 15px rgba(93, 0, 30, 0.2);
 }
-
-/* Card hover effect (already merged in Part 1) */
 .card:hover {
     transform: translateY(-10px) rotateZ(1deg);
     box-shadow: 0 25px 40px rgba(93, 0, 30, 0.25);
@@ -615,8 +522,15 @@ footer {
         transform 0.4s ease,
         box-shadow 0.4s ease;
 }
+.about-image img:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+    transition:
+        transform 0.5s ease,
+        filter 0.5s ease;
+}
 
-/* About image overlay text pop (already merged) */
+/* Overlay text pop */
 .about-image .overlay:hover .verse {
     transform: translateY(-10px);
     opacity: 0.95;
@@ -624,8 +538,11 @@ footer {
         transform 0.4s ease,
         opacity 0.4s ease;
 }
+.nav-links a {
+    position: relative;
+    padding-bottom: 4px;
+}
 
-/* Navigation links underline animation (merged) */
 .nav-links a::after {
     content: "";
     position: absolute;
@@ -641,8 +558,10 @@ footer {
 .nav-links a.active::after {
     width: 100%;
 }
-
-/* Fade-in utility (merged) */
+.hero-btn:hover {
+    transform: scale(1.1) rotate(-2deg);
+    box-shadow: 0 15px 25px rgba(230, 57, 70, 0.5); /* Accent hover shadow */
+}
 .fade-in {
     opacity: 0;
     transform: translateY(20px);
@@ -655,9 +574,64 @@ footer {
     opacity: 1;
     transform: translateY(0);
 }
+/* Ensures both cards in the contact section are same height */
+#contact .grid-container {
+    display: flex; /* Make it a flex container */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 20px; /* Space between cards */
+    align-items: stretch; /* Make all children same height */
+}
+#contact .grid-container > .card,
+#contact .grid-container > section#appointment .card {
+    flex: 1 1 300px; /* Flex-grow, flex-shrink, min-width */
+    display: flex;
+    flex-direction: column; /* So content stacks vertically */
+}
+#contact .card button {
+    margin-top: auto; /* Pushes button to the bottom */
+}
+/* Contact + Appointment Section */
+#contact .grid-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows cards to wrap on small screens */
+    gap: 20px;
+    align-items: stretch; /* Makes all cards same height */
+}
 
-/* Mobile menu slide effect (already merged in Part 2)
-   Kept override version here for clarity */
+#contact .grid-container > .contact-card {
+    flex: 1 1 300px; /* Grow equally, shrink if needed, min width 300px */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: var(--transition);
+}
+
+#contact .contact-card button {
+    margin-top: auto; /* Pushes button to the bottom */
+}
+
+/* Optional hover effect for cards */
+#contact .contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    #contact .grid-container {
+        flex-direction: column; /* Stack cards vertically */
+    }
+
+    #contact .grid-container > .contact-card {
+        width: 100%; /* Full width on mobile */
+    }
+}
+/* Mobile Menu Modern Slide Effect */
 @media (max-width: 768px) {
     .nav-links {
         display: flex;
