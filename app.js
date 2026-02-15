@@ -325,6 +325,7 @@ async function handleTestimonySubmit(e) {
         btn.disabled = false;
     }
 }
+
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
         navigator.serviceWorker
