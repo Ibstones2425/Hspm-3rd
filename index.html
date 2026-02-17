@@ -491,6 +491,67 @@
         <!-- Scripts -->
         <script src="config.js" type="module"></script>
         <script src="app.js" type="module"></script>
-<script src="ui.js" type="module"></script>
+
+        <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
+        <script>
+            // Copy functionality
+            function copyText(elementId) {
+                const text = document.getElementById(elementId).innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("Copied to clipboard!");
+                });
+            }
+
+            // Toast logic
+            function showToast(message) {
+                const toast = document.getElementById("toast");
+                toast.innerText = message;
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3000);
+            }
+
+            // Modal Logic
+            function toggleTestimonyModal() {
+                const modal = document.getElementById("testimony-modal");
+                if (
+                    modal.style.display === "none" ||
+                    modal.style.display === ""
+                ) {
+                    modal.style.display = "flex";
+                } else {
+                    modal.style.display = "none";
+                }
+            }
+
+            // Mobile Menu Logic
+            const menuToggle = document.getElementById("mobile-menu-toggle");
+            const navLinks = document.getElementById("nav-links");
+            const navItems = document.querySelectorAll("#nav-links a");
+
+            // Toggle menu open / close
+            menuToggle.addEventListener("click", e => {
+                e.stopPropagation();
+                navLinks.classList.toggle("active");
+            });
+
+            // Close menu when clicking a menu item
+            navItems.forEach(link => {
+                link.addEventListener("click", () => {
+                    navLinks.classList.remove("active");
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener("click", e => {
+                if (
+                    !navLinks.contains(e.target) &&
+                    !menuToggle.contains(e.target)
+                ) {
+                    navLinks.classList.remove("active");
+                }
+            });
+        </script>
     </body>
 </html>
