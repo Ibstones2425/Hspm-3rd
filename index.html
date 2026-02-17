@@ -487,7 +487,33 @@
 
         <!-- Toast Notification Container -->
         <div id="toast" class="toast">Action Successful!</div>
-
+<!-- DEVOTIONAL MODAL (Add this before </body>) -->
+<div id="devotional-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center;">
+    <div class="card" style="width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; position: relative; background: white; padding: 25px;">
+        
+        <!-- Close Button -->
+        <button id="close-devotional-btn" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+        
+        <!-- Modal Content -->
+        <div id="devotional-modal-content">
+            <h3 id="modal-dev-title" style="color: var(--primary-color);">Topic</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;" id="modal-dev-date">Date</p>
+            
+            <p style="font-style: italic; border-left: 4px solid #5d001e; padding-left: 10px; margin-bottom: 20px; background: #f9f9f9; padding: 10px;" id="modal-dev-verse">
+                Bible Verse
+            </p>
+            
+            <div id="modal-dev-body" style="line-height: 1.8; text-align: justify; white-space: pre-wrap;">
+                <!-- Full text goes here -->
+            </div>
+            
+            <div style="margin-top: 20px; background: #fff8f0; padding: 15px; border-radius: 5px;">
+                <p style="font-weight: bold; color: #5d001e;">Daily Confession:</p>
+                <p id="modal-dev-confession">Confession text...</p>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- Scripts -->
         <script src="config.js" type="module"></script>
         <script src="app.js" type="module"></script>
