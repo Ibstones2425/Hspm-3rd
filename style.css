@@ -662,3 +662,89 @@ footer {
         font-size: 1.1rem;
     }
 }
+/* ---------------------------------------------------------
+   9. MODAL STYLES (Devotional & Testimonies)
+   --------------------------------------------------------- */
+
+/* The Dark Background Overlay */
+#devotional-modal,
+#testimony-modal {
+    background: rgba(44, 11, 14, 0.9); /* Dark Burgundy tint */
+    backdrop-filter: blur(5px); /* Blurs the background website */
+    transition: opacity 0.3s ease;
+}
+
+/* The White Card inside the Modal */
+#devotional-modal .card,
+#testimony-modal .card {
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    border: 1px solid var(--secondary-color); /* Gold Border */
+    animation: slideUp 0.4s ease forwards;
+}
+
+/* Animation to make the modal slide up */
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Close Button Hover */
+#close-devotional-btn:hover {
+    color: var(--accent-color);
+    transform: scale(1.2);
+    transition: var(--transition);
+}
+
+/* ---------------------------------------------------------
+   10. DEVOTIONAL TEXT STYLING
+   --------------------------------------------------------- */
+
+/* The Bible Verse Box */
+#modal-dev-verse {
+    background-color: #fdfbf7; /* Light Cream */
+    border-left: 4px solid var(--secondary-color) !important; /* Gold Bar */
+    color: var(--primary-color);
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    padding: 15px 20px !important;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 20px 0 !important;
+}
+
+/* The Main Text Body */
+#modal-dev-body {
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 1.9 !important;
+}
+
+/* The Confession Box at the bottom */
+#modal-dev-confession {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+#devotional-modal-content > div:last-child {
+    background: rgba(212, 175, 55, 0.15) !important; /* Light Gold Background */
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--radius);
+}
+
+/* Custom Scrollbar for the Modal (Webkit browsers) */
+#devotional-modal .card::-webkit-scrollbar {
+    width: 8px;
+}
+
+#devotional-modal .card::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#devotional-modal .card::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+#devotional-modal .card::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
