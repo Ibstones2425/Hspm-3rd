@@ -106,13 +106,12 @@ async function loadSermons() {
 }
 
 /**
- * Load Today's Devotional
+ * Load Today's Devotional (UPDATED)
  */
 async function loadDevotional() {
     const container = document.getElementById("devotional-display");
 
     try {
-        // Get the most recent devotional
         const q = query(
             collection(db, "devotionals"),
             orderBy("date", "desc"),
@@ -122,6 +121,8 @@ async function loadDevotional() {
 
         if (!querySnapshot.empty) {
             const data = querySnapshot.docs[0].data();
+            
+            // Render the summary card
             container.innerHTML = `
                 <div class="card" style="border-left: 5px solid var(--secondary-color);">
                     <span style="background: var(--secondary-color); color: white; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem;">
@@ -132,17 +133,68 @@ async function loadDevotional() {
                         "${data.scripture}"
                     </p>
                     <div style="margin-top: 20px; line-height: 1.8;">
-                        ${data.content.substring(0, 300)}...
+                        ${data.content.substring(0, 200)}...
                     </div>
-                    <button class="btn btn-outline" style="margin-top: 20px;" onclick="alert('Full reading would open in a detailed view (Feature coming soon)')">Read Full Devotional</button>
+                    <button id="read-full-devotional-btn" class="btn btn-outline" style="margin-top: 20px;">
+                        Read Full Devotional
+                    </button>
                 </div>
             `;
+
+            // Add Event Listener to the new button to open the modal
+            document.getElementById("read-full-devotional-btn").addEventListener("click", () => {
+                openDevotionalModal(data);
+            });
+
         } else {
             container.innerHTML = `<div class="card"><p>No devotional for today.</p></div>`;
         }
     } catch (error) {
         console.error("Error loading devotional:", error);
+        container.innerHTML = `<div class="card"><p>Error loading content.</p></div>`;
     }
+}
+
+/**
+ * Helper: Open the Devotional Modal with Full Data
+ */
+function openDevotionalModal(data) {
+    const modal = document.getElementById("devotional-modal");
+    
+    // Fill the modal with data
+    document.getElementById("modal-dev-title").innerText = data.title;
+    document.getElementById("modal-dev-date").innerText = new Date(data.date).toDateString();
+    document.getElementById("modal-dev-verse").innerText = `"${data.scripture}"`;
+    document.getElementById("modal-dev-body").innerText = data.content; // Full text
+    
+    // Handle Confession (Check if it exists in database, otherwise hide/show default)
+    const confessionEl = document.getElementById("modal-dev-confession");
+    if (data.confession) {
+        confessionEl.innerText = data.confession;
+        confessionEl.parentElement.style.display = "block";
+    } else {
+        confessionEl.parentElement.style.display = "none";
+    }
+
+    // Show the modal
+    modal.style.display = "flex";
+
+    // Setup Close Logic
+    const closeBtn = document.getElementById("close-devotional-btn");
+    
+    // Function to hide modal
+    const closeModal = () => {
+        modal.style.display = "none";
+    };
+
+    closeBtn.onclick = closeModal;
+    
+    // Close if clicking outside the white card
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
 }
 
 /**
