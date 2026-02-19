@@ -772,9 +772,12 @@ h5{
 
 /* Image */
 .pastor-image img {
+    width: 320px;
+    height: 320px;
     border-radius: 50%;
-    box-shadow: var(--shadow-lg);
-    transition: var(--transition);
+    object-fit: cover;
+    border: 6px solid var(--secondary-color); /* Gold ring */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
 .pastor-image img:hover {
