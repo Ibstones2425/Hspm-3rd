@@ -772,7 +772,7 @@ h5{
 
 /* Image */
 .pastor-image img {
-    border-radius: var(--radius);
+    border-radius: 50%;
     box-shadow: var(--shadow-lg);
     transition: var(--transition);
 }
