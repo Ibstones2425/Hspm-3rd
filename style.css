@@ -340,7 +340,7 @@ footer {
 .social-links a {
     margin: 0 10px;
     font-size: 1.5rem;
-    color: var(--text-light);
+    color: var(#5d001e);
 }
 
 /* ---------------------------------------------------------
@@ -356,7 +356,7 @@ footer {
 }
 
 .section-title p {
-    color: var(--text-muted);
+    color: var(--text-main);
 }
 
 .loader {
@@ -608,6 +608,7 @@ footer {
     background: var(--bg-card);
     border: 1px solid rgba(0, 0, 0, 0.03);
     transition: var(--transition);
+   
 }
 
 #contact .contact-card button {
@@ -747,4 +748,13 @@ footer {
 
 #devotional-modal .card::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-color);
+}
+.contact-text{
+  margin-top: 40px;
+  text-decoration: italic;
+  font-weight:700;
+}
+h5{
+  color: red;
+  font-weight: 400;
 }
