@@ -23,6 +23,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 <link rel="stylesheet" href="style.css" />
 <link rel="manifest" href="/manifest.json" />
 <meta name="theme-color" content="#5d001e" />
+<!-- Open Graph (Facebook, WhatsApp, Telegram) -->
+<meta property="og:title" content="Daily Devotional — His Spirit and Power Ministry">
+<meta property="og:description" content="Start your day with the Word, prayer, and prophetic insight.">
+<meta property="og:url" content="https://hspm.vercel.app">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hspm.vercel.app/assets/images/logo.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Daily Devotional — HSPM">
+<meta name="twitter:description" content="Be strengthened by today's Word and prayer.">
+<meta name="twitter:image" content="https://hspm.vercel.app/assets/images/logo.png">
 </head>
 <body>
 <!-- Navigation -->
@@ -202,12 +214,16 @@ Start your day with the Word.
 </p>
 </div>
 <div id="devotional-display">
-<!-- Most recent devotional injected here -->
-<div class="card" style="text-align: center">
-<p>
-Loading today's word...
-</p>
-</div>
+  <!-- Devotional injected here -->
+
+  <!-- SHARE CTA -->
+  <div style="text-align:center; margin-top: 20px;">
+    <p><strong>Was this devotional a blessing? Share it ❤️</strong></p>
+
+    <button onclick="shareDevotional()" class="btn btn-primary">
+      <i class="fas fa-share-alt"></i> Share This Devotional
+    </button>
+  </div>
 </div>
 </div>
 </section>
@@ -648,6 +664,20 @@ if (
 navLinks.classList.remove("active");
 }
 });
+</script>
+<script>
+function shareDevotional() {
+  if (navigator.share) {
+    navigator.share({
+      title: "Daily Devotional — HSPM",
+      text: "Be strengthened by today's Word and prayer from His Spirit and Power Ministry.",
+      url: window.location.href
+    });
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link copied! You can paste and share.");
+  }
+}
 </script>
 </body>
 </html>
