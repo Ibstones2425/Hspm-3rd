@@ -149,7 +149,7 @@ onerror="this.src='https://placehold.co/400x500/5D001E/FFF?text=Pastor'"
 <!-- Pastor Info -->
 <div class="pastor-text">
 <h3>Dr Oluwaseun Oyewole</h3>
-<p>
+<p style="text-align:justify">
 Dr Oluwaseun Oyewole is the founder and lead pastor of His Spirit and Power
 Ministry. With a deep passion for prayer, deliverance, and the Word
 of God, he has dedicated his life to raising Spirit-filled believers
@@ -214,16 +214,18 @@ Start your day with the Word.
 </p>
 </div>
 <div id="devotional-display">
-  <!-- Devotional injected here -->
+<!-- Devotional injected here -->
 
-  <!-- SHARE CTA -->
-  <div style="text-align:center; margin-top: 20px;">
-    <p><strong>Was this devotional a blessing? Share it ❤️</strong></p>
+<!-- SHARE CTA -->
+<div style="text-align:center; margin-top: 20px;">
+<p>
+<strong>Was this devotional a blessing? Share it ❤️</strong>
+</p>
 
-    <button onclick="shareDevotional()" class="btn btn-primary">
-      <i class="fas fa-share-alt"></i> Share This Devotional
-    </button>
-  </div>
+<button onclick="shareDevotional()" class="btn btn-primary">
+<i class="fas fa-share-alt"></i> Share This Devotional
+</button>
+</div>
 </div>
 </div>
 </section>
@@ -667,16 +669,16 @@ navLinks.classList.remove("active");
 </script>
 <script>
 function shareDevotional() {
-  if (navigator.share) {
-    navigator.share({
-      title: "Daily Devotional — HSPM",
-      text: "Be strengthened by today's Word and prayer from His Spirit and Power Ministry.",
-      url: window.location.href
-    });
-  } else {
-    navigator.clipboard.writeText(window.location.href);
-    alert("Link copied! You can paste and share.");
-  }
+if (navigator.share) {
+navigator.share({
+title: "Daily Devotional — HSPM",
+text: "Be strengthened by today's Word and prayer from His Spirit and Power Ministry.",
+url: window.location.href
+});
+} else {
+navigator.clipboard.writeText(window.location.href);
+alert("Link copied! You can paste and share.");
+}
 }
 </script>
 </body>
