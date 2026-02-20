@@ -135,14 +135,12 @@ async function loadDevotional() {
                     <div style="margin-top: 20px; line-height: 1.8;">
                         ${data.content.substring(0, 200)}...
                     </div>
-<div style="text-align:center; margin-top: 20px;">
-<p>
-<strong>Was this devotional a blessing? Share it ❤️</strong>
-</p>
-
-<button onclick="shareDevotional()" class="btn btn-primary">
-<i class="fas fa-share-alt"></i> Share This Devotional
-</button>
+                    <button id="read-full-devotional-btn" class="btn btn-outline" style="margin-top: 20px;">
+                        Read Full Devotional
+                    </button>
+                    <button class="btn btn-outline" onclick="shareDevotional()">
+        <i class="fas fa-share-alt"></i> Share
+      </button>
                 </div>
             `;
 
