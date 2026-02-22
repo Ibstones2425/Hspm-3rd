@@ -1,685 +1,795 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>His Spirit and Power Ministry | HSPM</title>
-<meta name="google-site-verification" content="-vqHvxo2-97sEcxPtBQZ7_myR58OntI6XxZYx7k7w0A" />
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap"
-rel="stylesheet"
-/>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>His Spirit and Power Ministry | HSPM</title>
+        <meta
+            name="google-site-verification"
+            content="-vqHvxo2-97sEcxPtBQZ7_myR58OntI6XxZYx7k7w0A"
+        />
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
 
-<!-- Icons -->
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
 
-<!-- CSS -->
-<link rel="stylesheet" href="style.css" />
-<link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#5d001e" />
-<!-- Open Graph (Facebook, WhatsApp, Telegram) -->
-<meta property="og:title" content="Daily Devotional — His Spirit and Power Ministry">
-<meta property="og:description" content="Start your day with the Word, prayer, and prophetic insight.">
-<meta property="og:url" content="https://hspm.vercel.app">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://hspm.vercel.app/assets/images/logo.png">
+        <!-- CSS -->
+        <link rel="stylesheet" href="style.css" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#5d001e" />
+        <!-- Open Graph (Facebook, WhatsApp, Telegram) -->
+        <meta
+            property="og:title"
+            content="Daily Devotional — His Spirit and Power Ministry"
+        />
+        <meta
+            property="og:description"
+            content="Start your day with the Word, prayer, and prophetic insight."
+        />
+        <meta property="og:url" content="https://hspm.vercel.app" />
+        <meta property="og:type" content="website" />
+        <meta
+            property="og:image"
+            content="https://hspm.vercel.app/assets/images/logo.png"
+        />
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Daily Devotional — HSPM">
-<meta name="twitter:description" content="Be strengthened by today's Word and prayer.">
-<meta name="twitter:image" content="https://hspm.vercel.app/assets/images/logo.png">
-</head>
-<body>
-<!-- Navigation -->
-<header>
-<div class="container">
-<nav>
-<div class="logo">
-<img
-src="assets/images/logo.png"
-alt="HSPM Logo"
-style="height: 60px; width: auto"
-/>
-</div>
-<button class="mobile-menu-btn" id="mobile-menu-toggle">
-<i class="fas fa-bars"></i>
-</button>
-<ul class="nav-links" id="nav-links">
-<li><a href="#hero" class="active">Home</a></li>
-<li><a href="#about">About</a></li>
-<li><a href="#sermons">Daily Prayers</a></li>
-<li><a href="#devotional">Devotional</a></li>
-<li><a href="#giving">Giving</a></li>
-<li><a href="#events">Events</a></li>
-<li><a href="#testimonies">Testimonies</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</nav>
-</div>
-</header>
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Daily Devotional — HSPM" />
+        <meta
+            name="twitter:description"
+            content="Be strengthened by today's Word and prayer."
+        />
+        <meta
+            name="twitter:image"
+            content="https://hspm.vercel.app/assets/images/logo.png"
+        />
+    </head>
+    <body>
+        <!-- Navigation -->
+        <header>
+            <div class="container">
+                <nav>
+                    <div class="logo">
+                        <img
+                            src="assets/images/logo.png"
+                            alt="HSPM Logo"
+                            style="height: 60px; width: auto"
+                        />
+                    </div>
+                    <button class="mobile-menu-btn" id="mobile-menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <ul class="nav-links" id="nav-links">
+                        <li><a href="#hero" class="active">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#sermons">Daily Prayers</a></li>
+                        <li><a href="#devotional">Devotional</a></li>
+                        <li><a href="#giving">Giving</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#testimonies">Testimonies</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
-<!-- Hero Section -->
-<section id="hero">
-<div class="container">
-<h1>Welcome to His Spirit<br />and Power Ministry</h1>
-<p>
-Where Godly Minds Converge & Kingdom Leaders Emerge.
-</p>
-<div class="hero-btns">
-<a href="#sermons" class="btn btn-primary">Watch Online</a>
-<a
-href="#appointment"
-class="btn btn-outline"
-style="color: white; border-color: white"
->Book an Appointment</a
->
-</div>
-</div>
-</section>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container">
+                <h1>Welcome to His Spirit<br />and Power Ministry</h1>
+                <p>Where Godly Minds Converge & Kingdom Leaders Emerge.</p>
+                <div class="hero-btns">
+                    <a href="#sermons" class="btn btn-primary">Watch Online</a>
+                    <a
+                        href="#appointment"
+                        class="btn btn-outline"
+                        style="color: white; border-color: white"
+                        >Book an Appointment</a
+                    >
+                </div>
+            </div>
+        </section>
 
-<!-- About Section -->
-<section id="about">
-<div class="container">
-<div class="section-title">
-<h2>Our Vision & Mission</h2>
-<p style="text-align: justify;">
-We are a ministry committed to prayer, deliverance, healing, and the sound teaching of God’s Word. Our passion is to see lives transformed through the power of the Holy Spirit and the undiluted truth of Scripture.We also believe in the prophetic ministry, where God releases timely and accurate words that bring  direction, encouragement, correction, and upliftment  to His people. Lives are strengthened and destinies are awakened through the revelation of God’s purpose.
-</p>
-</div>
-<div class="grid-container">
-<div class="about-text">
-<h3>About Us</h3>
-<p>
-We are a Christ-centered ministry raising Spirit-filled believers through prayer, deliverance, healing, and the uncompromised Word of God. Our desire is to see lives transformed and people walking in their divine purpose.
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Vision & Mission</h2>
+                    <p>
+                        We are a ministry committed to prayer, deliverance,
+                        healing, and the sound teaching of God’s Word. Our
+                        passion is to see lives transformed through the power of
+                        the Holy Spirit and the undiluted truth of Scripture.We
+                        also believe in the prophetic ministry, where God
+                        releases timely and accurate words that bring direction,
+                        encouragement, correction, and upliftment to His people.
+                        Lives are strengthened and destinies are awakened
+                        through the revelation of God’s purpose.
+                    </p>
+                </div>
+                <div class="grid-container">
+                    <div class="about-text">
+                        <h3>About Us</h3>
+                        <p>
+                            We are a Christ-centered ministry raising
+                            Spirit-filled believers through prayer, deliverance,
+                            healing, and the uncompromised Word of God. Our
+                            desire is to see lives transformed and people
+                            walking in their divine purpose.
+                        </p>
+                        <br />
+                        <p>
+                            <strong
+                                >Join our daily early morning prayer:</strong
+                            >
+                            5:00 AM (Nigeria Time) on Mixlr.
+                        </p>
+                    </div>
 
-</p>
-<br />
-<p>
-<strong>Join our daily early morning prayer:</strong> 5:00 AM (Nigeria Time) on Mixlr.
-</p>
-</div>
+                    <div class="about-image">
+                        <img
+                            src="assets/images/about-church.jpg"
+                            alt="HSPM Worship"
+                            onerror="
+                                this.src =
+                                    'https://placehold.co/600x400/5D001E/FFF?text=HSPM+Worship'
+                            "
+                        />
+                        <div class="overlay">
+                            <p class="verse">
+                                “Your word is a lamp to my feet and a light to
+                                my path.” – Psalm 119:105
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Pastor Section -->
+        <section id="pastor" style="background-color: #fff">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Meet Our Pastor</h2>
+                    <p>Spiritual leadership and guidance for the ministry.</p>
+                </div>
 
-<div class="about-image">
-<img
-src="assets/images/about-church.jpg"
-alt="HSPM Worship"
-onerror="
-this.src =
-'https://placehold.co/600x400/5D001E/FFF?text=HSPM+Worship'
-"
-/>
-<div class="overlay">
-<p class="verse">
-“Your word is a lamp to my feet and a light to
-my path.” – Psalm 119:105
-</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Pastor Section -->
-<section id="pastor" style="background-color: #fff;">
-<div class="container">
-<div class="section-title">
-<h2>Meet Our Pastor</h2>
-<p>
-Spiritual leadership and guidance for the ministry.
-</p>
-</div>
+                <div class="grid-container">
+                    <!-- Pastor Image -->
+                    <div class="pastor-image">
+                        <img
+                            src="assets/images/pastor.jpg"
+                            alt="Pastor"
+                            onerror="
+                                this.src =
+                                    'https://placehold.co/400x500/5D001E/FFF?text=Pastor'
+                            "
+                        />
+                    </div>
 
-<div class="grid-container">
+                    <!-- Pastor Info -->
+                    <div class="pastor-text">
+                        <h3>Dr Oluwaseun Oyewole</h3>
+                        <p style="text-align: justify">
+                            Dr Oluwaseun Oyewole is the founder and lead pastor
+                            of His Spirit and Power Ministry. With a deep
+                            passion for prayer, deliverance, and the Word of
+                            God, he has dedicated his life to raising
+                            Spirit-filled believers and transforming lives
+                            through the power of the Holy Spirit.
+                        </p>
 
-<!-- Pastor Image -->
-<div class="pastor-image">
-<img
-src="assets/images/pastor.jpg"
-alt="Pastor"
-onerror="this.src='https://placehold.co/400x500/5D001E/FFF?text=Pastor'"
-/>
-</div>
+                        <p>
+                            Through prophetic insight and sound teaching, many
+                            have received healing, restoration, and direction
+                            for their destinies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Sermons Section (Dynamic) -->
+        <section id="sermons" style="background-color: #f8f9fa">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Daily Prayer Library</h2>
+                    <p>Browse our Daily Prayer Library and listen via Mixlr.</p>
+                </div>
 
-<!-- Pastor Info -->
-<div class="pastor-text">
-<h3>Dr Oluwaseun Oyewole</h3>
-<p style="text-align:justify">
-Dr Oluwaseun Oyewole is the founder and lead pastor of His Spirit and Power
-Ministry. With a deep passion for prayer, deliverance, and the Word
-of God, he has dedicated his life to raising Spirit-filled believers
-and transforming lives through the power of the Holy Spirit.
-</p>
+                <!-- Search -->
+                <div style="max-width: 500px; margin: 0 auto 30px">
+                    <input
+                        type="text"
+                        id="sermon-search"
+                        placeholder="Search sermons by title or preacher..."
+                    />
+                </div>
 
-<p>
-Through prophetic insight and sound teaching, many have received
-healing, restoration, and direction for their destinies.
-</p>
-</div>
+                <!-- Loading State -->
+                <div id="sermon-loader" class="loader"></div>
 
-</div>
-</div>
-</section>
-<!-- Sermons Section (Dynamic) -->
-<section id="sermons" style="background-color: #f8f9fa">
-<div class="container">
-<div class="section-title">
-<h2>Daily Prayer Library</h2>
-<p>
-Watch recent messages or listen via Mixlr.
-</p>
-</div>
+                <!-- Grid -->
+                <div class="grid-container" id="sermon-list">
+                    <!-- Sermons injected here by JS -->
+                </div>
 
-<!-- Search -->
-<div style="max-width: 500px; margin: 0 auto 30px">
-<input
-type="text"
-id="sermon-search"
-placeholder="Search sermons by title or preacher..."
-/>
-</div>
+                <div style="text-align: center; margin-top: 30px">
+                    <a
+                        href="https://hisspiritandpowerministry.mixlr.com/"
+                        target="_blank"
+                        class="btn btn-outline"
+                    >
+                        <i class="fas fa-headphones"></i> Visit Mixlr Channel
+                    </a>
+                </div>
+            </div>
+        </section>
 
-<!-- Loading State -->
-<div id="sermon-loader" class="loader"></div>
+        <!-- Daily Devotional (Dynamic) -->
+        <section id="devotional">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Daily Devotional</h2>
+                    <p>Start your day with the Word.</p>
+                </div>
+                <div id="devotional-display">
+                    <!-- Devotional injected here -->
 
-<!-- Grid -->
-<div class="grid-container" id="sermon-list">
-<!-- Sermons injected here by JS -->
-</div>
+                    <!-- SHARE CTA -->
+                    <div style="text-align: center; margin-top: 20px">
+                        <p>
+                            <strong
+                                >Was this devotional a blessing? Share it
+                                ❤️</strong
+                            >
+                        </p>
 
-<div style="text-align: center; margin-top: 30px">
-<a
-href="https://hisspiritandpowerministry.mixlr.com/"
-target="_blank"
-class="btn btn-outline"
->
-<i class="fas fa-headphones"></i> Visit Mixlr Channel
-</a>
-</div>
-</div>
-</section>
+                        <button
+                            onclick="shareDevotional()"
+                            class="btn btn-primary"
+                        >
+                            <i class="fas fa-share-alt"></i> Share This
+                            Devotional
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<!-- Daily Devotional (Dynamic) -->
-<section id="devotional">
-<div class="container">
-<div class="section-title">
-<h2>Daily Devotional</h2>
-<p>
-Start your day with the Word.
-</p>
-</div>
-<div id="devotional-display">
-<!-- Devotional injected here -->
+        <!-- Giving Section (Manual) -->
+        <section id="giving" style="background-color: #f4f4f4">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Online Giving</h2>
+                    <p>Honor the Lord with your substance.</p>
+                </div>
 
-<!-- SHARE CTA -->
-<div style="text-align:center; margin-top: 20px;">
-<p>
-<strong>Was this devotional a blessing? Share it ❤️</strong>
-</p>
+                <div
+                    class="giving-wrapper"
+                    style="
+                        display: grid;
+                        grid-template-columns: repeat(
+                            auto-fit,
+                            minmax(300px, 1fr)
+                        );
+                        gap: 30px;
+                    "
+                >
+                    <!-- Bank Transfer Details -->
+                    <div class="giving-details card">
+                        <h3><i class="fas fa-university"></i> Bank Transfer</h3>
+                        <p>
+                            Please use the account details below for Tithes,
+                            Offerings, and Seeds.
+                        </p>
 
-<button onclick="shareDevotional()" class="btn btn-primary">
-<i class="fas fa-share-alt"></i> Share This Devotional
-</button>
-</div>
-</div>
-</div>
-</section>
+                        <div class="account-box">
+                            <span id="bank-name">GTBank</span>
+                            <button
+                                class="btn-copy"
+                                onclick="copyText('bank-name')"
+                            >
+                                Copy
+                            </button>
+                        </div>
 
-<!-- Giving Section (Manual) -->
-<section id="giving" style="background-color: #f4f4f4">
-<div class="container">
-<div class="section-title">
-<h2>Online Giving</h2>
-<p>
-Honor the Lord with your substance.
-</p>
-</div>
+                        <div class="account-box">
+                            <span id="account-number">0123456789</span>
+                            <button
+                                class="btn-copy"
+                                onclick="copyText('account-number')"
+                            >
+                                Copy
+                            </button>
+                        </div>
 
-<div
-class="giving-wrapper"
-style="
-display: grid;
-grid-template-columns: repeat(
-auto-fit,
-minmax(300px, 1fr)
-);
-gap: 30px;
-"
->
-<!-- Bank Transfer Details -->
-<div class="giving-details card">
-<h3><i class="fas fa-university"></i> Bank Transfer</h3>
-<p>
-Please use the account details below for Tithes,
-Offerings, and Seeds.
-</p>
+                        <div class="account-box">
+                            <span id="account-name">HSPM Giving</span>
+                            <button
+                                class="btn-copy"
+                                onclick="copyText('account-name')"
+                            >
+                                Copy
+                            </button>
+                        </div>
 
-<div class="account-box">
-<span id="bank-name">GTBank</span>
-<button
-class="btn-copy"
-onclick="copyText('bank-name')"
->
-Copy
-</button>
-</div>
+                        <p
+                            style="
+                                font-size: 0.9rem;
+                                color: #666;
+                                margin-top: 10px;
+                            "
+                        >
+                            * Please indicate the purpose (e.g., "Tithe") in the
+                            transaction remarks.
+                        </p>
+                    </div>
 
-<div class="account-box">
-<span id="account-number">0123456789</span>
-<button
-class="btn-copy"
-onclick="copyText('account-number')"
->
-Copy
-</button>
-</div>
+                    <!-- Giving Info -->
+                    <div
+                        class="giving-info card"
+                        style="background: var(--primary-color); color: white"
+                    >
+                        <h3>Why We Give</h3>
+                        <p style="margin-top: 20px; text-align: justify">
+                            “Seek the Lord with all your heart, and you will
+                            find strength for every challenge. Trust in Him, and
+                            He will open doors no one can shut, filling your
+                            life with peace, guidance, and overflowing grace.”
+                        </p>
+                        <p style="margin-top: 20px; font-style: italic"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<div class="account-box">
-<span id="account-name">HSPM Giving</span>
-<button
-class="btn-copy"
-onclick="copyText('account-name')"
->
-Copy
-</button>
-</div>
+        <!-- Events Section -->
+        <section id="events">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Upcoming Events</h2>
+                    <p>Join us for our special programs.</p>
+                </div>
+                <div class="grid-container" id="events-list">
+                    <!-- Events injected by JS -->
+                    <p style="text-align: center; width: 100%">
+                        Loading events...
+                    </p>
+                </div>
+            </div>
+        </section>
 
-<p
-style="
-font-size: 0.9rem;
-color: #666;
-margin-top: 10px;
-"
->
-* Please indicate the purpose (e.g., "Tithe") in the
-transaction remarks.
-</p>
-</div>
+        <!-- Testimonies Section -->
+        <section id="testimonies" style="background-color: #fff8f0">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Testimonies</h2>
+                    <p>What the Lord has done.</p>
+                </div>
 
-<!-- Giving Info -->
-<div
-class="giving-info card"
-style="background: var(--primary-color); color: white"
->
-<h3>Why We Give</h3>
-<p style="margin-top: 20px; text-align: justify;">
-“Seek the Lord with all your heart, and you will find strength for every challenge. Trust in Him, and He will open doors no one can shut, filling your life with peace, guidance, and overflowing grace.”
-</p>
-<p style="margin-top: 20px; font-style: italic">
-</p>
-</div>
-</div>
-</div>
-</section>
+                <div class="grid-container" id="testimony-list">
+                    <!-- Testimonies injected by JS -->
+                </div>
 
-<!-- Events Section -->
-<section id="events">
-<div class="container">
-<div class="section-title">
-<h2>Upcoming Events</h2>
-<p>
-Join us for our special programs.
-</p>
-</div>
-<div class="grid-container" id="events-list">
-<!-- Events injected by JS -->
-<p style="text-align: center; width: 100%">
-Loading events...
-</p>
-</div>
-</div>
-</section>
+                <div style="text-align: center; margin-top: 40px">
+                    <button
+                        class="btn btn-primary"
+                        onclick="toggleTestimonyModal()"
+                    >
+                        Share Your Testimony
+                    </button>
+                </div>
+            </div>
+        </section>
 
-<!-- Testimonies Section -->
-<section id="testimonies" style="background-color: #fff8f0">
-<div class="container">
-<div class="section-title">
-<h2>Testimonies</h2>
-<p>
-What the Lord has done.
-</p>
-</div>
+        <!-- Testimony Modal (Hidden) -->
+        <div
+            id="testimony-modal"
+            style="
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 2000;
+                justify-content: center;
+                align-items: center;
+            "
+        >
+            <div
+                class="card"
+                style="
+                    width: 90%;
+                    max-width: 500px;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                "
+            >
+                <div
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    "
+                >
+                    <h3>Share Testimony</h3>
+                    <button
+                        onclick="toggleTestimonyModal()"
+                        style="
+                            background: none;
+                            border: none;
+                            font-size: 1.5rem;
+                            cursor: pointer;
+                        "
+                    >
+                        &times;
+                    </button>
+                </div>
+                <form id="testimony-form">
+                    <input
+                        type="text"
+                        id="t-name"
+                        placeholder="Your Name"
+                        required
+                    />
+                    <textarea
+                        id="t-content"
+                        rows="4"
+                        placeholder="What did God do for you?"
+                        required
+                    ></textarea>
+                    <label
+                        style="
+                            display: block;
+                            margin-bottom: 10px;
+                            font-size: 0.9rem;
+                        "
+                        >Upload Photo (Optional)</label
+                    >
+                    <input type="file" id="t-image" accept="image/*" />
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        style="width: 100%"
+                    >
+                        Submit for Approval
+                    </button>
+                </form>
+            </div>
+        </div>
 
-<div class="grid-container" id="testimony-list">
-<!-- Testimonies injected by JS -->
-</div>
+        <!-- Prayer Request & Contact -->
+        <section id="contact">
+            <div class="container">
+                <div class="grid-container">
+                    <!-- Prayer Request Form -->
+                    <div class="card contact-card">
+                        <h3>Send Prayer Request</h3>
+                        <form id="prayer-form">
+                            <input
+                                type="text"
+                                id="p-name"
+                                placeholder="Your Name"
+                                required
+                            />
+                            <input
+                                type="tel"
+                                id="p-phone"
+                                placeholder="Phone Number"
+                                required
+                            />
+                            <textarea
+                                id="p-request"
+                                rows="4"
+                                placeholder="How can we pray for you?"
+                                required
+                            ></textarea>
+                            <select id="p-type">
+                                <option value="Private">Keep Private</option>
+                                <option value="Public">
+                                    Share with Prayer Team
+                                </option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">
+                                Send Request
+                            </button>
+                        </form>
+                    </div>
 
-<div style="text-align: center; margin-top: 40px">
-<button
-class="btn btn-primary"
-onclick="toggleTestimonyModal()"
->
-Share Your Testimony
-</button>
-</div>
-</div>
-</section>
+                    <!-- Appointment Form -->
+                    <div class="card contact-card" id="appointment">
+                        <h3>Book an Appointment</h3>
+                        <form
+                            action="mailto:hisspiritandpowerministry@gmail.com"
+                            method="post"
+                            enctype="text/plain"
+                        >
+                            <h5>
+                                Appointments are available for spiritual
+                                counselling, prayer, prophetic guidance, and
+                                deliverance. Slots are limited due to high
+                                demand and are scheduled by spiritual leading.
+                                Please submit your request through the form
+                                below for review.
+                            </h5>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Your Name"
+                                required
+                            />
+                            <input
+                                type="text"
+                                name="country"
+                                placeholder="Country / Location"
+                                required
+                            />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Your Email"
+                                required
+                            />
+                            <input
+                                type="tel"
+                                name="phone"
+                                placeholder="Phone Number"
+                                required
+                            />
+                            <textarea
+                                name="message"
+                                rows="4"
+                                placeholder="Your Appointment Details"
+                                required
+                            ></textarea>
+                            <button type="submit" class="btn btn-primary">
+                                Send Appointment Request
+                            </button>
+                        </form>
+                    </div>
 
-<!-- Testimony Modal (Hidden) -->
-<div
-id="testimony-modal"
-style="
-display: none;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.8);
-z-index: 2000;
-justify-content: center;
-align-items: center;
-"
->
-<div
-class="card"
-style="
-width: 90%;
-max-width: 500px;
-max-height: 90vh;
-overflow-y: auto;
-"
->
-<div
-style="
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 20px;
-"
->
-<h3>Share Testimony</h3>
-<button
-onclick="toggleTestimonyModal()"
-style="
-background: none;
-border: none;
-font-size: 1.5rem;
-cursor: pointer;
-"
->
-&times;
-</button>
-</div>
-<form id="testimony-form">
-<input
-type="text"
-id="t-name"
-placeholder="Your Name"
-required
-/>
-<textarea
-id="t-content"
-rows="4"
-placeholder="What did God do for you?"
-required
-></textarea>
-<label
-style="
-display: block;
-margin-bottom: 10px;
-font-size: 0.9rem;
-"
->Upload Photo (Optional)</label
->
-<input type="file" id="t-image" accept="image/*" />
-<button
-type="submit"
-class="btn btn-primary"
-style="width: 100%"
->
-Submit for Approval
-</button>
-</form>
-</div>
-</div>
+                    <!-- Optional Contact Info (kept separate if needed) -->
+                    <div class="card contact-card">
+                        <h3>Contact Us</h3>
+                        <p>
+                            <i class="fas fa-map-marker-alt"></i> His Spirit and
+                            Power Ministry No. 4, Olaoluwa Street Ariyo,
+                            Ibadan,Oyo State, Nigeria
+                        </p>
+                        <p></p>
+                        <p>
+                            <i class="fas fa-envelope"></i>
+                            hisspiritandpowerministry@gmail.com
+                        </p>
+                        <p>
+                            <i class="contact-text"
+                                >We welcome your enquiries, prayer requests, and
+                                testimonies. Kindly reach out to us through the
+                                contact details above</i
+                            >
+                        </p>
+                        <div class="social-links">
+                            <a
+                                href="https://www.facebook.com/HisSpiritandpowerministry"
+                                ><i class="fab fa-facebook"></i
+                            ></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<!-- Prayer Request & Contact -->
-<section id="contact">
-<div class="container">
-<div class="grid-container">
-<!-- Prayer Request Form -->
-<div class="card contact-card">
-<h3>Send Prayer Request</h3>
-<form id="prayer-form">
-<input
-type="text"
-id="p-name"
-placeholder="Your Name"
-required
-/>
-<input
-type="tel"
-id="p-phone"
-placeholder="Phone Number"
-required
-/>
-<textarea
-id="p-request"
-rows="4"
-placeholder="How can we pray for you?"
-required
-></textarea>
-<select id="p-type">
-<option value="Private">Keep Private</option>
-<option value="Public">
-Share with Prayer Team
-</option>
-</select>
-<button type="submit" class="btn btn-primary">
-Send Request
-</button>
-</form>
-</div>
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <p>
+                    &copy; 2026 His Spirit and Power Ministry. All Rights
+                    Reserved.
+                </p>
+                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.5">
+                    <a href="login.html" style="color: inherit">Admin Portal</a>
+                </p>
+            </div>
+        </footer>
 
-<!-- Appointment Form -->
-<div class="card contact-card" id="appointment">
-<h3>Book an Appointment</h3>
-<form
-action="mailto:hisspiritandpowerministry@gmail.com"
-method="post"
-enctype="text/plain"
->
-<h5>Appointments are available for spiritual counselling, prayer, prophetic guidance, and deliverance.
+        <!-- Toast Notification Container -->
+        <div id="toast" class="toast">Action Successful!</div>
+        <!-- DEVOTIONAL MODAL (Add this before </body>) -->
+        <div
+            id="devotional-modal"
+            style="
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 2000;
+                justify-content: center;
+                align-items: center;
+            "
+        >
+            <div
+                class="card"
+                style="
+                    width: 90%;
+                    max-width: 600px;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    position: relative;
+                    background: white;
+                    padding: 25px;
+                "
+            >
+                <!-- Close Button -->
+                <button
+                    id="close-devotional-btn"
+                    style="
+                        position: absolute;
+                        top: 15px;
+                        right: 15px;
+                        background: none;
+                        border: none;
+                        font-size: 1.5rem;
+                        cursor: pointer;
+                    "
+                >
+                    &times;
+                </button>
 
-Slots are limited due to high demand and are scheduled by spiritual leading.
+                <!-- Modal Content -->
+                <div id="devotional-modal-content">
+                    <h3
+                        id="modal-dev-title"
+                        style="color: var(--primary-color)"
+                    >
+                        Topic
+                    </h3>
+                    <p
+                        style="
+                            font-size: 0.9rem;
+                            color: #666;
+                            margin-bottom: 15px;
+                        "
+                        id="modal-dev-date"
+                    >
+                        Date
+                    </p>
 
-Please submit your request through the form below for review.</h5>
-<input
-type="text"
-name="name"
-placeholder="Your Name"
-required
-/>
-<input
-type="text"
-name="country"
-placeholder="Country / Location"
-required
-/>
-<input
-type="email"
-name="email"
-placeholder="Your Email"
-required
-/>
-<input
-type="tel"
-name="phone"
-placeholder="Phone Number"
-required
-/>
-<textarea
-name="message"
-rows="4"
-placeholder="Your Appointment Details"
-required
-></textarea>
-<button type="submit" class="btn btn-primary">
-Send Appointment Request
-</button>
-</form>
-</div>
+                    <p
+                        style="
+                            font-style: italic;
+                            border-left: 4px solid #5d001e;
+                            padding-left: 10px;
+                            margin-bottom: 20px;
+                            background: #f9f9f9;
+                            padding: 10px;
+                        "
+                        id="modal-dev-verse"
+                    >
+                        Bible Verse
+                    </p>
 
-<!-- Optional Contact Info (kept separate if needed) -->
-<div class="card contact-card">
-<h3>Contact Us</h3>
-<p>
-<i class="fas fa-map-marker-alt"></i> His Spirit and Power Ministry
-No. 4, Olaoluwa Street
-Ariyo, Ibadan,Oyo State, Nigeria
-</p>
-<p>
-</p>
-<p>
-<i class="fas fa-envelope"></i> hisspiritandpowerministry@gmail.com
-</p>
-<p>
-<i class="contact-text">We welcome your enquiries, prayer requests, and testimonies. Kindly reach out to us through the contact details above</i>
-</p>
-<div class="social-links">
-<a href="https://www.facebook.com/HisSpiritandpowerministry"><i class="fab fa-facebook"></i></a>
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fab fa-youtube"></i></a>
-</div>
-</div>
-</div>
-</div>
-</section>
+                    <div
+                        id="modal-dev-body"
+                        style="
+                            line-height: 1.8;
+                            text-align: justify;
+                            white-space: pre-wrap;
+                        "
+                    >
+                        <!-- Full text goes here -->
+                    </div>
 
-<!-- Footer -->
-<footer>
-<div class="container">
-<p>
-&copy; 2026 His Spirit and Power Ministry. All Rights
-Reserved.
-</p>
-<p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.5">
-<a href="login.html" style="color: inherit">Admin Portal</a>
-</p>
-</div>
-</footer>
+                    <div
+                        style="
+                            margin-top: 20px;
+                            background: #fff8f0;
+                            padding: 15px;
+                            border-radius: 5px;
+                        "
+                    >
+                        <p style="font-weight: bold; color: #5d001e">
+                            Daily Confession:
+                        </p>
+                        <p id="modal-dev-confession">Confession text...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Scripts -->
+        <script src="config.js" type="module"></script>
+        <script src="app.js" type="module"></script>
 
-<!-- Toast Notification Container -->
-<div id="toast" class="toast">
-Action Successful!
-</div>
-<!-- DEVOTIONAL MODAL (Add this before </body>) -->
-<div id="devotional-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center;">
-<div class="card" style="width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; position: relative; background: white; padding: 25px;">
+        <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
+        <script>
+            // Copy functionality
+            function copyText(elementId) {
+                const text = document.getElementById(elementId).innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("Copied to clipboard!");
+                });
+            }
 
-<!-- Close Button -->
-<button id="close-devotional-btn" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            // Toast logic
+            function showToast(message) {
+                const toast = document.getElementById("toast");
+                toast.innerText = message;
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3000);
+            }
 
-<!-- Modal Content -->
-<div id="devotional-modal-content">
-<h3 id="modal-dev-title" style="color: var(--primary-color);">Topic</h3>
-<p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;" id="modal-dev-date">
-Date
-</p>
+            // Modal Logic
+            function toggleTestimonyModal() {
+                const modal = document.getElementById("testimony-modal");
+                if (
+                    modal.style.display === "none" ||
+                    modal.style.display === ""
+                ) {
+                    modal.style.display = "flex";
+                } else {
+                    modal.style.display = "none";
+                }
+            }
 
-<p style="font-style: italic; border-left: 4px solid #5d001e; padding-left: 10px; margin-bottom: 20px; background: #f9f9f9; padding: 10px;" id="modal-dev-verse">
-Bible Verse
-</p>
+            // Mobile Menu Logic
+            const menuToggle = document.getElementById("mobile-menu-toggle");
+            const navLinks = document.getElementById("nav-links");
+            const navItems = document.querySelectorAll("#nav-links a");
 
-<div id="modal-dev-body" style="line-height: 1.8; text-align: justify; white-space: pre-wrap;">
-<!-- Full text goes here -->
-</div>
+            // Toggle menu open / close
+            menuToggle.addEventListener("click", e => {
+                e.stopPropagation();
+                navLinks.classList.toggle("active");
+            });
 
-<div style="margin-top: 20px; background: #fff8f0; padding: 15px; border-radius: 5px;">
-<p style="font-weight: bold; color: #5d001e;">
-Daily Confession:
-</p>
-<p id="modal-dev-confession">
-Confession text...
-</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Scripts -->
-<script src="config.js" type="module"></script>
-<script src="app.js" type="module"></script>
+            // Close menu when clicking a menu item
+            navItems.forEach(link => {
+                link.addEventListener("click", () => {
+                    navLinks.classList.remove("active");
+                });
+            });
 
-<!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
-<script>
-// Copy functionality
-function copyText(elementId) {
-const text = document.getElementById(elementId).innerText;
-navigator.clipboard.writeText(text).then(() => {
-showToast("Copied to clipboard!");
-});
-}
-
-// Toast logic
-function showToast(message) {
-const toast = document.getElementById("toast");
-toast.innerText = message;
-toast.classList.add("show");
-setTimeout(() => {
-toast.classList.remove("show");
-}, 3000);
-}
-
-// Modal Logic
-function toggleTestimonyModal() {
-const modal = document.getElementById("testimony-modal");
-if (
-modal.style.display === "none" ||
-modal.style.display === ""
-) {
-modal.style.display = "flex";
-} else {
-modal.style.display = "none";
-}
-}
-
-// Mobile Menu Logic
-const menuToggle = document.getElementById("mobile-menu-toggle");
-const navLinks = document.getElementById("nav-links");
-const navItems = document.querySelectorAll("#nav-links a");
-
-// Toggle menu open / close
-menuToggle.addEventListener("click", e => {
-e.stopPropagation();
-navLinks.classList.toggle("active");
-});
-
-// Close menu when clicking a menu item
-navItems.forEach(link => {
-link.addEventListener("click", () => {
-navLinks.classList.remove("active");
-});
-});
-
-// Close menu when clicking outside
-document.addEventListener("click", e => {
-if (
-!navLinks.contains(e.target) &&
-!menuToggle.contains(e.target)
-) {
-navLinks.classList.remove("active");
-}
-});
-</script>
-<script>
-function shareDevotional() {
-if (navigator.share) {
-navigator.share({
-title: "Daily Devotional — HSPM",
-text: "Be strengthened by today's Word and prayer from His Spirit and Power Ministry.",
-url: window.location.href
-});
-} else {
-navigator.clipboard.writeText(window.location.href);
-alert("Link copied! You can paste and share.");
-}
-}
-</script>
-</body>
+            // Close menu when clicking outside
+            document.addEventListener("click", e => {
+                if (
+                    !navLinks.contains(e.target) &&
+                    !menuToggle.contains(e.target)
+                ) {
+                    navLinks.classList.remove("active");
+                }
+            });
+        </script>
+        <script>
+            function shareDevotional() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: "Daily Devotional — HSPM",
+                        text: "Be strengthened by today's Word and prayer from His Spirit and Power Ministry.",
+                        url: window.location.href
+                    });
+                } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert("Link copied! You can paste and share.");
+                }
+            }
+        </script>
+    </body>
 </html>
