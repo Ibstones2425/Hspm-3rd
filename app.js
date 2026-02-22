@@ -52,7 +52,7 @@ async function loadSermons() {
         sermonList.innerHTML = ""; // Clear existing
 
         if (querySnapshot.empty) {
-            sermonList.innerHTML = "<p>No sermons found.</p>";
+            sermonList.innerHTML = "<p>There is no Daily Prayer recording available at the moment. Please check back later or visit our Mixlr channel.</p>";
             return;
         }
 
