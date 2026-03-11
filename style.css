@@ -824,3 +824,18 @@ h5 {
     color:#1a1a1a;
     margin-bottom: 20px;
 }
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.contact-item i {
+    margin-top: 4px;
+}
+
+.email {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
