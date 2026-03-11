@@ -811,3 +811,9 @@ h5{
         order: 2;
     }
 }
+.appointment-sub{
+  background-color:#5d001e ;
+  color: black;
+  opacity: 0.4;
+  border-radius: 5px;
+}
