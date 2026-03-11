@@ -817,10 +817,10 @@ h5 {
     }
 }
 .appointment-sub {background: rgba(93, 0, 30, 0.08);
-    border: 1px solid rgba(212, 175, 55, 0.35); /* gold border */
+    border: 1px solid var(--primary-color);
     border-radius: 12px;
     padding: 20px;
-    color: var(--text-muted);
+    color: var(#1a1a1a);
     margin-bottom: 20px;
     
 }
