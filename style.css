@@ -608,7 +608,6 @@ footer {
     background: var(--bg-card);
     border: 1px solid rgba(0, 0, 0, 0.03);
     transition: var(--transition);
-   
 }
 
 #contact .contact-card button {
@@ -678,15 +677,21 @@ footer {
 /* The White Card inside the Modal */
 #devotional-modal .card,
 #testimony-modal .card {
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     border: 1px solid var(--secondary-color); /* Gold Border */
     animation: slideUp 0.4s ease forwards;
 }
 
 /* Animation to make the modal slide up */
 @keyframes slideUp {
-    from { transform: translateY(50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Close Button Hover */
@@ -749,14 +754,14 @@ footer {
 #devotional-modal .card::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-color);
 }
-.contact-text{
-  margin-top: 40px;
-  text-decoration: italic;
-  font-weight:700;
+.contact-text {
+    margin-top: 40px;
+    text-decoration: italic;
+    font-weight: 700;
 }
-h5{
-  color: #e63946;
-  font-weight: 500;
+h5 {
+    color: #e63946;
+    font-weight: 500;
 }
 /* ---------------------------------------------------------
    PASTOR SECTION
@@ -777,7 +782,7 @@ h5{
     border-radius: 50%;
     object-fit: cover;
     border: 6px solid var(--secondary-color); /* Gold ring */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .pastor-image img:hover {
@@ -811,9 +816,10 @@ h5{
         order: 2;
     }
 }
-.appointment-sub{
-  background-color:#5d001e ;
-  color: black;
-  opacity: 0.4;
-  border-radius: 5px;
+.appointment-sub {
+    background: rgba(59,130,246,0.15);
+  border: 1px solid rgba(59,130,246,0.35);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 20px;
 }
