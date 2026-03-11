@@ -817,7 +817,7 @@ h5 {
     }
 }
 .appointment-sub {background: rgba(93, 0, 30, 0.08);
-    border: 1px solid var(--primary-color);
+    border: 1px solid rgba(212, 175, 55, 0.35); /* gold border */
     border-radius: 12px;
     padding: 20px;
     color: var(--text-muted);
