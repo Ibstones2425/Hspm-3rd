@@ -736,53 +736,53 @@
         <!-- Scripts -->
         <script src="config.js" type="module"></script>
         <script src="app.js" type="module"></script>
-        <script>
-            // Your Apps Script Web App URL
-            const scriptURL =
-                "https://script.google.com/macros/s/AKfycbyua8bD0DOFSue1BcoB0MJLfQOqXj73q9qYQxlZrsLxaUoxK0FRzOLGxqY1RmRyE_eS/exec";
+<script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyua8bD0DOFSue1BcoB0MJLfQOqXj73q9qYQxlZrsLxaUoxK0FRzOLGxqY1RmRyE_eS/exec";
 
-            // Grab form and message element
-            const form = document.getElementById("subscribe-form");
-            const msg = document.getElementById("message");
+    const form = document.getElementById("subscribe-form");
+    const msg = document.getElementById("message");
 
-            // Listen for form submit
-            form.addEventListener("submit", function (e) {
-                e.preventDefault(); // Prevent default form submit
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-                const emailInput = document
-                    .getElementById("email")
-                    .value.trim();
+        const emailInput = document.getElementById("email").value.trim();
 
-                if (emailInput === "") {
+        if (emailInput === "") {
+            msg.style.color = "yellow";
+            msg.innerText = "Please enter your email address.";
+            return;
+        }
+
+        // Show loading state
+        msg.style.color = "white";
+        msg.innerText = "Subscribing...";
+
+        // Build FormData — this is what Google Apps Script accepts
+        const formData = new FormData();
+        formData.append("email", emailInput);
+
+        fetch(scriptURL, {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    msg.style.color = "lightgreen";
+                    msg.innerText = "✅ Thank you! You're now subscribed.";
+                    form.reset();
+                } else {
                     msg.style.color = "yellow";
-                    msg.innerText = "Please enter your email address.";
-                    return;
+                    msg.innerText = data.message || "Something went wrong. Try again.";
                 }
-
-                // Send POST request
-                fetch(scriptURL, {
-                    method: "POST",
-                    body: JSON.stringify({ email: emailInput })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.result === "success") {
-                            msg.style.color = "lightgreen";
-                            msg.innerText = "Thank you! You're now subscribed.";
-                            form.reset();
-                        } else {
-                            msg.style.color = "yellow";
-                            msg.innerText =
-                                data.message || "Something went wrong.";
-                        }
-                    })
-                    .catch(error => {
-                        msg.style.color = "red";
-                        msg.innerText = "Error subscribing. Try again later.";
-                        console.error("Subscription error:", error);
-                    });
+            })
+            .catch(error => {
+                msg.style.color = "red";
+                msg.innerText = "❌ Error subscribing. Please try again later.";
+                console.error("Subscription error:", error);
             });
-        </script>
+    });
+</script>
         <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
         <script>
             // Copy functionality
