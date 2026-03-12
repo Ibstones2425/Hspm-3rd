@@ -736,53 +736,60 @@
         <!-- Scripts -->
         <script src="config.js" type="module"></script>
         <script src="app.js" type="module"></script>
-<script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyua8bD0DOFSue1BcoB0MJLfQOqXj73q9qYQxlZrsLxaUoxK0FRzOLGxqY1RmRyE_eS/exec";
+        <script>
+            const scriptURL =
+                "https://script.google.com/macros/s/AKfycbyua8bD0DOFSue1BcoB0MJLfQOqXj73q9qYQxlZrsLxaUoxK0FRzOLGxqY1RmRyE_eS/exec";
 
-    const form = document.getElementById("subscribe-form");
-    const msg = document.getElementById("message");
+            const form = document.getElementById("subscribe-form");
+            const msg = document.getElementById("message");
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
 
-        const emailInput = document.getElementById("email").value.trim();
+                const emailInput = document
+                    .getElementById("email")
+                    .value.trim();
 
-        if (emailInput === "") {
-            msg.style.color = "yellow";
-            msg.innerText = "Please enter your email address.";
-            return;
-        }
-
-        // Show loading state
-        msg.style.color = "white";
-        msg.innerText = "Subscribing...";
-
-        // Build FormData — this is what Google Apps Script accepts
-        const formData = new FormData();
-        formData.append("email", emailInput);
-
-        fetch(scriptURL, {
-            method: "POST",
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === "success") {
-                    msg.style.color = "lightgreen";
-                    msg.innerText = "✅ Thank you! You're now subscribed.";
-                    form.reset();
-                } else {
+                if (emailInput === "") {
                     msg.style.color = "yellow";
-                    msg.innerText = data.message || "Something went wrong. Try again.";
+                    msg.innerText = "Please enter your email address.";
+                    return;
                 }
-            })
-            .catch(error => {
-                msg.style.color = "red";
-                msg.innerText = "❌ Error subscribing. Please try again later.";
-                console.error("Subscription error:", error);
+
+                // Show loading state
+                msg.style.color = "white";
+                msg.innerText = "Subscribing...";
+
+                // Build FormData — this is what Google Apps Script accepts
+                const formData = new FormData();
+                formData.append("email", emailInput);
+
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result === "success") {
+                            msg.style.color = "lightgreen";
+                            msg.innerText =
+                                "✅ Thank you! You're now subscribed.";
+                            form.reset();
+                        } else {
+                            msg.style.color = "yellow";
+                            msg.innerText =
+                                data.message ||
+                                "Something went wrong. Try again.";
+                        }
+                    })
+                    .catch(error => {
+                        msg.style.color = "red";
+                        msg.innerText =
+                            "❌ Error subscribing. Please try again later.";
+                        console.error("Subscription error:", error);
+                    });
             });
-    });
-</script>
+        </script>
         <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
         <script>
             // Copy functionality
