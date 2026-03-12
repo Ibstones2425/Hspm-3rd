@@ -921,7 +921,12 @@ h5 {
     margin-top: 10px;
     display: flex;
     justify-content: center;
+    gap: 10px;
+}
+
+.footer-links a {
     color: gold;
+    text-decoration: none;
 }
 
 .footer-links a {
