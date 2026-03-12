@@ -587,15 +587,11 @@
                         deliverance, and the uncompromised Word of God.
                     </p>
                 </div>
-                <form id="subscribe-form">
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        required
-                    />
-                    <button type="submit">Subscribe</button>
-                </form>
+<form id="subscribe-form">
+  <input type="email" id="email" placeholder="Enter your email" required>
+  <button type="submit">Subscribe</button>
+</form>
+<p id="message"></p>
 
                 <p id="message"></p>
                 <div class="contact-item">
@@ -737,49 +733,53 @@
         <!-- Scripts -->
         <script src="config.js" type="module"></script>
         <script src="app.js" type="module"></script>
-       <script>
-  // Your Apps Script Web App URL
-  const scriptURL = "https://script.google.com/macros/s/AKfycbyua8bD0DOFSue1BcoB0MJLfQOqXj73q9qYQxlZrsLxaUoxK0FRzOLGxqY1RmRyE_eS/exec";
+        <script>
+            // Your Apps Script Web App URL
+            const scriptURL =
+                "https://script.google.com/macros/s/AKfycbyua8bD0DOFSue1BcoB0MJLfQOqXj73q9qYQxlZrsLxaUoxK0FRzOLGxqY1RmRyE_eS/exec";
 
-  // Grab form and message element
-  const form = document.getElementById("subscribe-form");
-  const msg = document.getElementById("message");
+            // Grab form and message element
+            const form = document.getElementById("subscribe-form");
+            const msg = document.getElementById("message");
 
-  // Listen for form submit
-  form.addEventListener("submit", function (e) {
-    e.preventDefault(); // Prevent default form submit
+            // Listen for form submit
+            form.addEventListener("submit", function (e) {
+                e.preventDefault(); // Prevent default form submit
 
-    const emailInput = document.getElementById("email").value.trim();
+                const emailInput = document
+                    .getElementById("email")
+                    .value.trim();
 
-    if (emailInput === "") {
-      msg.style.color = "yellow";
-      msg.innerText = "Please enter your email address.";
-      return;
-    }
+                if (emailInput === "") {
+                    msg.style.color = "yellow";
+                    msg.innerText = "Please enter your email address.";
+                    return;
+                }
 
-    // Send POST request
-    fetch(scriptURL, {
-      method: "POST",
-      body: JSON.stringify({ email: emailInput })
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === "success") {
-          msg.style.color = "lightgreen";
-          msg.innerText = "Thank you! You're now subscribed.";
-          form.reset();
-        } else {
-          msg.style.color = "yellow";
-          msg.innerText = data.message || "Something went wrong.";
-        }
-      })
-      .catch(error => {
-        msg.style.color = "red";
-        msg.innerText = "Error subscribing. Try again later.";
-        console.error("Subscription error:", error);
-      });
-  });
-</script>
+                // Send POST request
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: JSON.stringify({ email: emailInput })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result === "success") {
+                            msg.style.color = "lightgreen";
+                            msg.innerText = "Thank you! You're now subscribed.";
+                            form.reset();
+                        } else {
+                            msg.style.color = "yellow";
+                            msg.innerText =
+                                data.message || "Something went wrong.";
+                        }
+                    })
+                    .catch(error => {
+                        msg.style.color = "red";
+                        msg.innerText = "Error subscribing. Try again later.";
+                        console.error("Subscription error:", error);
+                    });
+            });
+        </script>
         <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
         <script>
             // Copy functionality
