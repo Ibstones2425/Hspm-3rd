@@ -587,20 +587,24 @@
                         deliverance, and the uncompromised Word of God.
                     </p>
                 </div>
-<form id="subscribe-form">
-  <input type="email" id="email" placeholder="Enter your email" required>
-  <button type="submit">Subscribe</button>
-</form>
+                <form id="subscribe-form">
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    />
+                    <button type="submit">Subscribe</button>
+                </form>
 
-<p id="message"></p>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span
-                            >No. 4, Olaoluwa Street Ariyo, Ibadan, Oyo State,
-                            Nigeria</span
-                        >
-                    </div>
-
+                <p id="message"></p>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span
+                        >No. 4, Olaoluwa Street Ariyo, Ibadan, Oyo State,
+                        Nigeria</span
+                    >
+                </div>
 
                 <div class="footer-social">
                     <h4>Follow Us</h4>
@@ -733,7 +737,30 @@
         <!-- Scripts -->
         <script src="config.js" type="module"></script>
         <script src="app.js" type="module"></script>
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbzRADbHL8LrsObt_IlNywko0vLoHCslios21fUZsRq62ykNUaL9-F8e0ZjUiC-1hYsG/exec";
 
+document.getElementById("subscribe-form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+
+  fetch(scriptURL,{
+    method: "POST",
+    body: JSON.stringify({
+      email: email
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("message").innerText = "Subscribed successfully!";
+    document.getElementById("subscribe-form").reset();
+  })
+  .catch(err => {
+    document.getElementById("message").innerText = "Error subscribing.";
+  });
+});
+</script>
         <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
         <script>
             // Copy functionality
