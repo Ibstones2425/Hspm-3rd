@@ -933,10 +933,12 @@ h5 {
     color: var(--secondary-color);
 }
 .contact-note{
-    background:#e6f2ea;
-    padding:25px;
-    border-radius:var(--radius);
-    margin-top:20px;
+    background: rgba(93, 0, 30, 0.08);
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 20px;
+    color: #1a1a1a;
+    margin-bottom: 20px;
     color:var(--text-main);
     line-height:1.7;
 }
