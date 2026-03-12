@@ -959,48 +959,48 @@ h5 {
     color: var(--text-muted);
 }
 /* Subscribe Form Container */
-#subscribe-form{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-top:10px;
+#subscribe-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
 }
 
 /* Email Input */
-#subscribe-form input{
-    padding:10px 14px;
-    width:250px;
-    max-width:90%;
-    border:none;
-    border-radius:4px;
-    outline:none;
-    font-size:14px;
+#subscribe-form input {
+    padding: 10px 14px;
+    width: 250px;
+    max-width: 90%;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
 }
 
 /* Subscribe Button */
-#subscribe-form button{
-    padding:10px 16px;
-    background:gold;
-    color:#5a0f16; /* burgundy text */
-    border:none;
-    border-radius:4px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
+#subscribe-form button {
+    padding: 10px 16px;
+    background: gold;
+    color: #5a0f16; /* burgundy text */
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 /* Hover Effect */
-#subscribe-form button:hover{
-    background:#ffd700;
-    transform:scale(1.05);
+#subscribe-form button:hover {
+    background: #ffd700;
+    transform: scale(1.05);
 }
 
 /* Message Text */
-#message{
-    text-align:center;
-    margin-top:8px;
-    color:white;
-    font-size:14px;
+#message {
+    text-align: center;
+    margin-top: 8px;
+    color: white;
+    font-size: 14px;
 }
