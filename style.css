@@ -1040,12 +1040,12 @@ about-image {
 }
 
 .about-image .overlay .verse {
-    font-family: "Cormorant Garamond", Georgia, serif;;
+    font-family: "Cormorant Garamond", Georgia, serif;
     font-style: italic;
     font-size: 1.1rem;
     font-weight: 400;
-    color: var(--cream);
+    color: #fdfbf7;
     line-height: 1.5;
-    border-left: 2px solid var(--gold);
+    border-left: 2px solid #d4af37;
     padding-left: 14px;
 }
