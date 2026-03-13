@@ -1036,7 +1036,7 @@ about-image {
     display: flex;
     align-items: flex-end;
     padding: 32px;
-    border-radius: var(--radius-lg);
+    border-radius: 20px;
 }
 
 .about-image .overlay .verse {
