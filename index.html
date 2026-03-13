@@ -587,22 +587,22 @@
                         deliverance, and the uncompromised Word of God.
                     </p>
                 </div>
-<form id="subscribe-form">
-    <input
-        type="text"
-        id="sub-name"
-        placeholder="Enter your name"
-        required
-    />
-    <input
-        type="email"
-        id="sub-email"
-        placeholder="Enter your email"
-        required
-    />
-    <button type="submit">Subscribe</button>
-</form>
-<p id="message"></p>
+                <form id="subscribe-form">
+                    <input
+                        type="text"
+                        id="sub-name"
+                        placeholder="Enter your name"
+                        required
+                    />
+                    <input
+                        type="email"
+                        id="sub-email"
+                        placeholder="Enter your email"
+                        required
+                    />
+                    <button type="submit">Subscribe</button>
+                </form>
+                <p id="message"></p>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
                     <span
@@ -743,75 +743,68 @@
         <script src="config.js" type="module"></script>
         <script src="app.js" type="module"></script>
         <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbzDtRpQLyunbXSIsP3g9TvccESj8uquxGZIv6iLFTk3EjwMQUhO1p8LzZlUFp6aKJ0/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxuGje_KmorJVKclituweqb_i3UrmJeiF6Mws_P1DIV9DJWs6G9mITZ7Eb0MBvPjWVVsQ/exec";
 
-            const form = document.getElementById("subscribe-form");
-            const msg = document.getElementById("message");
+    const form = document.getElementById("subscribe-form");
+    const msg = document.getElementById("message");
 
-            // Remove duplicate message tag issue — clear any extra ones
-            document.querySelectorAll("#message").forEach((el, i) => {
-                if (i > 0) el.remove();
-            });
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-            form.addEventListener("submit", function (e) {
-                e.preventDefault();
+        const nameInput = document.getElementById("sub-name").value.trim();
+        const emailInput = document.getElementById("sub-email").value.trim();
 
-                const emailInput = document
-                    .getElementById("email")
-                    .value.trim();
+        // Validate
+        if (nameInput === "") {
+            msg.style.color = "yellow";
+            msg.innerText = "⚠️ Please enter your name.";
+            return;
+        }
+        if (emailInput === "") {
+            msg.style.color = "yellow";
+            msg.innerText = "⚠️ Please enter your email address.";
+            return;
+        }
 
-                // Validate email
-                if (emailInput === "") {
+        // Disable button
+        const btn = form.querySelector("button[type='submit']");
+        btn.disabled = true;
+        btn.innerText = "Subscribing...";
+
+        msg.style.color = "white";
+        msg.innerText = "Please wait...";
+
+        // Build FormData
+        const formData = new FormData();
+        formData.append("name", nameInput);
+        formData.append("email", emailInput);
+
+        fetch(scriptURL, {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === "success") {
+                    msg.style.color = "lightgreen";
+                    msg.innerText = "✅ Thank you " + nameInput + "! You're now subscribed.";
+                    form.reset();
+                } else {
                     msg.style.color = "yellow";
-                    msg.innerText = "⚠️ Please enter your email address.";
-                    return;
+                    msg.innerText = "⚠️ " + (data.message || "Something went wrong. Try again.");
                 }
-
-                // Disable button to prevent double submit
-                const btn = form.querySelector("button[type='submit']");
-                btn.disabled = true;
-                btn.innerText = "Subscribing...";
-
-                // Show loading message
-                msg.style.color = "white";
-                msg.innerText = "Please wait...";
-
-                // Build FormData — required for Google Apps Script
-                const formData = new FormData();
-                formData.append("email", emailInput);
-
-                fetch(scriptURL, {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.result === "success") {
-                            msg.style.color = "lightgreen";
-                            msg.innerText =
-                                "✅ Thank you! You're now subscribed.";
-                            form.reset();
-                        } else {
-                            msg.style.color = "yellow";
-                            msg.innerText =
-                                "⚠️ " +
-                                (data.message ||
-                                    "Something went wrong. Try again.");
-                        }
-                    })
-                    .catch(error => {
-                        msg.style.color = "red";
-                        msg.innerText =
-                            "❌ Error subscribing. Please try again later.";
-                        console.error("Subscription error:", error);
-                    })
-                    .finally(() => {
-                        // Re-enable button regardless of outcome
-                        btn.disabled = false;
-                        btn.innerText = "Subscribe";
-                    });
+            })
+            .catch(error => {
+                msg.style.color = "red";
+                msg.innerText = "❌ Error subscribing. Please try again later.";
+                console.error("Subscription error:", error);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = "Subscribe";
             });
-        </script>
+    });
+</script>
         <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
         <script>
             // Copy functionality
