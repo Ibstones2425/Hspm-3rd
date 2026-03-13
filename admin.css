@@ -4,7 +4,7 @@
    1. LAYOUT & SIDEBAR
    --------------------------------------------------------- */
 body {
-    background-color: #f4f6f8; /* Slightly cooler grey for admin focus */
+    background-color: #f4f6f8;
     display: flex;
     min-height: 100vh;
     overflow-x: hidden;
@@ -13,7 +13,7 @@ body {
 /* Sidebar Navigation */
 .sidebar {
     width: 260px;
-    background: var(--primary-color);
+    background: var(--primary);
     color: white;
     display: flex;
     flex-direction: column;
@@ -26,12 +26,12 @@ body {
 .sidebar-header {
     padding: 20px;
     text-align: center;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.15);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-header h2 {
-    color: var(--secondary-color);
+    color: var(--gold);
     margin: 0;
     font-size: 1.5rem;
 }
@@ -47,7 +47,7 @@ body {
     display: flex;
     align-items: center;
     padding: 15px 25px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.75);
     cursor: pointer;
     transition: var(--transition);
     border-left: 4px solid transparent;
@@ -57,7 +57,7 @@ body {
 .menu-item.active {
     background: rgba(255, 255, 255, 0.1);
     color: white;
-    border-left-color: var(--secondary-color);
+    border-left-color: var(--gold);
 }
 
 .menu-item i {
@@ -83,10 +83,12 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    font-family: var(--font-body);
+    transition: var(--transition);
 }
 
 .logout-btn:hover {
-    background: var(--accent-color);
+    background: #c0392b;
 }
 
 /* ---------------------------------------------------------
@@ -94,7 +96,7 @@ body {
    --------------------------------------------------------- */
 .main-content {
     flex: 1;
-    margin-left: 260px; /* Width of sidebar */
+    margin-left: 260px;
     padding: 30px;
     transition: var(--transition);
 }
@@ -108,14 +110,14 @@ body {
 
 .top-bar h1 {
     font-size: 1.8rem;
-    color: var(--text-main);
-    font-family: var(--font-body); /* Cleaner for dashboard */
+    color: var(--text);
+    font-family: var(--font-body);
 }
 
 /* Stats Grid */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
     margin-bottom: 40px;
 }
@@ -128,16 +130,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border: 1px solid var(--border);
 }
 
 .stat-info h3 {
     font-size: 2rem;
-    color: var(--primary-color);
+    color: var(--primary);
     margin: 0;
 }
 
 .stat-info p {
-    color: var(--text-muted);
+    color: var(--muted);
     font-size: 0.9rem;
     margin: 0;
 }
@@ -145,13 +148,13 @@ body {
 .stat-icon {
     width: 50px;
     height: 50px;
-    background: rgba(93, 0, 30, 0.1);
+    background: var(--primary-light);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary-color);
-    font-size: 1.5rem;
+    color: var(--primary);
+    font-size: 1.4rem;
 }
 
 /* ---------------------------------------------------------
@@ -161,9 +164,10 @@ body {
     background: white;
     padding: 25px;
     border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
+    border: 1px solid var(--border);
     margin-bottom: 30px;
-    display: none; /* Hidden by default, toggled by JS */
+    display: none;
 }
 
 .admin-section.active {
@@ -185,84 +189,70 @@ table {
     margin-top: 10px;
 }
 
-th,
-td {
-    padding: 15px;
+th, td {
+    padding: 14px 15px;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #f0e8eb;
 }
 
 th {
     font-weight: 600;
-    color: var(--text-muted);
-    font-size: 0.9rem;
+    color: var(--muted);
+    font-size: 0.8rem;
     text-transform: uppercase;
+    letter-spacing: 0.8px;
 }
 
 tr:hover {
-    background-color: #f9f9f9;
+    background-color: var(--primary-light);
 }
 
 .status-badge {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.78rem;
     font-weight: 600;
 }
 
-.status-badge.pending {
-    background: #fff3cd;
-    color: #856404;
-}
-.status-badge.approved {
-    background: #d4edda;
-    color: #155724;
-}
-.status-badge.rejected {
-    background: #f8d7da;
-    color: #721c24;
-}
+.status-badge.pending  { background: #fff3cd; color: #856404; }
+.status-badge.approved { background: #d4edda; color: #155724; }
+.status-badge.rejected { background: #f8d7da; color: #721c24; }
 
 .action-btn {
     padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     border: none;
     cursor: pointer;
     font-size: 0.8rem;
     margin-right: 5px;
+    font-family: var(--font-body);
+    transition: var(--transition);
 }
 
-.btn-edit {
-    background: #e2e6ea;
-    color: #333;
-}
-.btn-delete {
-    background: #f8d7da;
-    color: #dc3545;
-}
-.btn-approve {
-    background: #d4edda;
-    color: #28a745;
-}
+.btn-edit    { background: #e2e6ea; color: #333; }
+.btn-delete  { background: #f8d7da; color: #dc3545; }
+.btn-approve { background: #d4edda; color: #28a745; }
+
+.btn-edit:hover    { background: #c8cdd2; }
+.btn-delete:hover  { background: #f5c6cb; }
+.btn-approve:hover { background: #c3e6cb; }
 
 /* ---------------------------------------------------------
-   4. MODALS (Popups)
+   4. MODALS
    --------------------------------------------------------- */
 .modal {
     display: none;
     position: fixed;
     z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    background: rgba(28, 10, 14, 0.6);
+    backdrop-filter: blur(4px);
     align-items: center;
     justify-content: center;
 }
 
 .modal-content {
-    background-color: white;
+    background: white;
     padding: 30px;
     border-radius: var(--radius);
     width: 90%;
@@ -270,26 +260,31 @@ tr:hover {
     position: relative;
     max-height: 90vh;
     overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    border-top: 3px solid var(--gold);
 }
 
 .close-modal {
     position: absolute;
     right: 20px;
-    top: 20px;
-    font-size: 1.5rem;
+    top: 16px;
+    font-size: 1.4rem;
     cursor: pointer;
-    color: #aaa;
+    color: var(--muted);
+    transition: var(--transition);
 }
 
+.close-modal:hover { color: var(--primary); }
+
 /* ---------------------------------------------------------
-   5. MOBILE RESPONSIVE DASHBOARD
+   5. MOBILE RESPONSIVE
    --------------------------------------------------------- */
 .mobile-toggle {
     display: none;
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: var(--primary-color);
+    color: var(--primary);
     cursor: pointer;
 }
 
