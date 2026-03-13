@@ -1006,7 +1006,7 @@ h5 {
 }
 about-image {
     position: relative;
-    border-radius: var(--radius-lg);
+    border-radius: 20px;
     overflow: hidden;
     aspect-ratio: 4/5;
     box-shadow: var(--shadow-xl);
