@@ -1009,7 +1009,7 @@ about-image {
     border-radius: 20px;
     overflow: hidden;
     aspect-ratio: 4/5;
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.2);
 }
 
 .about-image img {
