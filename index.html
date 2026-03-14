@@ -616,7 +616,9 @@
 
                     <div class="social-icons">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.facebook.com/HisSpiritandpowerministry"><i class="fab fa-twitter"></i></a>
+                        <a
+                            href="https://www.facebook.com/HisSpiritandpowerministry"><i class="fab fa-twitter"></i
+                        ></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
@@ -743,68 +745,80 @@
         <script src="config.js" type="module"></script>
         <script src="app.js" type="module"></script>
         <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxuGje_KmorJVKclituweqb_i3UrmJeiF6Mws_P1DIV9DJWs6G9mITZ7Eb0MBvPjWVVsQ/exec";
+            const scriptURL =
+                "https://script.google.com/macros/s/AKfycbxuGje_KmorJVKclituweqb_i3UrmJeiF6Mws_P1DIV9DJWs6G9mITZ7Eb0MBvPjWVVsQ/exec";
 
-    const form = document.getElementById("subscribe-form");
-    const msg = document.getElementById("message");
+            const form = document.getElementById("subscribe-form");
+            const msg = document.getElementById("message");
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
 
-        const nameInput = document.getElementById("sub-name").value.trim();
-        const emailInput = document.getElementById("sub-email").value.trim();
+                const nameInput = document
+                    .getElementById("sub-name")
+                    .value.trim();
+                const emailInput = document
+                    .getElementById("sub-email")
+                    .value.trim();
 
-        // Validate
-        if (nameInput === "") {
-            msg.style.color = "yellow";
-            msg.innerText = "⚠️ Please enter your name.";
-            return;
-        }
-        if (emailInput === "") {
-            msg.style.color = "yellow";
-            msg.innerText = "⚠️ Please enter your email address.";
-            return;
-        }
-
-        // Disable button
-        const btn = form.querySelector("button[type='submit']");
-        btn.disabled = true;
-        btn.innerText = "Subscribing...";
-
-        msg.style.color = "white";
-        msg.innerText = "Please wait...";
-
-        // Build FormData
-        const formData = new FormData();
-        formData.append("name", nameInput);
-        formData.append("email", emailInput);
-
-        fetch(scriptURL, {
-            method: "POST",
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result === "success") {
-                    msg.style.color = "lightgreen";
-                    msg.innerText = "✅ Thank you " + nameInput + "! You're now subscribed.";
-                    form.reset();
-                } else {
+                // Validate
+                if (nameInput === "") {
                     msg.style.color = "yellow";
-                    msg.innerText = "⚠️ " + (data.message || "Something went wrong. Try again.");
+                    msg.innerText = "⚠️ Please enter your name.";
+                    return;
                 }
-            })
-            .catch(error => {
-                msg.style.color = "red";
-                msg.innerText = "❌ Error subscribing. Please try again later.";
-                console.error("Subscription error:", error);
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerText = "Subscribe";
+                if (emailInput === "") {
+                    msg.style.color = "yellow";
+                    msg.innerText = "⚠️ Please enter your email address.";
+                    return;
+                }
+
+                // Disable button
+                const btn = form.querySelector("button[type='submit']");
+                btn.disabled = true;
+                btn.innerText = "Subscribing...";
+
+                msg.style.color = "white";
+                msg.innerText = "Please wait...";
+
+                // Build FormData
+                const formData = new FormData();
+                formData.append("name", nameInput);
+                formData.append("email", emailInput);
+
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result === "success") {
+                            msg.style.color = "lightgreen";
+                            msg.innerText =
+                                "✅ Thank you " +
+                                nameInput +
+                                "! You're now subscribed.";
+                            form.reset();
+                        } else {
+                            msg.style.color = "yellow";
+                            msg.innerText =
+                                "⚠️ " +
+                                (data.message ||
+                                    "Something went wrong. Try again.");
+                        }
+                    })
+                    .catch(error => {
+                        msg.style.color = "red";
+                        msg.innerText =
+                            "❌ Error subscribing. Please try again later.";
+                        console.error("Subscription error:", error);
+                    })
+                    .finally(() => {
+                        btn.disabled = false;
+                        btn.innerText = "Subscribe";
+                    });
             });
-    });
-</script>
+        </script>
         <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
         <script>
             // Copy functionality
