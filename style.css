@@ -873,6 +873,11 @@ nav {
 
 .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
+.section-title p {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
 
 /* ─── 21. RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 900px) {
@@ -939,8 +944,13 @@ nav {
   .footer-grid { grid-template-columns: 1fr; gap: 28px; padding-bottom: 28px; }
   .footer-bottom { flex-direction: column; text-align: center; }
 
-  /* Section title */
-  .section-title h2 { font-size: 1.9rem; }
+ /* Section title */
+.section-title h2 { font-size: 1.9rem; }
+
+.section-title p {
+  text-align: left;
+  max-width: 100%;
+}
 }
 
 @media (max-width: 480px) {
