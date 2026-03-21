@@ -1269,8 +1269,8 @@ nav {
     }
 
     .section-title p {
- text-align: justify;
- text-align-last: left;
+        text-align: justify;
+        text-align-last: left;
         max-width: 100%;
     }
 }
@@ -1294,4 +1294,8 @@ nav {
         padding: 12px 24px;
         font-size: 0.82rem;
     }
+}
+ p{
+  text-align: justify;
+  text-align-last: left;
 }
