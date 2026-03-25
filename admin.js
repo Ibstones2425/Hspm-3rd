@@ -21,10 +21,8 @@ import {
 // ---------------------------------------------------------
 onAuthStateChanged(auth, user => {
     if (!user) {
-        // Redirect to login if not authenticated
         window.location.href = "login.html";
     } else {
-        // Initialize Dashboard if logged in
         initDashboard();
     }
 });
@@ -47,32 +45,19 @@ function initDashboard() {
     loadTestimonies();
     loadPrayers();
     loadSettings();
-
     loadSubscribers();
 
-    // Event Listeners for Forms
-    document
-        .getElementById("form-sermon")
-        .addEventListener("submit", handleAddSermon);
-    document
-        .getElementById("form-devotional")
-        .addEventListener("submit", handleAddDevotional);
-    document
-        .getElementById("form-event")
-        .addEventListener("submit", handleAddEvent);
-    document
-        .getElementById("settings-form")
-        .addEventListener("submit", handleSaveSettings);
-    document
-        .getElementById("form-bulk-email")
-        .addEventListener("submit", handleSendBulkEmail);
+    document.getElementById("form-sermon").addEventListener("submit", handleAddSermon);
+    document.getElementById("form-devotional").addEventListener("submit", handleAddDevotional);
+    document.getElementById("form-event").addEventListener("submit", handleAddEvent);
+    document.getElementById("settings-form").addEventListener("submit", handleSaveSettings);
+    document.getElementById("form-bulk-email").addEventListener("submit", handleSendBulkEmail);
 }
 
 // ---------------------------------------------------------
 // 3. STATS & OVERVIEW
 // ---------------------------------------------------------
 async function loadStats() {
-    // Note: For large apps, use distributed counters. For this scale, counting clientside is okay.
     const sermons = await getDocs(collection(db, "sermons"));
     const prayers = await getDocs(collection(db, "prayerRequests"));
     const testimonies = await getDocs(collection(db, "testimonies"));
@@ -205,7 +190,6 @@ async function handleAddEvent(e) {
     const fileInput = document.getElementById("event-image");
 
     try {
-        // 1. Upload to ImgBB
         let imageUrl = "";
         if (fileInput.files.length > 0) {
             const formData = new FormData();
@@ -213,10 +197,7 @@ async function handleAddEvent(e) {
 
             const response = await fetch(
                 `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
-                {
-                    method: "POST",
-                    body: formData
-                }
+                { method: "POST", body: formData }
             );
             const result = await response.json();
             if (result.success) {
@@ -226,7 +207,6 @@ async function handleAddEvent(e) {
             }
         }
 
-        // 2. Save to Firestore
         await addDoc(collection(db, "events"), {
             title: document.getElementById("event-title").value,
             date: document.getElementById("event-date").value,
@@ -262,7 +242,7 @@ async function loadEvents() {
                 <img src="${data.imageUrl}" style="height:100px; width:100%; object-fit:cover; border-radius:8px;">
                 <h4 style="margin:10px 0 5px;">${data.title}</h4>
                 <small>${new Date(data.date).toDateString()}</small>
-                <button onclick="window.deleteItem('events', '${docSnap.id}')" 
+                <button onclick="window.deleteItem('events', '${docSnap.id}')"
                     style="position:absolute; top:10px; right:10px; background:red; color:white; border:none; padding:5px; border-radius:4px; cursor:pointer;">
                     <i class="fas fa-trash"></i>
                 </button>
@@ -291,10 +271,9 @@ async function loadTestimonies() {
                 <td>${data.content.substring(0, 50)}...</td>
                 <td><span class="status-badge ${statusClass}">${data.status}</span></td>
                 <td>
-                    ${
-                        data.status !== "approved"
-                            ? `<button class="action-btn btn-approve" onclick="window.updateStatus('testimonies', '${docSnap.id}', 'approved')"><i class="fas fa-check"></i></button>`
-                            : ""
+                    ${data.status !== "approved"
+                        ? `<button class="action-btn btn-approve" onclick="window.updateStatus('testimonies', '${docSnap.id}', 'approved')"><i class="fas fa-check"></i></button>`
+                        : ""
                     }
                     <button class="action-btn btn-delete" onclick="window.deleteItem('testimonies', '${docSnap.id}')"><i class="fas fa-trash"></i></button>
                 </td>
@@ -356,13 +335,7 @@ async function handleSaveSettings(e) {
 
 async function loadSettings() {
     try {
-        // Since we are reading a specific document, we use getDoc logic implicitly via query if needed,
-        // but let's try reading the doc directly.
-        // *Note*: For cleaner code in this file structure, we will just use basic getDocs on a known collection if specific doc fails,
-        // but here we know the ID is 'giving'.
-        // Simulating fetch or if we had getDoc imported.
-        // For simplicity in this specific stack, let's assume the user starts fresh.
-        // If the doc doesn't exist yet, fields will be empty.
+        // Settings loaded on demand when admin opens the settings panel
     } catch (error) {
         console.log("Settings not initialized yet.");
     }
@@ -371,18 +344,17 @@ async function loadSettings() {
 // ---------------------------------------------------------
 // 10. GLOBAL UTILITIES (Exposed to Window)
 // ---------------------------------------------------------
-
 window.deleteItem = async (collectionName, id) => {
     if (confirm("Are you sure you want to delete this item?")) {
         try {
             await deleteDoc(doc(db, collectionName, id));
             showToast("Item deleted");
-            // Refresh tables
             if (collectionName === "sermons") loadSermons();
             if (collectionName === "devotionals") loadDevotionals();
             if (collectionName === "events") loadEvents();
             if (collectionName === "testimonies") loadTestimonies();
             if (collectionName === "prayerRequests") loadPrayers();
+            if (collectionName === "subscribers") loadSubscribers();
             loadStats();
         } catch (error) {
             console.error("Delete error", error);
@@ -407,6 +379,7 @@ function showToast(msg) {
     toast.classList.add("show");
     setTimeout(() => toast.classList.remove("show"), 3000);
 }
+
 // ---------------------------------------------------------
 // 11. AUTO-CLOSE SIDEBAR ON MOBILE MENU CLICK
 // ---------------------------------------------------------
@@ -417,6 +390,7 @@ document.querySelectorAll(".menu-item").forEach(item => {
         }
     });
 });
+
 document.addEventListener("click", e => {
     const sidebar = document.getElementById("sidebar");
     const toggleBtn = document.querySelector(".mobile-toggle");
@@ -430,34 +404,27 @@ document.addEventListener("click", e => {
         sidebar.classList.remove("active");
     }
 });
-// ---------------------------------------------------------
-// 12. SUBSCRIBERS & BULK EMAIL (Resend API)
-// ---------------------------------------------------------
-//const RESEND_API_KEY = "re_N5cp9n63_9TDxFc4Me3qtFynAsKtutNie";
-//const FROM_EMAIL = "HSPM <newsletter@hisspiritandpowerministry.org>";
 
+// ---------------------------------------------------------
+// 12. SUBSCRIBERS & BULK EMAIL
+// ---------------------------------------------------------
 async function loadSubscribers() {
     const tbody = document.getElementById("table-subscribers");
     const statEl = document.getElementById("stat-subscribers");
     if (!tbody) return;
 
-    tbody.innerHTML =
-        "<tr><td colspan='4' style='padding:12px'>Loading...</td></tr>";
+    tbody.innerHTML = "<tr><td colspan='4' style='padding:12px'>Loading...</td></tr>";
 
     try {
         const snapshot = await getDocs(
-            query(
-                collection(db, "subscribers"),
-                orderBy("subscribedAt", "desc")
-            )
+            query(collection(db, "subscribers"), orderBy("subscribedAt", "desc"))
         );
 
         statEl.innerText = snapshot.size;
         tbody.innerHTML = "";
 
         if (snapshot.empty) {
-            tbody.innerHTML =
-                "<tr><td colspan='4' style='padding:12px'>No subscribers yet.</td></tr>";
+            tbody.innerHTML = "<tr><td colspan='4' style='padding:12px'>No subscribers yet.</td></tr>";
             return;
         }
 
@@ -482,33 +449,31 @@ async function loadSubscribers() {
         });
     } catch (err) {
         console.error("loadSubscribers error:", err);
-        tbody.innerHTML =
-            "<tr><td colspan='4' style='padding:12px;color:red;'>Error loading subscribers.</td></tr>";
+        tbody.innerHTML = "<tr><td colspan='4' style='padding:12px;color:red;'>Error loading subscribers.</td></tr>";
     }
 }
 
 async function handleSendBulkEmail(e) {
     e.preventDefault();
 
-    const subject = document.getElementById("bulk-subject").value.trim();
-    const message = document.getElementById("bulk-message").value.trim();
-    const btn = document.getElementById("btn-send-email");
+    const subject  = document.getElementById("bulk-subject").value.trim();
+    const message  = document.getElementById("bulk-message").value.trim();
+    const btn      = document.getElementById("btn-send-email");
     const statusEl = document.getElementById("bulk-email-status");
 
     if (!subject || !message) return;
 
-    btn.disabled = true;
-    btn.innerText = "Fetching subscribers...";
+    btn.disabled   = true;
+    btn.innerText  = "Fetching subscribers...";
     statusEl.style.color = "#333";
-    statusEl.innerText = "";
+    statusEl.innerText   = "";
 
     try {
-        // 1. Get all subscribers from Firestore
         const snapshot = await getDocs(collection(db, "subscribers"));
 
         if (snapshot.empty) {
             statusEl.style.color = "orange";
-            statusEl.innerText = "⚠️ No subscribers found.";
+            statusEl.innerText   = "⚠️ No subscribers found.";
             return;
         }
 
@@ -517,8 +482,7 @@ async function handleSendBulkEmail(e) {
 
         btn.innerText = `Sending to ${subscribers.length} subscribers...`;
 
-        // 2. Send one email per subscriber via Resend
-        let sent = 0;
+        let sent   = 0;
         let failed = 0;
 
         for (const sub of subscribers) {
@@ -543,7 +507,6 @@ async function handleSendBulkEmail(e) {
                 const res = await fetch("/api/send-email", {
                     method: "POST",
                     headers: {
-                        Authorization: `Bearer ${RESEND_API_KEY}`,
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
@@ -570,18 +533,17 @@ async function handleSendBulkEmail(e) {
 
         showToast(`✅ Sent to ${sent} subscriber${sent !== 1 ? "s" : ""}!`);
         statusEl.style.color = sent > 0 ? "green" : "red";
-        statusEl.innerText =
-            failed > 0
-                ? `✅ ${sent} sent, ❌ ${failed} failed`
-                : `✅ Successfully sent to all ${sent} subscribers!`;
+        statusEl.innerText = failed > 0
+            ? `✅ ${sent} sent, ❌ ${failed} failed`
+            : `✅ Successfully sent to all ${sent} subscribers!`;
 
         e.target.reset();
     } catch (err) {
         console.error("Bulk email error:", err);
         statusEl.style.color = "red";
-        statusEl.innerText = "❌ Failed to send. Check console.";
+        statusEl.innerText   = "❌ Failed to send. Check console.";
     } finally {
-        btn.disabled = false;
+        btn.disabled  = false;
         btn.innerText = "Send to All Subscribers";
     }
 }
