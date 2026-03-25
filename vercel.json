@@ -1,7 +1,4 @@
 {
-  "functions": {
-    "api/send-email.js": {}
-  },
   "redirects": [
     {
       "source": "/:path*",
