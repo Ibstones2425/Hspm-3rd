@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | HSPM</title>
-    
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="admin.css">
 </head>
@@ -21,10 +17,13 @@
             <h2>HSPM Admin</h2>
             <small style="opacity: 0.7;">Content Management</small>
         </div>
-        
+
         <nav class="sidebar-menu">
             <div class="menu-item active" onclick="showSection('dashboard', this)">
                 <i class="fas fa-chart-pie"></i> Dashboard
+            </div>
+            <div class="menu-item" onclick="showSection('analytics', this)">
+                <i class="fas fa-chart-line"></i> Analytics
             </div>
             <div class="menu-item" onclick="showSection('sermons', this)">
                 <i class="fas fa-video"></i> Prayer
@@ -42,7 +41,7 @@
                 <i class="fas fa-hands-praying"></i> Prayer Requests
             </div>
             <div class="menu-item" onclick="showSection('subscribers', this)">
-                <i class="fas fa-envelope-open-text"></i> Subscribers & Email
+                <i class="fas fa-envelope-open-text"></i> Subscribers &amp; Email
             </div>
             <div class="menu-item" onclick="showSection('settings', this)">
                 <i class="fas fa-cogs"></i> Settings (Giving)
@@ -58,7 +57,7 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        
+
         <!-- Top Bar -->
         <div class="top-bar">
             <button class="mobile-toggle" onclick="toggleSidebar()">
@@ -105,13 +104,65 @@
             </div>
         </div>
 
-        <!-- 2. SERMON MANAGEMENT -->
+        <!-- 2. ANALYTICS -->
+        <div id="section-analytics" class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-line" style="margin-right:8px; color:#5d001e;"></i>Website Analytics</h2>
+            </div>
+
+            <!-- Stat Cards Row -->
+            <div class="stats-grid" style="margin-bottom: 30px;">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="analytics-total">—</h3>
+                        <p>Total Visits</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-eye"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="analytics-today">—</h3>
+                        <p>Visits Today</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-calendar-day"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="analytics-week">—</h3>
+                        <p>This Week</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-calendar-week"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="analytics-device">—</h3>
+                        <p>Top Device</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-mobile-alt"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3 id="analytics-country">—</h3>
+                        <p>Top Country</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-globe-africa"></i></div>
+                </div>
+            </div>
+
+            <!-- Bar Chart -->
+            <div class="card" style="padding: 24px;">
+                <h3 style="margin-bottom: 20px; font-size: 1rem; color: #555;">Visits — Last 7 Days</h3>
+                <div id="analytics-chart" class="analytics-chart"></div>
+            </div>
+        </div>
+
+        <!-- 3. SERMON MANAGEMENT -->
         <div id="section-sermons" class="admin-section">
             <div class="section-header">
                 <h2>Manage Sermons</h2>
                 <button class="btn btn-primary" onclick="openModal('modal-sermon')"><i class="fas fa-plus"></i> Add Sermon</button>
             </div>
-            <div style="overflow-x: auto;">
+            <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
@@ -122,20 +173,18 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="table-sermons">
-                        <!-- Populated by JS -->
-                    </tbody>
+                    <tbody id="table-sermons"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 3. DEVOTIONAL MANAGEMENT -->
+        <!-- 4. DEVOTIONAL MANAGEMENT -->
         <div id="section-devotionals" class="admin-section">
             <div class="section-header">
                 <h2>Manage Devotionals</h2>
                 <button class="btn btn-primary" onclick="openModal('modal-devotional')"><i class="fas fa-plus"></i> Add Devotional</button>
             </div>
-            <div style="overflow-x: auto;">
+            <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
@@ -145,30 +194,26 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="table-devotionals">
-                        <!-- Populated by JS -->
-                    </tbody>
+                    <tbody id="table-devotionals"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 4. EVENT MANAGEMENT -->
+        <!-- 5. EVENT MANAGEMENT -->
         <div id="section-events" class="admin-section">
             <div class="section-header">
                 <h2>Manage Events</h2>
                 <button class="btn btn-primary" onclick="openModal('modal-event')"><i class="fas fa-plus"></i> Add Event</button>
             </div>
-            <div id="events-grid-admin" class="grid-container" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
-                <!-- Populated by JS -->
-            </div>
+            <div id="events-grid-admin" class="grid-container" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));"></div>
         </div>
 
-        <!-- 5. TESTIMONY MANAGEMENT -->
+        <!-- 6. TESTIMONY MANAGEMENT -->
         <div id="section-testimonies" class="admin-section">
             <div class="section-header">
                 <h2>Testimony Inbox</h2>
             </div>
-            <div style="overflow-x: auto;">
+            <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
@@ -178,19 +223,17 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="table-testimonies">
-                        <!-- Populated by JS -->
-                    </tbody>
+                    <tbody id="table-testimonies"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 6. PRAYER REQUESTS -->
+        <!-- 7. PRAYER REQUESTS -->
         <div id="section-prayers" class="admin-section">
             <div class="section-header">
                 <h2>Prayer Requests</h2>
             </div>
-            <div style="overflow-x: auto;">
+            <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
@@ -201,35 +244,12 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="table-prayers">
-                        <!-- Populated by JS -->
-                    </tbody>
+                    <tbody id="table-prayers"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 7. SETTINGS (GIVING) -->
-        <div id="section-settings" class="admin-section">
-            <div class="section-header">
-                <h2>Giving Configuration</h2>
-            </div>
-            <div class="card" style="max-width: 600px;">
-                <form id="settings-form">
-                    <label>Bank Name</label>
-                    <input type="text" id="set-bank" placeholder="e.g. GTBank" required>
-                    
-                    <label>Account Number</label>
-                    <input type="text" id="set-account-num" placeholder="0123456789" required>
-                    
-                    <label>Account Name</label>
-                    <input type="text" id="set-account-name" placeholder="HSPM Giving" required>
-                    
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- SUBSCRIBERS & BULK EMAIL SECTION -->
+        <!-- 8. SUBSCRIBERS & BULK EMAIL -->
         <div id="section-subscribers" class="admin-section">
             <div class="section-header">
                 <h2>Subscribers &amp; Bulk Email</h2>
@@ -237,8 +257,11 @@
 
             <div class="stats-grid" style="margin-bottom: 24px;">
                 <div class="stat-card">
-                    <div class="stat-number" id="stat-subscribers">—</div>
-                    <div class="stat-label">Total Subscribers</div>
+                    <div class="stat-info">
+                        <h3 id="stat-subscribers">—</h3>
+                        <p>Total Subscribers</p>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
                 </div>
             </div>
 
@@ -264,19 +287,39 @@
 
             <div class="card">
                 <h3 style="margin-bottom: 16px;">Subscriber List</h3>
-                <table style="width:100%; border-collapse:collapse;">
-                    <thead>
-                        <tr style="background:#f5f5f5;">
-                            <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Name</th>
-                            <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Email</th>
-                            <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Date Subscribed</th>
-                            <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-subscribers">
-                        <tr><td colspan="4" style="padding:12px;">Loading...</td></tr>
-                    </tbody>
-                </table>
+                <div class="table-wrap">
+                    <table style="width:100%; border-collapse:collapse;">
+                        <thead>
+                            <tr style="background:#f5f5f5;">
+                                <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Name</th>
+                                <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Email</th>
+                                <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Date</th>
+                                <th style="padding:10px; text-align:left; border-bottom:1px solid #ddd;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-subscribers">
+                            <tr><td colspan="4" style="padding:12px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. SETTINGS -->
+        <div id="section-settings" class="admin-section">
+            <div class="section-header">
+                <h2>Giving Configuration</h2>
+            </div>
+            <div class="card" style="max-width: 600px;">
+                <form id="settings-form">
+                    <label>Bank Name</label>
+                    <input type="text" id="set-bank" placeholder="e.g. GTBank" required>
+                    <label>Account Number</label>
+                    <input type="text" id="set-account-num" placeholder="0123456789" required>
+                    <label>Account Name</label>
+                    <input type="text" id="set-account-name" placeholder="HSPM Giving" required>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
             </div>
         </div>
 
@@ -336,27 +379,20 @@
     <!-- Toast -->
     <div id="toast" class="toast">Operation Successful</div>
 
-    <!-- Script -->
+    <!-- Scripts -->
     <script src="config.js" type="module"></script>
     <script src="admin.js" type="module"></script>
 
-    <!-- UI Logic for switching tabs -->
     <script>
         function showSection(sectionId, element) {
-            // Hide all sections
             document.querySelectorAll('.admin-section').forEach(sec => {
                 sec.style.display = 'none';
                 sec.classList.remove('active');
             });
-            // Show target section
             document.getElementById('section-' + sectionId).style.display = 'block';
-            
-            // Update Menu Active State
             document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
             element.classList.add('active');
-            
-            // Update Title
-            document.getElementById('page-title').innerText = element.innerText;
+            document.getElementById('page-title').innerText = element.innerText.trim();
         }
 
         function openModal(modalId) {
@@ -371,7 +407,6 @@
             document.getElementById('sidebar').classList.toggle('active');
         }
 
-        // Close modal if clicked outside
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = "none";
