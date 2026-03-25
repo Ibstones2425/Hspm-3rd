@@ -45,11 +45,14 @@ function initDashboard() {
     loadPrayers();
     loadSettings();
 
+    loadSubscribers();
+
     // Event Listeners for Forms
     document.getElementById("form-sermon").addEventListener("submit", handleAddSermon);
     document.getElementById("form-devotional").addEventListener("submit", handleAddDevotional);
     document.getElementById("form-event").addEventListener("submit", handleAddEvent);
     document.getElementById("settings-form").addEventListener("submit", handleSaveSettings);
+    document.getElementById("form-bulk-email").addEventListener("submit", handleSendBulkEmail);
 }
 
 // ---------------------------------------------------------
@@ -408,3 +411,142 @@ document.addEventListener("click", (e) => {
         sidebar.classList.remove("active");
     }
 });
+// ---------------------------------------------------------
+// 12. SUBSCRIBERS & BULK EMAIL (Resend API)
+// ---------------------------------------------------------
+const RESEND_API_KEY = "re_N5cp9n63_9TDxFc4Me3qtFynAsKtutNie";
+const FROM_EMAIL     = "HSPM <onboarding@resend.dev>"; // Update when you verify your domain
+
+async function loadSubscribers() {
+    const tbody = document.getElementById("table-subscribers");
+    const statEl = document.getElementById("stat-subscribers");
+    if (!tbody) return;
+
+    tbody.innerHTML = "<tr><td colspan='4' style='padding:12px'>Loading...</td></tr>";
+
+    try {
+        const snapshot = await getDocs(
+            query(collection(db, "subscribers"), orderBy("subscribedAt", "desc"))
+        );
+
+        statEl.innerText = snapshot.size;
+        tbody.innerHTML  = "";
+
+        if (snapshot.empty) {
+            tbody.innerHTML = "<tr><td colspan='4' style='padding:12px'>No subscribers yet.</td></tr>";
+            return;
+        }
+
+        snapshot.forEach(docSnap => {
+            const d    = docSnap.data();
+            const date = d.subscribedAt
+                ? new Date(d.subscribedAt.seconds * 1000).toLocaleDateString()
+                : "N/A";
+
+            tbody.innerHTML += `
+                <tr>
+                    <td style="padding:10px; border-bottom:1px solid #eee;">${d.name}</td>
+                    <td style="padding:10px; border-bottom:1px solid #eee;">${d.email}</td>
+                    <td style="padding:10px; border-bottom:1px solid #eee;">${date}</td>
+                    <td style="padding:10px; border-bottom:1px solid #eee;">
+                        <button class="action-btn btn-delete"
+                            onclick="window.deleteItem('subscribers', '${docSnap.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>`;
+        });
+    } catch (err) {
+        console.error("loadSubscribers error:", err);
+        tbody.innerHTML = "<tr><td colspan='4' style='padding:12px;color:red;'>Error loading subscribers.</td></tr>";
+    }
+}
+
+async function handleSendBulkEmail(e) {
+    e.preventDefault();
+
+    const subject   = document.getElementById("bulk-subject").value.trim();
+    const message   = document.getElementById("bulk-message").value.trim();
+    const btn       = document.getElementById("btn-send-email");
+    const statusEl  = document.getElementById("bulk-email-status");
+
+    if (!subject || !message) return;
+
+    btn.disabled    = true;
+    btn.innerText   = "Fetching subscribers...";
+    statusEl.style.color = "#333";
+    statusEl.innerText   = "";
+
+    try {
+        // 1. Get all subscribers from Firestore
+        const snapshot = await getDocs(collection(db, "subscribers"));
+
+        if (snapshot.empty) {
+            statusEl.style.color = "orange";
+            statusEl.innerText   = "⚠️ No subscribers found.";
+            return;
+        }
+
+        const subscribers = [];
+        snapshot.forEach(d => subscribers.push(d.data()));
+
+        btn.innerText = `Sending to ${subscribers.length} subscribers...`;
+
+        // 2. Send one email per subscriber via Resend
+        let sent   = 0;
+        let failed = 0;
+
+        for (const sub of subscribers) {
+            const htmlBody = `
+                <div style="font-family:Georgia,serif; max-width:600px; margin:auto; padding:30px; color:#222;">
+                    <div style="background:#5d001e; padding:20px; border-radius:8px 8px 0 0; text-align:center;">
+                        <h1 style="color:#fff; margin:0; font-size:1.4rem;">His Spirit and Power Ministry</h1>
+                        <p style="color:#f5c6cb; margin:4px 0 0; font-size:0.9rem;">HSPM Newsletter</p>
+                    </div>
+                    <div style="background:#fff; border:1px solid #eee; padding:30px; border-radius:0 0 8px 8px;">
+                        <p style="color:#5d001e; font-size:1rem;">Dear ${sub.name},</p>
+                        <div style="line-height:1.8; white-space:pre-wrap;">${message}</div>
+                        <hr style="border:none; border-top:1px solid #eee; margin:24px 0;">
+                        <p style="font-size:0.8rem; color:#999; text-align:center;">
+                            You are receiving this because you subscribed to HSPM updates.<br>
+                            <a href="https://hisspiritandpowerministry.org" style="color:#5d001e;">hisspiritandpowerministry.org</a>
+                        </p>
+                    </div>
+                </div>`;
+
+            try {
+                const res = await fetch("https://api.resend.com/emails", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${RESEND_API_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        from:    FROM_EMAIL,
+                        to:      sub.email,
+                        subject: subject,
+                        html:    htmlBody
+                    })
+                });
+
+                if (res.ok) { sent++; } else { failed++; }
+            } catch { failed++; }
+        }
+
+        showToast(`✅ Sent to ${sent} subscriber${sent !== 1 ? "s" : ""}!`);
+        statusEl.style.color = sent > 0 ? "green" : "red";
+        statusEl.innerText   = failed > 0
+            ? `✅ ${sent} sent, ❌ ${failed} failed`
+            : `✅ Successfully sent to all ${sent} subscribers!`;
+
+        e.target.reset();
+
+    } catch (err) {
+        console.error("Bulk email error:", err);
+        statusEl.style.color = "red";
+        statusEl.innerText   = "❌ Failed to send. Check console.";
+    } finally {
+        btn.disabled  = false;
+        btn.innerText = "Send to All Subscribers";
+    }
+}

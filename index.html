@@ -861,79 +861,68 @@
             src="app.js"
             type="module"
         ></script>
-        <script>
-            const scriptURL =
-                "https://script.google.com/macros/s/AKfycbxuGje_KmorJVKclituweqb_i3UrmJeiF6Mws_P1DIV9DJWs6G9mITZ7Eb0MBvPjWVVsQ/exec";
+        <script type="module">
+            import { db } from "./config.js";
+            import { collection, addDoc, query, where, getDocs, serverTimestamp }
+                from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
             const form = document.getElementById("subscribe-form");
-            const msg = document.getElementById("message");
+            const msg  = document.getElementById("message");
 
-            form.addEventListener("submit", function (e) {
+            form.addEventListener("submit", async function (e) {
                 e.preventDefault();
 
-                const nameInput = document
-                    .getElementById("sub-name")
-                    .value.trim();
-                const emailInput = document
-                    .getElementById("sub-email")
-                    .value.trim();
+                const nameInput  = document.getElementById("sub-name").value.trim();
+                const emailInput = document.getElementById("sub-email").value.trim();
+                const btn        = form.querySelector("button[type='submit']");
 
-                // Validate
-                if (nameInput === "") {
+                if (!nameInput) {
                     msg.style.color = "yellow";
-                    msg.innerText = "⚠️ Please enter your name.";
+                    msg.innerText   = "⚠️ Please enter your name.";
                     return;
                 }
-                if (emailInput === "") {
+                if (!emailInput) {
                     msg.style.color = "yellow";
-                    msg.innerText = "⚠️ Please enter your email address.";
+                    msg.innerText   = "⚠️ Please enter your email address.";
                     return;
                 }
 
-                // Disable button
-                const btn = form.querySelector("button[type='submit']");
-                btn.disabled = true;
-                btn.innerText = "Subscribing...";
-
+                btn.disabled    = true;
+                btn.innerText   = "Subscribing...";
                 msg.style.color = "white";
-                msg.innerText = "Please wait...";
+                msg.innerText   = "Please wait...";
 
-                // Build FormData
-                const formData = new FormData();
-                formData.append("name", nameInput);
-                formData.append("email", emailInput);
+                try {
+                    // Check if email already subscribed
+                    const existing = await getDocs(
+                        query(collection(db, "subscribers"), where("email", "==", emailInput))
+                    );
 
-                fetch(scriptURL, {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.result === "success") {
-                            msg.style.color = "lightgreen";
-                            msg.innerText =
-                                "✅ Thank you " +
-                                nameInput +
-                                "! You're now subscribed.";
-                            form.reset();
-                        } else {
-                            msg.style.color = "yellow";
-                            msg.innerText =
-                                "⚠️ " +
-                                (data.message ||
-                                    "Something went wrong. Try again.");
-                        }
-                    })
-                    .catch(error => {
-                        msg.style.color = "red";
-                        msg.innerText =
-                            "❌ Error subscribing. Please try again later.";
-                        console.error("Subscription error:", error);
-                    })
-                    .finally(() => {
-                        btn.disabled = false;
-                        btn.innerText = "Subscribe";
+                    if (!existing.empty) {
+                        msg.style.color = "yellow";
+                        msg.innerText   = "⚠️ This email is already subscribed!";
+                        return;
+                    }
+
+                    // Save to Firestore
+                    await addDoc(collection(db, "subscribers"), {
+                        name:        nameInput,
+                        email:       emailInput,
+                        subscribedAt: serverTimestamp()
                     });
+
+                    msg.style.color = "lightgreen";
+                    msg.innerText   = "✅ Thank you " + nameInput + "! You're now subscribed.";
+                    form.reset();
+
+                } catch (error) {
+                    console.error("Subscription error:", error);
+                    msg.style.color = "red";
+                    msg.innerText   = "❌ Error subscribing. Please try again later.";
+                } finally {
+                    btn.disabled  = false;
+                    btn.innerText = "Subscribe";
+                }
             });
         </script>
         <!-- Simple Script for Copy Button & Modal UI (Non-Module) -->
