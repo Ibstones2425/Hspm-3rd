@@ -1,7 +1,7 @@
 {
   "name": "His Spirit and Power Ministry",
   "short_name": "HSPM",
-  "start_url": "/index.html",
+  "start_url": "https://hisspiritandpowerministry.org/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#5d001e",
@@ -16,5 +16,6 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "scope": "/"
 }

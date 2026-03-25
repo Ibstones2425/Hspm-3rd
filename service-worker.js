@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hspm-cache-v1';
+const CACHE_NAME = 'hisspiritandpowerministry-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',

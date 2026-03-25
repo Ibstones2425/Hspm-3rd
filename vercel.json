@@ -1,8 +1,13 @@
 {
   "redirects": [
     {
-      "source": "https://www.hspm.vercel.app/:path*",
-      "destination": "https://hspm.vercel.app/:path*",
+      "source": "https://www.hisspiritandpowerministry.org/:path*",
+      "destination": "https://hisspiritandpowerministry.org/:path*",
+      "permanent": true
+    },
+    {
+      "source": "https://hspm.vercel.app/:path*",
+      "destination": "https://hisspiritandpowerministry.org/:path*",
       "permanent": true
     }
   ]
