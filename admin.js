@@ -522,11 +522,10 @@ async function handleSendBulkEmail(e) {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        from:    FROM_EMAIL,
-                        to:      sub.email,
-                        subject: subject,
-                        html:    htmlBody
-                    })
+    to: sub.email,
+    subject: subject,
+    html: htmlBody
+})
                 });
 
                 const resJson = await res.json();
