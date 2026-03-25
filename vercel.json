@@ -10,17 +10,6 @@
       ],
       "destination": "https://hisspiritandpowerministry.org/:path*",
       "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "hspm.vercel.app"
-        }
-      ],
-      "destination": "https://hisspiritandpowerministry.org/:path*",
-      "permanent": true
     }
   ]
 }
