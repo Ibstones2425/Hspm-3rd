@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/send-email.js": {
+      "runtime": "edge"
+    }
+  },
   "redirects": [
     {
       "source": "/:path*",
