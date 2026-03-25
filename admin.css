@@ -15,7 +15,7 @@ body {
     background: var(--primary);
     color: white;
     display: flex;
-    flex-direction: column !important
+    flex-direction: column !important;
     position: fixed;
     height: 100vh;
     transition: var(--transition);
