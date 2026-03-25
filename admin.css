@@ -15,7 +15,7 @@ body {
     background: var(--primary);
     color: white;
     display: flex;
-    flex-direction: column !important;
+    flex-direction: column;
     position: fixed;
     height: 100vh;
     transition: var(--transition);
@@ -495,4 +495,12 @@ tr:hover { background-color: var(--primary-light); }
         flex-direction: column;
         align-items: flex-start;
     }
+}
+.menu-item {
+    display: flex;
+    width: 100%;   /* 🔥 important */
+}
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;  /* 🔥 force vertical stacking */
 }
