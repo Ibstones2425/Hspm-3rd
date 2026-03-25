@@ -415,7 +415,7 @@ document.addEventListener("click", (e) => {
 // 12. SUBSCRIBERS & BULK EMAIL (Resend API)
 // ---------------------------------------------------------
 const RESEND_API_KEY = "re_N5cp9n63_9TDxFc4Me3qtFynAsKtutNie";
-const FROM_EMAIL     = "HSPM <onboarding@resend.dev>"; // Update when you verify your domain
+const FROM_EMAIL = "HSPM <newsletter@hisspiritandpowerministry.org>";
 
 async function loadSubscribers() {
     const tbody = document.getElementById("table-subscribers");
