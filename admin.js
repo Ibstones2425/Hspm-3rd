@@ -1,22 +1,25 @@
 import { db, auth, IMGBB_API_KEY } from "./config.js";
-import { 
-    collection, 
-    addDoc, 
-    getDocs, 
-    deleteDoc, 
-    doc, 
-    updateDoc, 
-    query, 
+import {
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    updateDoc,
+    query,
     orderBy,
     serverTimestamp,
     setDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // ---------------------------------------------------------
 // 1. AUTHENTICATION CHECK
 // ---------------------------------------------------------
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, user => {
     if (!user) {
         // Redirect to login if not authenticated
         window.location.href = "login.html";
@@ -48,11 +51,21 @@ function initDashboard() {
     loadSubscribers();
 
     // Event Listeners for Forms
-    document.getElementById("form-sermon").addEventListener("submit", handleAddSermon);
-    document.getElementById("form-devotional").addEventListener("submit", handleAddDevotional);
-    document.getElementById("form-event").addEventListener("submit", handleAddEvent);
-    document.getElementById("settings-form").addEventListener("submit", handleSaveSettings);
-    document.getElementById("form-bulk-email").addEventListener("submit", handleSendBulkEmail);
+    document
+        .getElementById("form-sermon")
+        .addEventListener("submit", handleAddSermon);
+    document
+        .getElementById("form-devotional")
+        .addEventListener("submit", handleAddDevotional);
+    document
+        .getElementById("form-event")
+        .addEventListener("submit", handleAddEvent);
+    document
+        .getElementById("settings-form")
+        .addEventListener("submit", handleSaveSettings);
+    document
+        .getElementById("form-bulk-email")
+        .addEventListener("submit", handleSendBulkEmail);
 }
 
 // ---------------------------------------------------------
@@ -78,7 +91,7 @@ async function handleAddSermon(e) {
     e.preventDefault();
     const btn = e.target.querySelector("button");
     btn.innerText = "Publishing...";
-    
+
     try {
         await addDoc(collection(db, "sermons"), {
             title: document.getElementById("sermon-title").value,
@@ -88,7 +101,7 @@ async function handleAddSermon(e) {
             mixlrLink: document.getElementById("sermon-mixlr").value,
             createdAt: serverTimestamp()
         });
-        
+
         showToast("Sermon Published!");
         e.target.reset();
         document.getElementById("modal-sermon").style.display = "none";
@@ -105,15 +118,15 @@ async function handleAddSermon(e) {
 async function loadSermons() {
     const tbody = document.getElementById("table-sermons");
     tbody.innerHTML = "<tr><td colspan='5'>Loading...</td></tr>";
-    
+
     const q = query(collection(db, "sermons"), orderBy("date", "desc"));
     const snapshot = await getDocs(q);
-    
+
     tbody.innerHTML = "";
     snapshot.forEach(docSnap => {
         const data = docSnap.data();
         const type = data.youtubeLink ? "Video" : "Audio";
-        
+
         const row = `
             <tr>
                 <td>${data.date}</td>
@@ -136,7 +149,7 @@ async function loadSermons() {
 // ---------------------------------------------------------
 async function handleAddDevotional(e) {
     e.preventDefault();
-    
+
     try {
         await addDoc(collection(db, "devotionals"), {
             date: document.getElementById("dev-date").value,
@@ -145,7 +158,7 @@ async function handleAddDevotional(e) {
             content: document.getElementById("dev-content").value,
             createdAt: serverTimestamp()
         });
-        
+
         showToast("Devotional Published!");
         e.target.reset();
         document.getElementById("modal-devotional").style.display = "none";
@@ -160,7 +173,7 @@ async function loadDevotionals() {
     const tbody = document.getElementById("table-devotionals");
     const q = query(collection(db, "devotionals"), orderBy("date", "desc"));
     const snapshot = await getDocs(q);
-    
+
     tbody.innerHTML = "";
     snapshot.forEach(docSnap => {
         const data = docSnap.data();
@@ -190,18 +203,21 @@ async function handleAddEvent(e) {
     btn.disabled = true;
 
     const fileInput = document.getElementById("event-image");
-    
+
     try {
         // 1. Upload to ImgBB
         let imageUrl = "";
         if (fileInput.files.length > 0) {
             const formData = new FormData();
             formData.append("image", fileInput.files[0]);
-            
-            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                method: "POST",
-                body: formData
-            });
+
+            const response = await fetch(
+                `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
             const result = await response.json();
             if (result.success) {
                 imageUrl = result.data.url;
@@ -224,7 +240,6 @@ async function handleAddEvent(e) {
         document.getElementById("modal-event").style.display = "none";
         loadEvents();
         loadStats();
-
     } catch (error) {
         console.error(error);
         alert("Failed to create event. Check console.");
@@ -238,7 +253,7 @@ async function loadEvents() {
     const grid = document.getElementById("events-grid-admin");
     const q = query(collection(db, "events"), orderBy("date", "asc"));
     const snapshot = await getDocs(q);
-    
+
     grid.innerHTML = "";
     snapshot.forEach(docSnap => {
         const data = docSnap.data();
@@ -264,20 +279,23 @@ async function loadTestimonies() {
     const tbody = document.getElementById("table-testimonies");
     const q = query(collection(db, "testimonies"), orderBy("date", "desc"));
     const snapshot = await getDocs(q);
-    
+
     tbody.innerHTML = "";
     snapshot.forEach(docSnap => {
         const data = docSnap.data();
-        const statusClass = data.status === 'approved' ? 'approved' : 'pending';
-        
+        const statusClass = data.status === "approved" ? "approved" : "pending";
+
         const row = `
             <tr>
                 <td>${data.name}</td>
                 <td>${data.content.substring(0, 50)}...</td>
                 <td><span class="status-badge ${statusClass}">${data.status}</span></td>
                 <td>
-                    ${data.status !== 'approved' ? 
-                        `<button class="action-btn btn-approve" onclick="window.updateStatus('testimonies', '${docSnap.id}', 'approved')"><i class="fas fa-check"></i></button>` : ''}
+                    ${
+                        data.status !== "approved"
+                            ? `<button class="action-btn btn-approve" onclick="window.updateStatus('testimonies', '${docSnap.id}', 'approved')"><i class="fas fa-check"></i></button>`
+                            : ""
+                    }
                     <button class="action-btn btn-delete" onclick="window.deleteItem('testimonies', '${docSnap.id}')"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
@@ -293,12 +311,14 @@ async function loadPrayers() {
     const tbody = document.getElementById("table-prayers");
     const q = query(collection(db, "prayerRequests"), orderBy("date", "desc"));
     const snapshot = await getDocs(q);
-    
+
     tbody.innerHTML = "";
     snapshot.forEach(docSnap => {
         const data = docSnap.data();
-        const date = data.date ? new Date(data.date.seconds * 1000).toLocaleDateString() : 'N/A';
-        
+        const date = data.date
+            ? new Date(data.date.seconds * 1000).toLocaleDateString()
+            : "N/A";
+
         const row = `
             <tr>
                 <td>${date}</td>
@@ -336,12 +356,11 @@ async function handleSaveSettings(e) {
 
 async function loadSettings() {
     try {
-        // Since we are reading a specific document, we use getDoc logic implicitly via query if needed, 
+        // Since we are reading a specific document, we use getDoc logic implicitly via query if needed,
         // but let's try reading the doc directly.
-        // *Note*: For cleaner code in this file structure, we will just use basic getDocs on a known collection if specific doc fails, 
+        // *Note*: For cleaner code in this file structure, we will just use basic getDocs on a known collection if specific doc fails,
         // but here we know the ID is 'giving'.
-        
-        // Simulating fetch or if we had getDoc imported. 
+        // Simulating fetch or if we had getDoc imported.
         // For simplicity in this specific stack, let's assume the user starts fresh.
         // If the doc doesn't exist yet, fields will be empty.
     } catch (error) {
@@ -354,16 +373,16 @@ async function loadSettings() {
 // ---------------------------------------------------------
 
 window.deleteItem = async (collectionName, id) => {
-    if(confirm("Are you sure you want to delete this item?")) {
+    if (confirm("Are you sure you want to delete this item?")) {
         try {
             await deleteDoc(doc(db, collectionName, id));
             showToast("Item deleted");
             // Refresh tables
-            if(collectionName === 'sermons') loadSermons();
-            if(collectionName === 'devotionals') loadDevotionals();
-            if(collectionName === 'events') loadEvents();
-            if(collectionName === 'testimonies') loadTestimonies();
-            if(collectionName === 'prayerRequests') loadPrayers();
+            if (collectionName === "sermons") loadSermons();
+            if (collectionName === "devotionals") loadDevotionals();
+            if (collectionName === "events") loadEvents();
+            if (collectionName === "testimonies") loadTestimonies();
+            if (collectionName === "prayerRequests") loadPrayers();
             loadStats();
         } catch (error) {
             console.error("Delete error", error);
@@ -398,7 +417,7 @@ document.querySelectorAll(".menu-item").forEach(item => {
         }
     });
 });
-document.addEventListener("click", (e) => {
+document.addEventListener("click", e => {
     const sidebar = document.getElementById("sidebar");
     const toggleBtn = document.querySelector(".mobile-toggle");
 
@@ -414,31 +433,36 @@ document.addEventListener("click", (e) => {
 // ---------------------------------------------------------
 // 12. SUBSCRIBERS & BULK EMAIL (Resend API)
 // ---------------------------------------------------------
-const RESEND_API_KEY = "re_N5cp9n63_9TDxFc4Me3qtFynAsKtutNie";
-const FROM_EMAIL = "HSPM <newsletter@hisspiritandpowerministry.org>";
+//const RESEND_API_KEY = "re_N5cp9n63_9TDxFc4Me3qtFynAsKtutNie";
+//const FROM_EMAIL = "HSPM <newsletter@hisspiritandpowerministry.org>";
 
 async function loadSubscribers() {
     const tbody = document.getElementById("table-subscribers");
     const statEl = document.getElementById("stat-subscribers");
     if (!tbody) return;
 
-    tbody.innerHTML = "<tr><td colspan='4' style='padding:12px'>Loading...</td></tr>";
+    tbody.innerHTML =
+        "<tr><td colspan='4' style='padding:12px'>Loading...</td></tr>";
 
     try {
         const snapshot = await getDocs(
-            query(collection(db, "subscribers"), orderBy("subscribedAt", "desc"))
+            query(
+                collection(db, "subscribers"),
+                orderBy("subscribedAt", "desc")
+            )
         );
 
         statEl.innerText = snapshot.size;
-        tbody.innerHTML  = "";
+        tbody.innerHTML = "";
 
         if (snapshot.empty) {
-            tbody.innerHTML = "<tr><td colspan='4' style='padding:12px'>No subscribers yet.</td></tr>";
+            tbody.innerHTML =
+                "<tr><td colspan='4' style='padding:12px'>No subscribers yet.</td></tr>";
             return;
         }
 
         snapshot.forEach(docSnap => {
-            const d    = docSnap.data();
+            const d = docSnap.data();
             const date = d.subscribedAt
                 ? new Date(d.subscribedAt.seconds * 1000).toLocaleDateString()
                 : "N/A";
@@ -458,24 +482,25 @@ async function loadSubscribers() {
         });
     } catch (err) {
         console.error("loadSubscribers error:", err);
-        tbody.innerHTML = "<tr><td colspan='4' style='padding:12px;color:red;'>Error loading subscribers.</td></tr>";
+        tbody.innerHTML =
+            "<tr><td colspan='4' style='padding:12px;color:red;'>Error loading subscribers.</td></tr>";
     }
 }
 
 async function handleSendBulkEmail(e) {
     e.preventDefault();
 
-    const subject   = document.getElementById("bulk-subject").value.trim();
-    const message   = document.getElementById("bulk-message").value.trim();
-    const btn       = document.getElementById("btn-send-email");
-    const statusEl  = document.getElementById("bulk-email-status");
+    const subject = document.getElementById("bulk-subject").value.trim();
+    const message = document.getElementById("bulk-message").value.trim();
+    const btn = document.getElementById("btn-send-email");
+    const statusEl = document.getElementById("bulk-email-status");
 
     if (!subject || !message) return;
 
-    btn.disabled    = true;
-    btn.innerText   = "Fetching subscribers...";
+    btn.disabled = true;
+    btn.innerText = "Fetching subscribers...";
     statusEl.style.color = "#333";
-    statusEl.innerText   = "";
+    statusEl.innerText = "";
 
     try {
         // 1. Get all subscribers from Firestore
@@ -483,7 +508,7 @@ async function handleSendBulkEmail(e) {
 
         if (snapshot.empty) {
             statusEl.style.color = "orange";
-            statusEl.innerText   = "⚠️ No subscribers found.";
+            statusEl.innerText = "⚠️ No subscribers found.";
             return;
         }
 
@@ -493,7 +518,7 @@ async function handleSendBulkEmail(e) {
         btn.innerText = `Sending to ${subscribers.length} subscribers...`;
 
         // 2. Send one email per subscriber via Resend
-        let sent   = 0;
+        let sent = 0;
         let failed = 0;
 
         for (const sub of subscribers) {
@@ -518,45 +543,45 @@ async function handleSendBulkEmail(e) {
                 const res = await fetch("/api/send-email", {
                     method: "POST",
                     headers: {
-                        "Authorization": `Bearer ${RESEND_API_KEY}`,
+                        Authorization: `Bearer ${RESEND_API_KEY}`,
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-    to: sub.email,
-    subject: subject,
-    html: htmlBody
-})
+                        to: sub.email,
+                        subject: subject,
+                        html: htmlBody
+                    })
                 });
 
                 const resJson = await res.json();
-                if (res.ok) { 
-                    sent++; 
-                } else { 
+                if (res.ok) {
+                    sent++;
+                } else {
                     console.error(`❌ Failed for ${sub.email}:`, resJson);
                     statusEl.style.color = "red";
                     statusEl.innerText = `Error: ${resJson.message || resJson.name || JSON.stringify(resJson)}`;
-                    failed++; 
+                    failed++;
                 }
-            } catch (err) { 
+            } catch (err) {
                 console.error("Fetch error:", err);
-                failed++; 
+                failed++;
             }
         }
 
         showToast(`✅ Sent to ${sent} subscriber${sent !== 1 ? "s" : ""}!`);
         statusEl.style.color = sent > 0 ? "green" : "red";
-        statusEl.innerText   = failed > 0
-            ? `✅ ${sent} sent, ❌ ${failed} failed`
-            : `✅ Successfully sent to all ${sent} subscribers!`;
+        statusEl.innerText =
+            failed > 0
+                ? `✅ ${sent} sent, ❌ ${failed} failed`
+                : `✅ Successfully sent to all ${sent} subscribers!`;
 
         e.target.reset();
-
     } catch (err) {
         console.error("Bulk email error:", err);
         statusEl.style.color = "red";
-        statusEl.innerText   = "❌ Failed to send. Check console.";
+        statusEl.innerText = "❌ Failed to send. Check console.";
     } finally {
-        btn.disabled  = false;
+        btn.disabled = false;
         btn.innerText = "Send to All Subscribers";
     }
 }
