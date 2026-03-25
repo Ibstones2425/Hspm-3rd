@@ -515,7 +515,7 @@ async function handleSendBulkEmail(e) {
                 </div>`;
 
             try {
-                const res = await fetch("https://api.resend.com/emails", {
+                const res = await fetch("/api/send-email", {
                     method: "POST",
                     headers: {
                         "Authorization": `Bearer ${RESEND_API_KEY}`,
