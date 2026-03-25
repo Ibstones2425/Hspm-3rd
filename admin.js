@@ -529,8 +529,19 @@ async function handleSendBulkEmail(e) {
                     })
                 });
 
-                if (res.ok) { sent++; } else { failed++; }
-            } catch { failed++; }
+                const resJson = await res.json();
+                if (res.ok) { 
+                    sent++; 
+                } else { 
+                    console.error(`❌ Failed for ${sub.email}:`, resJson);
+                    statusEl.style.color = "red";
+                    statusEl.innerText = `Error: ${resJson.message || resJson.name || JSON.stringify(resJson)}`;
+                    failed++; 
+                }
+            } catch (err) { 
+                console.error("Fetch error:", err);
+                failed++; 
+            }
         }
 
         showToast(`✅ Sent to ${sent} subscriber${sent !== 1 ? "s" : ""}!`);
