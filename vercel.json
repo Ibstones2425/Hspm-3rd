@@ -1,8 +1,6 @@
 {
   "functions": {
-    "api/send-email.js": {
-      "runtime": "edge"
-    }
+    "api/send-email.js": {}
   },
   "redirects": [
     {
