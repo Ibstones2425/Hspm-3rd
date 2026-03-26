@@ -219,18 +219,17 @@ async function loadEvents() {
 
         querySnapshot.forEach(doc => {
             const data = doc.data();
-            // Use placeholder if no image
-            const image = data.imageUrl || "assets/images/default-event.jpg";
 
             const html = `
                 <div class="card" style="padding: 0; overflow: hidden;">
-                    <img src="${image}" alt="${data.title}" style="width: 100%; height: 200px; object-fit: cover;">
+                    ${data.imageUrl ? `<img src="${data.imageUrl}" alt="${data.title}" style="width: 100%; height: 200px; object-fit: cover;">` : ""}
                     <div style="padding: 20px;">
                         <h4 style="color: var(--primary-color);">${data.title}</h4>
                         <p style="font-weight: bold; margin: 5px 0;">
                             <i class="far fa-clock"></i> ${new Date(data.date).toDateString()}
                         </p>
                         <p>${data.description || "Join us for this special program."}</p>
+                        ${data.eventLink ? `<a href="${data.eventLink}" target="_blank" rel="noopener" style="display:inline-block; margin-top:10px; padding:8px 18px; background:var(--primary-color); color:#fff; border-radius:5px; text-decoration:none; font-size:0.9rem;"><i class="fas fa-external-link-alt" style="margin-right:6px;"></i>Learn More</a>` : ""}
                     </div>
                 </div>
             `;

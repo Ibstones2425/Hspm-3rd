@@ -182,14 +182,17 @@ async function loadDevotionals() {
 async function handleAddEvent(e) {
     e.preventDefault();
     const btn = e.target.querySelector("button");
-    btn.innerText = "Uploading Image...";
     btn.disabled  = true;
 
-    const fileInput = document.getElementById("event-image");
+    const fileInput  = document.getElementById("event-image");
+    const eventLink  = document.getElementById("event-link").value.trim();
+    const hasImage   = fileInput.files.length > 0;
 
     try {
         let imageUrl = "";
-        if (fileInput.files.length > 0) {
+
+        if (hasImage) {
+            btn.innerText = "Uploading Image...";
             const formData = new FormData();
             formData.append("image", fileInput.files[0]);
 
@@ -210,6 +213,7 @@ async function handleAddEvent(e) {
             date:        document.getElementById("event-date").value,
             description: document.getElementById("event-desc").value,
             imageUrl,
+            eventLink:   eventLink || "",
             createdAt:   serverTimestamp()
         });
 
@@ -235,11 +239,18 @@ async function loadEvents() {
     grid.innerHTML = "";
     snapshot.forEach(docSnap => {
         const data = docSnap.data();
+        const imageHtml = data.imageUrl
+            ? `<img src="${data.imageUrl}" style="height:100px; width:100%; object-fit:cover; border-radius:8px; margin-bottom:8px;">`
+            : `<div style="height:60px; display:flex; align-items:center; justify-content:center; background:#f5f0f2; border-radius:8px; margin-bottom:8px; color:#aaa;"><i class="fas fa-calendar-alt fa-2x"></i></div>`;
+        const linkHtml = data.eventLink
+            ? `<a href="${data.eventLink}" target="_blank" style="display:inline-block; margin-top:6px; font-size:0.75rem; color:#5d001e; text-decoration:underline;"><i class="fas fa-link"></i> Event Link</a>`
+            : "";
         grid.innerHTML += `
             <div class="card" style="padding:15px; position:relative;">
-                <img src="${data.imageUrl}" style="height:100px; width:100%; object-fit:cover; border-radius:8px;">
-                <h4 style="margin:10px 0 5px;">${data.title}</h4>
+                ${imageHtml}
+                <h4 style="margin:4px 0;">${data.title}</h4>
                 <small>${new Date(data.date).toDateString()}</small>
+                ${linkHtml}
                 <button onclick="window.deleteItem('events', '${docSnap.id}')"
                     style="position:absolute; top:10px; right:10px; background:red; color:white; border:none; padding:5px; border-radius:4px; cursor:pointer;">
                     <i class="fas fa-trash"></i>
@@ -365,7 +376,30 @@ async function loadAnalytics() {
 
         // Top country
         const countries  = docs.reduce((acc, d) => { acc[d.country || "Unknown"] = (acc[d.country || "Unknown"] || 0) + 1; return acc; }, {});
-        const topCountry = Object.entries(countries).sort((a, b) => b[1] - a[1])[0]?.[0] || "—";
+        const sortedCountries = Object.entries(countries).sort((a, b) => b[1] - a[1]);
+        const topCountry = sortedCountries[0]?.[0] || "—";
+
+        // Populate top 5 countries modal
+        const top5 = sortedCountries.slice(0, 5);
+        const countriesListEl = document.getElementById("countries-list");
+        if (countriesListEl) {
+            const maxCount = top5[0]?.[1] || 1;
+            countriesListEl.innerHTML = top5.length === 0
+                ? "<p style='color:#aaa; text-align:center;'>No visitor data yet.</p>"
+                : top5.map(([country, count], i) => `
+                    <div style="margin-bottom:16px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                            <span style="font-weight:600; display:flex; align-items:center; gap:8px;">
+                                <span style="width:22px; height:22px; border-radius:50%; background:#5d001e; color:#fff; font-size:0.7rem; display:inline-flex; align-items:center; justify-content:center;">${i+1}</span>
+                                ${country}
+                            </span>
+                            <span style="font-weight:700; color:#5d001e;">${count}</span>
+                        </div>
+                        <div style="background:#f0e8ea; border-radius:99px; height:7px; overflow:hidden;">
+                            <div style="background:#5d001e; height:100%; width:${Math.round((count/maxCount)*100)}%; border-radius:99px; transition:width 0.4s;"></div>
+                        </div>
+                    </div>`).join("");
+        }
 
         // Last 7 days bar chart data
         const days = [];
