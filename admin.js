@@ -379,12 +379,12 @@ async function loadAnalytics() {
         const sortedCountries = Object.entries(countries).sort((a, b) => b[1] - a[1]);
         const topCountry = sortedCountries[0]?.[0] || "—";
 
-        // Populate top 5 countries modal
+        // Populate top 15 countries modal
         const top15 = sortedCountries.slice(0, 15);
         const countriesListEl = document.getElementById("countries-list");
         if (countriesListEl) {
             const maxCount = top15[0]?.[1] || 1;
-            countriesListEl.innerHTML = top15.length === 0
+            const listHtml = top15.length === 0
                 ? "<p style='color:#aaa; text-align:center;'>No visitor data yet.</p>"
                 : top15.map(([country, count], i) => `
                     <div style="margin-bottom:16px;">
@@ -399,6 +399,7 @@ async function loadAnalytics() {
                             <div style="background:#5d001e; height:100%; width:${Math.round((count/maxCount)*100)}%; border-radius:99px; transition:width 0.4s;"></div>
                         </div>
                     </div>`).join("");
+            countriesListEl.innerHTML = `<div style="max-height:60vh; overflow-y:auto; padding-right:4px;">${listHtml}</div>`;
         }
 
         // Last 7 days bar chart data
