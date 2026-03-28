@@ -427,7 +427,7 @@ async function loadAnalytics() {
                     </div>`
                           )
                           .join("");
-            countriesListEl.innerHTML = `<div style="max-height:60vh; overflow-y:auto; padding-right:4px;">${listHtml}</div>`;
+            countriesListEl.innerHTML = `<div style="max-height:40vh; overflow-y:auto; padding-right:4px;">${listHtml}</div>`;
         }
 
         // Last 7 days bar chart data
