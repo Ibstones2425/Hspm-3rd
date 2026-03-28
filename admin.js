@@ -380,13 +380,13 @@ async function loadAnalytics() {
         const topCountry = sortedCountries[0]?.[0] || "—";
 
         // Populate top 5 countries modal
-        const top5 = sortedCountries.slice(0, 5);
+        const top15 = sortedCountries.slice(0, 15);
         const countriesListEl = document.getElementById("countries-list");
         if (countriesListEl) {
-            const maxCount = top5[0]?.[1] || 1;
-            countriesListEl.innerHTML = top5.length === 0
+            const maxCount = top15[0]?.[1] || 1;
+            countriesListEl.innerHTML = top15.length === 0
                 ? "<p style='color:#aaa; text-align:center;'>No visitor data yet.</p>"
-                : top5.map(([country, count], i) => `
+                : top15.map(([country, count], i) => `
                     <div style="margin-bottom:16px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
                             <span style="font-weight:600; display:flex; align-items:center; gap:8px;">
