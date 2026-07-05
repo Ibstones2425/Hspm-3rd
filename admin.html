@@ -386,6 +386,38 @@
             <div id="countries-list" style="margin-top:18px;"></div>
         </div>
     </div>
+    <div id="modal-edit-devotional" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modal-edit-devotional')">&times;</span>
+        <h2>Edit Devotional</h2>
+        <form id="form-edit-devotional">
+            <input type="hidden" id="edit-devo-id">
+            
+            <div class="form-group">
+                <label>Title / Topic</label>
+                <input type="text" id="edit-devo-title" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="edit-devo-date" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Scripture</label>
+                <input type="text" id="edit-devo-scripture" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Message Content</label>
+                <textarea id="edit-devo-content" rows="6" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Update Devotional</button>
+        </form>
+    </div>
+</div>
+
 
     <!-- Toast -->
     <div id="toast" class="toast">Operation Successful</div>
