@@ -138,7 +138,7 @@ async function loadDevotional() {
                     <button id="read-full-devotional-btn" class="btn btn-outline" style="margin-top: 20px;">
                         Read Full Devotional
                     </button>
-                    <button class="btn btn-outline" onclick="shareDevotional()">
+                    <button class="btn btn-outline" onclick="window.shareDevotional()">
         <i class="fas fa-share-alt"></i> Share
       </button>
                 </div>
