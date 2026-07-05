@@ -1002,42 +1002,46 @@
     }
 </script> -->
 <script>
-window.shareDevotional = function() {
-// 1. Grab the current text content dynamically from the webpage DOM
-const titleEl = document.querySelector("#devotional-display h2");
-const dateEl = document.querySelector("#devotional-display span");
-const scriptureEl = document.querySelector("#devotional-display p");
-const contentEl = document.querySelector("#devotional-display div");
+    window.shareDevotional = function() {
+        // Grab the elements from the app.js generated UI
+        const titleEl = document.querySelector("#devotional-display h2");
+        const dateEl = document.querySelector("#devotional-display span");
+        const scriptureEl = document.querySelector("#devotional-display p");
+        const contentEl = document.querySelector("#devotional-display div");
 
-// 2. Set clean fallbacks just in case an element hasn't loaded yet
-const title = titleEl ? titleEl.innerText: "Daily Devotional";
-const date = dateEl ? dateEl.innerText.trim(): "";
-const scripture = scriptureEl ? scriptureEl.innerText: "";
+        const title = titleEl ? titleEl.innerText : "Daily Devotional";
+        const date = dateEl ? dateEl.innerText.trim() : "";
+        const scripture = scriptureEl ? scriptureEl.innerText : "";
+        
+        let previewText = "";
+        if (contentEl) {
+            // Cut the content down to a brief readable snippet
+            previewText = contentEl.innerText.substring(0, 150).replace(/\n/g, " ") + "...";
+        }
 
-// 3. Create a short text snippet (approx 120 characters) for the text message copy
-let previewText = "";
-if (contentEl) {
-previewText = contentEl.innerText.substring(0, 120).replace(/\n/g, " ") + "...";
-}
+        // Build a clean text format without emojis
+        const shareText = `TODAY'S DEVOTIONAL\nDate: ${date}\n\nTopic: ${title}\nScripture: ${scripture}\n\n"${previewText}"\n\nRead full message here:`;
+        
+        // Append the exact hashtag hash route so users jump straight to the section
+        const shareUrl = "https://hisspiritandpowerministry.org/#devotional";
 
-// 4. Construct a beautifully formatted message string for platforms like WhatsApp or Telegram
-const shareText = `📖 *HSPM Daily Devotional*\n🗓️ ${date}\n\n📌 *Topic:* ${title}\n${scripture}\n\n"${previewText}"\n\nRead the full message here:`;
-const shareUrl = window.location.href;
-
-// 5. Execute Share or Clipboard Copy fallback
-if (navigator.share) {
-navigator.share({
-title: `${title} — HSPM Devotional`,
-text: shareText,
-url: shareUrl
-})
-.catch(err => console.log("Error sharing:", err));
-} else {
-// Fallback for desktop browsers
-navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
-showToast("Devotional link and preview copied!");
-}
-}
+        if (navigator.share) {
+            navigator.share({
+                title: `${title} — HSPM`,
+                text: shareText,
+                url: shareUrl
+            })
+            .catch(err => console.log("Share cancelled/failed", err));
+        } else {
+            // Desktop fallback
+            navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+            if (typeof showToast === "function") {
+                showToast("Devotional copied to clipboard!");
+            } else {
+                alert("Devotional text and link copied!");
+            }
+        }
+    }
 </script>
 
     </body>
