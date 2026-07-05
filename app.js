@@ -132,9 +132,10 @@ async function loadDevotional() {
                     <p style="font-style: italic; color: var(--primary-color); margin: 10px 0;">
                         "${data.scripture}"
                     </p>
-                    <div style="margin-top: 20px; line-height: 1.8;">
-                        ${data.content.substring(0, 200)}...
-                    </div>
+<div id="devotional-snippet-text" style="margin-top: 20px; line-height: 1.8;">
+    ${data.content.substring(0, 200)}...
+</div>
+
                     <button id="read-full-devotional-btn" class="btn btn-outline" style="margin-top: 20px;">
                         Read Full Devotional
                     </button>
