@@ -208,6 +208,8 @@ async function handleAddDevotional(e) {
   }
 }
 
+let allDevotionals = [];
+
 async function loadDevotionals() {
   const tbody = document.getElementById("table-devotionals");
   const q = query(collection(db, "devotionals"),
@@ -216,9 +218,12 @@ async function loadDevotionals() {
 
   const nowStr = nowDateTimeString();
 
+  allDevotionals = [];
   tbody.innerHTML = "";
   snapshot.forEach(docSnap => {
-    const data = docSnap.data();
+    const data = { id: docSnap.id, ...docSnap.data() };
+    allDevotionals.push(data);
+
     const isScheduled = data.date > nowStr;
     const statusBadge = isScheduled
       ? `<span class="status-badge pending" title="Goes live automatically on ${formatDevotionalDateTime(data.date)}">Scheduled</span>`
@@ -231,17 +236,25 @@ async function loadDevotionals() {
     <td>${data.scripture}</td>
     <td>${statusBadge}</td>
     <td>
-    <button class="action-btn btn-edit" title="Edit Devotional" onclick="window.openEditDevotional('${docSnap.id}', '${data.title.replace(/'/g, "\\'")}', '${data.date}', '${data.scripture.replace(/'/g, "\\'")}', '${data.content.replace(/'/g, "\\'").replace(/\n/g, "\\n")}')">
+    <button class="action-btn btn-edit edit-devotional-btn" title="Edit Devotional" data-id="${data.id}">
     <i class="fas fa-edit"></i>
     </button>
 
-    <button class="action-btn btn-delete" onclick="window.deleteItem('devotionals', '${docSnap.id}')">
+    <button class="action-btn btn-delete" onclick="window.deleteItem('devotionals', '${data.id}')">
     <i class="fas fa-trash"></i>
     </button>
     </td>
     </tr>`;
   });
 
+  // Data-lookup instead of inline onclick — avoids breaking when a title or
+  // devotional message contains a double quote, apostrophe, or newline.
+  document.querySelectorAll(".edit-devotional-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const data = allDevotionals.find(d => d.id === btn.getAttribute("data-id"));
+      if (data) window.openEditDevotional(data);
+    });
+  });
 }
 
 // ---------------------------------------------------------
@@ -795,14 +808,15 @@ async function handleSendBulkEmail(e) {
 // ---------------------------------------------------------
 
 // 1. Function attached to the Window so your HTML buttons can click it
-window.openEditDevotional = function(id, title, date, scripture, content) {
-    document.getElementById('edit-devo-id').value = id;
-    document.getElementById('edit-devo-title').value = title;
+window.openEditDevotional = function(data) {
+    document.getElementById('edit-devo-id').value = data.id;
+    document.getElementById('edit-devo-title').value = data.title || "";
     // Legacy entries were saved as plain "YYYY-MM-DD" dates with no time —
     // default them to midnight so the datetime-local input can display them.
+    const date = data.date || "";
     document.getElementById('edit-devo-date').value = date.includes('T') ? date : `${date}T00:00`;
-    document.getElementById('edit-devo-scripture').value = scripture;
-    document.getElementById('edit-devo-content').value = content;
+    document.getElementById('edit-devo-scripture').value = data.scripture || "";
+    document.getElementById('edit-devo-content').value = data.content || "";
     
     // Your global function from admin.html
     window.openModal('modal-edit-devotional'); 
