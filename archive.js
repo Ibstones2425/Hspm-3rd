@@ -4,11 +4,13 @@ import {
     collection,
     getDocs,
     query,
-    orderBy
+    orderBy,
+    where
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 let allDevotionals = [];       // [{ id, ...data }], newest first
 let searchTerm = "";
+let currentModalDevotional = null; // Data for the devotional currently open in the modal (used by Share)
 
 document.addEventListener("DOMContentLoaded", () => {
     loadAllDevotionals();
@@ -27,12 +29,66 @@ function escapeHTML(str) {
         .replace(/'/g, "&#039;");
 }
 
+/** Format a YYYY-MM-DD style date string safely, falling back to the raw value. */
+function formatDate(dateStr, options) {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString("en-US", options);
+}
+
+/** Current local moment as "YYYY-MM-DDTHH:MM", matching <input type="datetime-local">
+ *  and the format devotionals are stored in — devotionals scheduled for a future
+ *  date/time stay hidden from the public archive until that moment arrives. */
+function nowDateTimeString() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+/** Build a share message from a devotional and open the native share sheet / WhatsApp.
+ *  Mirrors shareDevotional() in app.js exactly, so archived entries share the same way
+ *  the "Today's Devotional" card does. */
+function shareDevotional(data) {
+    if (!data) return;
+
+    const { title, date, scripture } = data;
+
+    // Truncate the scripture so they have to click the link to read it fully
+    const maxScriptureLen = 25;
+    const cleanScripture = (scripture || "").trim();
+    const scriptureSnippet = cleanScripture.substring(0, maxScriptureLen);
+    const scriptureEllipsis = cleanScripture.length > maxScriptureLen ? "..." : "";
+
+    const shareText =
+        `📖 *DEVOTIONAL*\n` +
+        `🗓️ *Date:* ${formatDate(date, { year: "numeric", month: "long", day: "numeric" })}\n\n` +
+        `🔥 *Topic:* ${title || ""}\n` +
+        `📍 *Scripture:* ${scriptureSnippet}${scriptureEllipsis}\n\n` +
+        `Read the full message and join the prayer lines here:\n`;
+
+    const shareUrl = "https://hisspiritandpowerministry.org/archive.html";
+    const fullMessage = `${shareText}${shareUrl}`;
+
+    if (navigator.share) {
+        navigator.share({ title: `Devotional: ${title || ""}`, text: fullMessage })
+            .catch(err => console.log("Share dialog closed", err));
+    } else {
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(fullMessage)}`;
+        window.open(whatsappUrl, "_blank", "noopener");
+    }
+}
+
 async function loadAllDevotionals() {
     const archiveList = document.getElementById("archive-list");
     const loaderContainer = document.getElementById("archive-loader-container");
 
     try {
-        const q = query(collection(db, "devotionals"), orderBy("date", "desc"));
+        const q = query(
+            collection(db, "devotionals"),
+            where("date", "<=", nowDateTimeString()),
+            orderBy("date", "desc")
+        );
         const querySnapshot = await getDocs(q);
 
         loaderContainer.style.display = "none";
@@ -86,9 +142,14 @@ function renderArchive() {
                     <p class="card-scripture">${escapeHTML(data.scripture)}</p>
                     <p class="card-snippet">${escapeHTML(snippetText)}</p>
                 </div>
-                <button class="btn btn-outline view-details-btn" data-id="${data.id}">
-                    Read Full Message
-                </button>
+                <div class="archive-card-actions">
+                    <button class="btn btn-outline view-details-btn" data-id="${data.id}">
+                        Read Full Message
+                    </button>
+                    <button class="btn btn-outline btn-icon share-devotional-btn" data-id="${data.id}" aria-label="Share this devotional" title="Share">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
             </div>
         `;
     }).join("");
@@ -98,6 +159,14 @@ function renderArchive() {
             const docId = e.currentTarget.getAttribute("data-id");
             const data = allDevotionals.find(d => d.id === docId);
             if (data) openArchiveModal(data);
+        });
+    });
+
+    document.querySelectorAll(".share-devotional-btn").forEach(button => {
+        button.addEventListener("click", (e) => {
+            const docId = e.currentTarget.getAttribute("data-id");
+            const data = allDevotionals.find(d => d.id === docId);
+            if (data) shareDevotional(data);
         });
     });
 }
@@ -118,6 +187,7 @@ function setupSearch() {
 
 function openArchiveModal(data) {
     const modal = document.getElementById("archive-modal");
+    currentModalDevotional = data;
 
     document.getElementById("modal-arch-title").innerText = data.title || "Untitled";
     document.getElementById("modal-arch-date").innerText = data.date ? new Date(data.date).toDateString() : "";
@@ -150,4 +220,9 @@ function setupModalClose() {
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && modal.style.display === "flex") closeArchiveModal();
     });
+
+    const shareBtn = document.getElementById("modal-arch-share-btn");
+    if (shareBtn) {
+        shareBtn.addEventListener("click", () => shareDevotional(currentModalDevotional));
+    }
 }

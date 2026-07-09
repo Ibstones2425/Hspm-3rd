@@ -64,6 +64,16 @@ function formatDate(dateStr, options) {
     return d.toLocaleDateString("en-US", options);
 }
 
+/** Current local moment as "YYYY-MM-DDTHH:MM", matching <input type="datetime-local">
+ *  and the format devotionals are stored in — used to hide devotionals scheduled
+ *  for a future date/time until that moment actually arrives. Also compares
+ *  correctly against legacy date-only ("YYYY-MM-DD") entries. */
+function nowDateTimeString() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 // ---------------------------------------------------------
 // 3. SERMONS — load, search, "See Older Sermons" pagination
 // ---------------------------------------------------------
@@ -195,7 +205,12 @@ async function loadDevotional() {
     const container = document.getElementById("devotional-display");
 
     try {
-        const q = query(collection(db, "devotionals"), orderBy("date", "desc"), limit(1));
+        const q = query(
+            collection(db, "devotionals"),
+            where("date", "<=", nowDateTimeString()),
+            orderBy("date", "desc"),
+            limit(1)
+        );
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {

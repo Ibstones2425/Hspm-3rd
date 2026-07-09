@@ -213,9 +213,44 @@ body {
 }
 
 .archive-card .btn {
-    margin: 18px 0 0;
+    margin: 0;
     width: 100%;
     justify-content: center;
+}
+
+/* Row holding "Read Full Message" + Share, sitting under the snippet */
+.archive-card-actions {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.archive-card-actions .view-details-btn {
+    flex: 1;
+}
+
+/* Square icon-only Share button next to "Read Full Message" */
+.archive-card-actions .btn-icon {
+    flex: 0 0 auto;
+    width: 46px;
+    padding: 13px 0;
+    justify-content: center;
+}
+
+.archive-card-actions .btn-icon i {
+    margin: 0;
+}
+
+/* Share button inside the full devotional modal */
+.archive-modal-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.archive-modal-actions .btn {
+    margin: 0;
 }
 
 /* ─── MODAL BACKDROP ──────────────────────────────────────── */

@@ -23,6 +23,33 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // ---------------------------------------------------------
+// 0. DATE / TIME HELPERS (Devotional Scheduling)
+// ---------------------------------------------------------
+/** Current local moment as "YYYY-MM-DDTHH:MM", matching <input type="datetime-local">
+ *  and the format devotionals are stored in — so it sorts/compares correctly
+ *  against scheduled dates, including legacy date-only ("YYYY-MM-DD") entries. */
+function nowDateTimeString() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+/** Friendly "Jul 10, 2026 at 2:30 PM" style label for a stored devotional date
+ *  string, whether it has a time component or not. */
+function formatDevotionalDateTime(dateStr) {
+  if (!dateStr) return "";
+  const hasTime = dateStr.includes("T");
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    ...(hasTime ? { hour: "numeric", minute: "2-digit" } : {})
+  });
+}
+
+// ---------------------------------------------------------
 // 1. AUTHENTICATION CHECK
 // ---------------------------------------------------------
 onAuthStateChanged(auth, user => {
@@ -159,16 +186,19 @@ async function handleAddDevotional(e) {
   e.preventDefault();
 
   try {
+    const date = document.getElementById("dev-date").value;
+    const isScheduled = date > nowDateTimeString();
+
     await addDoc(collection(db, "devotionals"),
       {
-        date: document.getElementById("dev-date").value,
+        date,
         title: document.getElementById("dev-title").value,
         scripture: document.getElementById("dev-scripture").value,
         content: document.getElementById("dev-content").value,
         createdAt: serverTimestamp()
       });
 
-    showToast("Devotional Published!");
+    showToast(isScheduled ? `Devotional scheduled for ${formatDevotionalDateTime(date)}!` : "Devotional Published!");
     e.target.reset();
     document.getElementById("modal-devotional").style.display = "none";
     loadDevotionals();
@@ -184,14 +214,22 @@ async function loadDevotionals() {
     orderBy("date", "desc"));
   const snapshot = await getDocs(q);
 
+  const nowStr = nowDateTimeString();
+
   tbody.innerHTML = "";
   snapshot.forEach(docSnap => {
     const data = docSnap.data();
+    const isScheduled = data.date > nowStr;
+    const statusBadge = isScheduled
+      ? `<span class="status-badge pending" title="Goes live automatically on ${formatDevotionalDateTime(data.date)}">Scheduled</span>`
+      : `<span class="status-badge approved">Published</span>`;
+
     tbody.innerHTML += `
     <tr>
-    <td>${data.date}</td>
+    <td>${formatDevotionalDateTime(data.date)}</td>
     <td>${data.title}</td>
     <td>${data.scripture}</td>
+    <td>${statusBadge}</td>
     <td>
     <button class="action-btn btn-edit" title="Edit Devotional" onclick="window.openEditDevotional('${docSnap.id}', '${data.title.replace(/'/g, "\\'")}', '${data.date}', '${data.scripture.replace(/'/g, "\\'")}', '${data.content.replace(/'/g, "\\'").replace(/\n/g, "\\n")}')">
     <i class="fas fa-edit"></i>
@@ -292,14 +330,18 @@ async function loadEvents() {
 // ---------------------------------------------------------
 // 7. TESTIMONY MANAGEMENT
 // ---------------------------------------------------------
+let allTestimonies = [];
+
 async function loadTestimonies() {
   const tbody = document.getElementById("table-testimonies");
   const q = query(collection(db, "testimonies"), orderBy("date", "desc"));
   const snapshot = await getDocs(q);
 
   tbody.innerHTML = "";
+  allTestimonies = [];
   snapshot.forEach(docSnap => {
     const data = docSnap.data();
+    allTestimonies.push({ id: docSnap.id, ...data });
     const statusClass = data.status === "approved" ? "approved": "pending";
 
     tbody.innerHTML += `
@@ -308,6 +350,7 @@ async function loadTestimonies() {
     <td>${data.content.substring(0, 50)}...</td>
     <td><span class="status-badge ${statusClass}">${data.status}</span></td>
     <td>
+    <button class="action-btn btn-edit" title="Read Full Testimony" onclick="window.viewTestimony('${docSnap.id}')"><i class="fas fa-eye"></i></button>
     ${
     data.status !== "approved"
     ? `<button class="action-btn btn-approve" onclick="window.updateStatus('testimonies', '${docSnap.id}', 'approved')"><i class="fas fa-check"></i></button>`: ""
@@ -317,6 +360,47 @@ async function loadTestimonies() {
     </tr>`;
   });
 }
+
+window.viewTestimony = function(id) {
+  const data = allTestimonies.find(t => t.id === id);
+  if (!data) return;
+
+  document.getElementById("view-testimony-name").innerText = data.name || "Anonymous";
+  document.getElementById("view-testimony-content").innerText = data.content || "";
+
+  const dateEl = document.getElementById("view-testimony-date");
+  dateEl.innerText = data.date && data.date.seconds
+    ? new Date(data.date.seconds * 1000).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
+    : "";
+
+  const statusEl = document.getElementById("view-testimony-status");
+  statusEl.innerText = data.status;
+  statusEl.className = `status-badge ${data.status === "approved" ? "approved" : "pending"}`;
+
+  const imageWrap = document.getElementById("view-testimony-image-wrap");
+  const imageEl = document.getElementById("view-testimony-image");
+  if (data.imageUrl) {
+    imageEl.src = data.imageUrl;
+    imageEl.alt = data.name || "Testimony photo";
+    imageWrap.style.display = "block";
+  } else {
+    imageWrap.style.display = "none";
+  }
+
+  const approveBtn = document.getElementById("view-testimony-approve-btn");
+  approveBtn.style.display = data.status === "approved" ? "none" : "inline-flex";
+  approveBtn.onclick = async () => {
+    await window.updateStatus("testimonies", id, "approved");
+    window.closeModal("modal-view-testimony");
+  };
+
+  document.getElementById("view-testimony-delete-btn").onclick = () => {
+    window.closeModal("modal-view-testimony");
+    window.deleteItem("testimonies", id);
+  };
+
+  window.openModal("modal-view-testimony");
+};
 
 // ---------------------------------------------------------
 // 8. PRAYER REQUESTS
@@ -714,7 +798,9 @@ async function handleSendBulkEmail(e) {
 window.openEditDevotional = function(id, title, date, scripture, content) {
     document.getElementById('edit-devo-id').value = id;
     document.getElementById('edit-devo-title').value = title;
-    document.getElementById('edit-devo-date').value = date;
+    // Legacy entries were saved as plain "YYYY-MM-DD" dates with no time —
+    // default them to midnight so the datetime-local input can display them.
+    document.getElementById('edit-devo-date').value = date.includes('T') ? date : `${date}T00:00`;
     document.getElementById('edit-devo-scripture').value = scripture;
     document.getElementById('edit-devo-content').value = content;
     
@@ -748,10 +834,14 @@ async function handleEditDevotional(e) {
         await updateDoc(devoRef, updatedData);
         
         // Use your existing toast notification
+        const isScheduled = updatedData.date > nowDateTimeString();
+        const successMsg = isScheduled
+            ? `Devotional updated — scheduled for ${formatDevotionalDateTime(updatedData.date)}!`
+            : "Devotional successfully updated!";
         if (typeof showToast === "function") {
-            showToast("Devotional successfully updated!");
+            showToast(successMsg);
         } else {
-            alert("Devotional updated!");
+            alert(successMsg);
         }
         
         // Close modal and refresh the list
