@@ -288,14 +288,25 @@ function shareDevotional() {
     if (!currentDevotional) return;
 
     const { title, date, scripture, content } = currentDevotional;
-    const snippet = (content || "").substring(0, 140).replace(/\n/g, " ").trim();
+
+    // 1. Shorten the content paragraph (Limit to 75 characters)
+    const maxContentLen = 75;
+    const cleanContent = (content || "").replace(/\n/g, " ").trim();
+    const contentSnippet = cleanContent.substring(0, maxContentLen);
+    const contentEllipsis = cleanContent.length > maxContentLen ? "..." : "";
+
+    // 2. Truncate the scripture so they have to click the link to read it fully
+    const maxScriptureLen = 25; 
+    const cleanScripture = (scripture || "").trim();
+    const scriptureSnippet = cleanScripture.substring(0, maxScriptureLen);
+    const scriptureEllipsis = cleanScripture.length > maxScriptureLen ? "..." : "";
 
     const shareText =
         `📖 *TODAY'S DEVOTIONAL*\n` +
         `🗓️ *Date:* ${formatDate(date, { year: "numeric", month: "long", day: "numeric" })}\n\n` +
         `🔥 *Topic:* ${title || ""}\n` +
-        `📍 *Scripture:* ${scripture || ""}\n\n` +
-        `"${snippet}${snippet.length === 70 ? "..." : ""}"\n\n` +
+        `📍 *Scripture:* ${scriptureSnippet}${scriptureEllipsis}\n\n` +
+        `"${contentSnippet}${contentEllipsis}"\n\n` +
         `Read the full message and join the prayer lines here:\n`;
 
     const shareUrl = "https://hisspiritandpowerministry.org/#devotional";
@@ -309,6 +320,7 @@ function shareDevotional() {
         window.open(whatsappUrl, "_blank", "noopener");
     }
 }
+
 
 // ---------------------------------------------------------
 // 5. UPCOMING EVENTS
