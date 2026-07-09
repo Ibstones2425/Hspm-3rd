@@ -295,7 +295,7 @@ function shareDevotional() {
         `🗓️ *Date:* ${formatDate(date, { year: "numeric", month: "long", day: "numeric" })}\n\n` +
         `🔥 *Topic:* ${title || ""}\n` +
         `📍 *Scripture:* ${scripture || ""}\n\n` +
-        `"${snippet}${snippet.length === 140 ? "..." : ""}"\n\n` +
+        `"${snippet}${snippet.length === 70 ? "..." : ""}"\n\n` +
         `Read the full message and join the prayer lines here:\n`;
 
     const shareUrl = "https://hisspiritandpowerministry.org/#devotional";
