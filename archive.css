@@ -1,0 +1,391 @@
+/* Globals for layout structure and overflow protection */
+html, body {
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.archive-section {
+    flex: 1 0 auto; /* Pushes the footer down when content is short */
+}
+
+.main-footer {
+    flex-shrink: 0;
+}
+
+/* Ensure padding doesn't push elements wider than their parent */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Sits directly beneath the fixed site nav (76px tall), so it needs
+   its own top offset the same way #hero does on the homepage. */
+.archive-header {
+    background:
+        linear-gradient(160deg, rgba(28, 10, 14, 0.85) 0%, rgba(93, 0, 30, 0.92) 100%),
+        url('assets/images/about-church.jpg') center/cover no-repeat;
+    color: #fff;
+    padding: 148px 20px 52px;
+    text-align: center;
+}
+
+.archive-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 700;
+    color: #fff;
+    margin: 10px 0 8px;
+}
+
+.archive-header p {
+    font-family: var(--font-body);
+    font-size: 0.97rem;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: center;
+    text-align-last: center;
+}
+
+.back-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-body);
+    font-size: 0.83rem;
+    transition: var(--transition);
+    margin-bottom: 12px;
+}
+
+.back-home-btn:hover {
+    color: #fff;
+    gap: 12px;
+}
+
+/* ─── CONTENT SECTION — gold border = clear break from header ─ */
+.archive-section {
+    background: var(--bg);
+    border-top: 3px solid var(--gold);
+    padding: 48px 0 80px;
+}
+
+#archive-search {
+    display: block;
+    padding: 13px 20px 13px 46px;
+    border-radius: 50px;
+    border: 1.5px solid var(--border);
+    background: var(--bg-card)
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%237a6670' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zm-5.242 1.656a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E")
+        16px center / 16px no-repeat;
+    margin-bottom: 0;
+}
+#archive-search:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* ─── LOADER ──────────────────────────────────────────────── */
+#archive-loader-container, 
+#prayer-loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    color: var(--muted);
+    gap: 14px;
+    font-family: var(--font-body);
+}
+
+
+.archive-spinner {
+    width: 38px;
+    height: 38px;
+    border: 3px solid var(--primary-light);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: archiveSpin 0.85s linear infinite;
+}
+
+@keyframes archiveSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ─── CARD GRID ───────────────────────────────────────────── */
+.devo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.archive-empty,
+.archive-error {
+    text-align: center;
+    width: 100%;
+    grid-column: 1 / -1;
+    font-family: var(--font-body);
+    color: var(--muted);
+    padding: 40px 0;
+}
+.archive-error { color: #b8433a; }
+
+/* ─── ARCHIVE CARD ────────────────────────────────────────── */
+.archive-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    border: 1px solid rgba(93, 0, 30, 0.06);
+    border-top: 3px solid var(--gold);
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.archive-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-5px);
+}
+/* Fix for Flex/Grid blowout caused by white-space: nowrap */
+.archive-card {
+    min-width: 0; 
+}
+
+.archive-card > div {
+    min-width: 0; 
+    width: 100%;
+}
+
+/* Ensure long unbroken text in snippets also wraps correctly */
+.card-snippet {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.card-date {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold);
+    margin-bottom: 6px;
+}
+
+.card-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin: 4px 0 8px;
+    line-height: 1.25;
+}
+
+/* one line only — no wrapping */
+.card-scripture {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--primary);
+    opacity: 0.8;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* hard cap at 3 lines no matter how long the text is */
+.card-snippet {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.archive-card .btn {
+    margin: 18px 0 0;
+    width: 100%;
+    justify-content: center;
+}
+
+/* ─── MODAL BACKDROP ──────────────────────────────────────── */
+.archive-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 10, 14, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 2500;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ─── MODAL CONTENT ───────────────────────────────────────── */
+.archive-modal-content {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    border-top: 3px solid var(--gold);
+    animation: archiveModalSlideUp 0.36s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.archive-modal-content::-webkit-scrollbar { width: 6px; }
+.archive-modal-content::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+.archive-modal-content::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+@keyframes archiveModalSlideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.archive-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.archive-modal-close:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+#modal-arch-title {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    color: var(--primary);
+    padding-right: 30px;
+    margin-bottom: 6px;
+}
+
+#modal-arch-date {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+}
+
+#modal-arch-verse {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--primary);
+    border-left: 3px solid var(--gold);
+    padding: 12px 18px;
+    background: var(--gold-light);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 0 0 20px;
+}
+
+#modal-arch-body {
+    font-family: var(--font-body);
+    font-size: 0.97rem;
+    color: var(--text);
+    line-height: 1.9;
+    text-align: justify;
+    white-space: pre-wrap;
+}
+
+.archive-modal-confession {
+    margin-top: 24px;
+    background: var(--gold-light);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+}
+
+.confession-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .archive-header { padding: 128px 20px 40px; }
+}
+
+/* @media (max-width: 640px) {
+    .archive-header { padding: 116px 20px 36px; }
+    .archive-section { padding: 36px 0 60px; }
+    .devo-grid { grid-template-columns: 1fr; }
+    .archive-modal-content { padding: 1.5rem; }
+} */
+@media screen and (max-width: 640px) {
+    /* General layout overrides */
+    .archive-header { padding: 116px 16px 36px; }
+    .archive-section { padding: 36px 0 60px; }
+    .devo-grid { grid-template-columns: 1fr; gap: 16px; }
+    .archive-modal-content { padding: 16px; }
+
+    /* 1. Prevent Word-Wrapping Disasters */
+    .archive-header h1,
+    .card-title,
+    #modal-arch-title,
+    h1, h2, h3, h4, h5, h6 {
+        word-break: break-word;
+    }
+
+    /* 2. Minimize Padding */
+    .container { padding-left: 16px !important; padding-right: 16px !important; }
+    .archive-card { padding: 16px; }
+    .archive-modal-backdrop { padding: 16px; }
+    #modal-arch-verse { padding: 12px; margin-bottom: 12px; }
+    .archive-modal-confession { padding: 12px; margin-top: 16px; }
+
+    /* 3. Linearize Elements */
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* 4. Scale Down Fixed-Width Elements */
+    .archive-header p,
+    #archive-search,
+    .archive-card,
+    .archive-modal-content,
+    .btn {
+        width: 100%;
+        max-width: 100% !important;
+    }
+
+    /* Target the inline-styled search wrapper */
+    div[style*="max-width: 500px"] {
+        max-width: 100% !important;
+        margin-bottom: 24px !important;
+    }
+}

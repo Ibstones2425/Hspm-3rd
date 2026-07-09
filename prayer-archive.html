@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="description" content="Browse the full archive of daily devotionals from His Spirit and Power Ministry — past scriptures, teachings, and confessions." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="archive.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#5d001e">
+</head>
+<body>
+    <!-- 1. Header (Keep your standard nav here) -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="assets/images/logo.png" alt="HSPM Logo" style="height: 60px; width: auto" />
+                </a>
+                <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#sermons">Daily Prayers</a></li>
+    <li><a href="index.html#devotional">Devotional</a></li>
+    <li><a href="index.html#events">Events</a></li>
+    <li><a href="index.html#testimonies">Testimonies</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="archive.html">Devotional-Archives</a></li>
+    <li><a href="prayer-archive.html" class="active">Prayer-Archives</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </header>
+    <!-- 2. Archive Header -->
+    <section class="archive-header">
+        <div class="container">
+            <a href="index.html" class="back-home-btn"><i class="fas fa-arrow-left"></i> Back to Homepage</a>
+            <h1>Daily Prayers Archive</h1>
+            <p>Browse through past prayer sessions and spiritual insights.</p>
+        </div>
+    </section>
+
+    <!-- 3. Archive Content -->
+    <section class="archive-section">
+        <div class="container">
+            <div style="max-width: 500px; margin: 0 auto 40px;">
+                <input type="text" id="prayer-archive-search" placeholder="Search by title or preacher...">
+            </div>
+
+            <div id="prayer-loader-container">
+                <div class="archive-spinner"></div>
+                <p>Loading Prayers...</p>
+            </div>
+            
+            <!-- This is where our JS will inject the Mixlr/YouTube cards -->
+            <div class="grid-container" id="prayer-archive-list"></div>
+        </div>
+    </section>
+    <footer class="main-footer">
+        <div class="container footer-bottom" style="border-top: none; padding-top: 0;">
+            <p>© 2026 His Spirit and Power Ministry. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="index.html">Homepage</a>
+                <a href="login.html">Admin Portal</a>
+            </div>
+        </div>
+    </footer>
+    <script src="config.js" type="module"></script>
+    <script src="ui.js" type="module"></script>
+   <script src="prayer-archive.js" type="module"></script> 
+</body>
+</html>
