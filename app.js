@@ -284,18 +284,13 @@ function openDevotionalModal(data) {
 }
 
 /** Build a share message from the currently loaded devotional and open the native share sheet / WhatsApp. */
+/** Build a share message from the currently loaded devotional and open the native share sheet / WhatsApp. */
 function shareDevotional() {
     if (!currentDevotional) return;
 
-    const { title, date, scripture, content } = currentDevotional;
+    const { title, date, scripture } = currentDevotional;
 
-    // 1. Shorten the content paragraph (Limit to 75 characters)
-    const maxContentLen = 75;
-    const cleanContent = (content || "").replace(/\n/g, " ").trim();
-    const contentSnippet = cleanContent.substring(0, maxContentLen);
-    const contentEllipsis = cleanContent.length > maxContentLen ? "..." : "";
-
-    // 2. Truncate the scripture so they have to click the link to read it fully
+    // 1. Truncate the scripture so they have to click the link to read it fully
     const maxScriptureLen = 25; 
     const cleanScripture = (scripture || "").trim();
     const scriptureSnippet = cleanScripture.substring(0, maxScriptureLen);
@@ -306,7 +301,6 @@ function shareDevotional() {
         `🗓️ *Date:* ${formatDate(date, { year: "numeric", month: "long", day: "numeric" })}\n\n` +
         `🔥 *Topic:* ${title || ""}\n` +
         `📍 *Scripture:* ${scriptureSnippet}${scriptureEllipsis}\n\n` +
-        `"${contentSnippet}${contentEllipsis}"\n\n` +
         `Read the full message and join the prayer lines here:\n`;
 
     const shareUrl = "https://hisspiritandpowerministry.org/#devotional";
