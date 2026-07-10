@@ -73,6 +73,30 @@ function nowDateTimeString() {
     const pad = n => String(n).padStart(2, "0");
     return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
+async function forceUpdateCheck() {
+  try {
+    // Fetch the version.txt file. The Date.now() prevents the browser from caching this check.
+    const response = await fetch(`/version.txt?t=${Date.now()}`);
+    const latestVersion = (await response.text()).trim();
+    
+    const currentVersion = localStorage.getItem('user_site_version');
+
+    if (currentVersion && currentVersion !== latestVersion) {
+      // 1. Update the version in localStorage
+      localStorage.setItem('user_site_version', latestVersion);
+      // 2. Force a hard reload from the server
+      window.location.reload(true); 
+    } else {
+      localStorage.setItem('user_site_version', latestVersion);
+    }
+  } catch (error) {
+    console.log('Version check failed, skipping.', error);
+  }
+}
+
+// Run the check as soon as the script loads
+forceUpdateCheck();
+
 
 // ---------------------------------------------------------
 // 3. SERMONS — load, search, "See Older Sermons" pagination
